@@ -7,7 +7,8 @@ documentation for the divisor-residue approach to the Erdős–Straus conjecture
 
 ## Contents
 
-- `paper/` — manuscript source (`manuscript.md`) and compiled PDF
+- `paper/` — manuscript source (`manuscript.md`, `manuscript.tex`)
+- `docs/manuscript.pdf` — compiled PDF
 - `code/verify.py` — SymPy verification of key theorems and computational results
 - `code/search_solutions.py` — exhaustive search for Erdős–Straus solutions
 - `code/verify_lemma.py` — verification of the Bounded Divisor-Residue Lemma
@@ -28,14 +29,16 @@ admissible n, there must exist bounded A ≡ 3 (mod 4) and a divisor P of
 
 **Proven results:**
 - Theorem 1: Exact divisor-residue criterion (T ∈ D_A iff A works)
-- Theorem 2: n ≡ 5 (mod 8) always admits A = 3 (direct proof)
-- Theorem 4: Composite n with factor ≡ 3 (mod 4) (Mballa 2026)
+- Theorem 2: Prime n ≡ 5 (mod 8) always admits A = 3 (direct proof)
 - Theorem 5: Legendre symbol identity for the m-route
 - Theorem 3 converse: No QNR → T ∉ D_A (unconditional)
-- Bounded Divisor-Residue Lemma: Proven for h=2, order-2 QNR, and Kneser cases (92.4%); computational for remaining 7.6%
+- Bounded Divisor-Residue Lemma: Proven for h=2, order-2 QNR, and Kneser-trivial-stabilizer cases (73.1%); computational/candidate for remaining 26.9%
+
+**Claimed (preprint, pending independent verification):**
+- Theorem 4: Composite n with factor ≡ 3 (mod 4) — claimed/proposed via Mballa 2026
 
 **Computational results (verified, not proven):**
-- Theorem 3 forward direction: T ∈ D_A iff QNR exists (0 mismatches, 6,473 cases)
+- Theorem 3 forward direction: T ∈ D_A iff QNR exists (0 mismatches, 10,096 cases)
 - Theorem 6: A ≤ 31 covers all n ≤ 100,000
 - Theorem 7: A ≤ 99 covers all but 1 of 666,666 cases up to 10,000,000
 

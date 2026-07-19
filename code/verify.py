@@ -328,7 +328,8 @@ def main():
     assert mismatches == 0, "Theorem 1 has mismatches!"
     
     print("\n" + "=" * 60)
-    print("All assertions passed! ✅")
+    print("Required smoke-test assertions passed.")
+    print("Conditional/computational checks reported above.")
     print("=" * 60)
 
 

@@ -74,34 +74,26 @@ def compute_H_A(n, A):
     return H
 
 
-def compute_stabilizer(S, A):
-    """Compute the stabilizer of S' = S ∩ ⟨g₁,...,gₖ⟩ in (Z/AZ)*.
+def compute_stabilizer(S, A, m, gen_dlogs, nx_factors, A_val):
+    """Compute the additive stabilizer of S' in Z/mZ.
     
-    The stabilizer is {s ∈ H(A) : s*S' = S'}, where S' is the set of
-    residues achievable by the generators. For the Kneser condition,
-    we need |Stab(S')| = 1 (trivial stabilizer).
+    The Kneser argument is about the additive sumset
+    S' = {Σ s_i * a_i mod m : 0 ≤ a_i ≤ 2e_i} ⊆ Z/mZ.
+    
+    The stabilizer that matters is:
+    stab(S') = {t ∈ Z/mZ : S' + t = S'} (additive translation).
+    
+    For Kneser's theorem, we need |stab(S')| = 1 (trivial = {0}).
     """
-    if not S or S == {1}:
-        return {1}
-    # Build H from generators implied by S
-    gens = set(S)
-    H = {1}
-    changed = True
-    while changed:
-        changed = False
-        new = set()
-        for g in gens:
-            for s in H:
-                v = (s * g) % A
-                if v not in H:
-                    new.add(v)
-                    changed = True
-        H |= new
+    if not S or len(S) == 0:
+        return {0}
     
-    stab = {1}
-    for h in H:
-        if all((h * s) % A in S for s in S) and all(any((h * s2) % A == s1 for s2 in S) for s1 in S):
-            stab.add(h)
+    # S is already a set of residues mod m (the shifted sumset)
+    # Check which translations t preserve S
+    stab = {0}
+    for t in range(1, m):
+        if all((s + t) % m in S for s in S) and all(any((s2 + t) % m == s1 for s2 in S) for s1 in S):
+            stab.add(t)
     return stab
 
 
@@ -158,10 +150,26 @@ def verify_lemma(max_n=100000, A_values=None):
                 k = len(orders)
                 sum_range = sum(2 * e + 1 for _, e in orders.values())
                 if sum_range >= m_val + k - 1:
-                    # Check stabilizer of the shifted set
-                    # The shifted set S' consists of residues from generators with reduced exponents
-                    gens_residues = {p % A for p in nx_factors if gcd(p, A) == 1}
-                    stab = compute_stabilizer(gens_residues, A)
+                    # Compute the actual additive sumset S' in Z/mZ
+                    # S' = {sum s_i * a_i mod m : 0 <= a_i <= 2e_i}
+                    # where s_i = dlog_g(p_i) mod m and m = h/2
+                    gen_dlogs_mod_m = []
+                    gen_exps = []
+                    for p, (d, e) in orders.items():
+                        gen_dlogs_mod_m.append(d % m_val)
+                        gen_exps.append(2 * e)
+                    
+                    # Build S' by iterating over all exponent combinations
+                    S_prime = {0}
+                    for s_i, max_a in zip(gen_dlogs_mod_m, gen_exps):
+                        new_S = set()
+                        for a in range(max_a + 1):
+                            for s in S_prime:
+                                new_S.add((s + a * s_i) % m_val)
+                        S_prime = new_S
+                    
+                    # Check additive stabilizer in Z/mZ
+                    stab = compute_stabilizer(S_prime, A, m_val, gen_dlogs_mod_m, nx_factors, A)
                     if len(stab) == 1:
                         cat2b_kneser += 1
                     else:
