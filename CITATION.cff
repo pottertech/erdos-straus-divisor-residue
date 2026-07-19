@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+title: "A Divisor-Residue Criterion for Bounded A-Parameters in the Erdős–Straus Conjecture"
+message: "If you use this work, please cite it as below."
+type: article
+authors:
+  - family-names: Potter
+    given-names: "Skip"
+    affiliation: "Potter's Quill Publishing"
+contributors:
+  - name: "Brodie Foxworth"
+    type: "other"
+    affiliation: "OpenClaw AI Agent"
+    note: "Computational verification, framework development, manuscript preparation"
+keywords:
+  - Erdős–Straus conjecture
+  - unit fractions
+  - divisor-residue
+  - quadratic non-residue
+  - Burgess bound
+  - Kneser's theorem
+date-released: 2026-07-18
+url: "https://github.com/pottertech/erdos-straus-divisor-residue"
+preferred-citation:
+  type: article
+  title: "A Divisor-Residue Criterion for Bounded A-Parameters in the Erdős–Straus Conjecture"
+  authors:
+    - family-names: Potter
+      given-names: "Skip"
+  year: 2026
+  notes: "Research note / preprint"

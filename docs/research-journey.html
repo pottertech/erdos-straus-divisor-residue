@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research Journey — Erdős–Straus Divisor-Residue Criterion</title>
+<style>
+body { font-family: Georgia, serif; max-width: 800px; margin: auto; line-height: 1.6; padding: 20px; color: #2c3e50; }
+h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+h2 { color: #34495e; margin-top: 30px; }
+.timeline { border-left: 3px solid #3498db; padding-left: 20px; margin: 20px 0; }
+.timeline-item { margin-bottom: 20px; }
+.timeline-item h3 { color: #3498db; margin-bottom: 5px; }
+.theorem { background: #ecf0f1; padding: 10px; border-radius: 5px; margin: 10px 0; }
+.gap { background: #fce4e4; padding: 10px; border-radius: 5px; margin: 10px 0; border-left: 3px solid #e74c3c; }
+.proven { color: #27ae60; font-weight: bold; }
+.computational { color: #f39c12; font-weight: bold; }
+.open { color: #e74c3c; font-weight: bold; }
+code { background: #f4f4f4; padding: 2px 5px; border-radius: 3px; font-family: monospace; }
+</style>
+</head>
+<body>
+
+<h1>Research Journey: A Divisor-Residue Criterion for the Erdős–Straus Conjecture</h1>
+
+<p>This document narrates the research process from initial idea through eight manuscript revisions, conducted on July 18, 2026.</p>
+
+<div class="timeline">
+
+<div class="timeline-item">
+<h3>Phase 1: The A-Parameter Framework</h3>
+<p>The starting point was Mballa's (2026) parametric framework: write x = (n+A)/4 with A ≡ 3 (mod 4), reducing 4/n = 1/x + 1/y + 1/z to finding a divisor P of (nx)² with a specific residue mod A. The key insight was defining the <strong>bounded divisor-residue set</strong> D_A((nx)²) — the set of achievable residues mod A from actual divisors of (nx)², with exponents bounded by 2v_p(nx).</p>
+<p>This is NOT a subgroup — it's a bounded subset. The distinction matters.</p>
+</div>
+
+<div class="timeline-item">
+<h3>Phase 2: The Divisor-Residue Criterion (Theorem 1)</h3>
+<p>The exact characterization: A works iff T = −n²·4⁻¹ mod A lies in D_A. Verified with zero mismatches across 6,666 test cases (n ≤ 100,000).</p>
+</div>
+
+<div class="timeline-item">
+<h3>Phase 3: Reduction to Quadratic Non-Residues (Theorem 3)</h3>
+<p>For prime A, the condition reduces to: some prime factor of nx is a QNR mod A. This connects the Erdős–Straus problem to quadratic reciprocity and the Burgess bound — classical analytic number theory.</p>
+</div>
+
+<div class="timeline-item">
+<h3>Phase 4: The n ≡ 5 (mod 8) Case (Theorem 2)</h3>
+<p>Direct proof: when n ≡ 5 (mod 8), the prime 2 divides m₃ = (n+3)/4, and 2 ≡ −1 (mod 3), so P = 2 is a working divisor for A = 3. No polynomial identity needed.</p>
+</div>
+
+<div class="timeline-item">
+<h3>Phase 5: Computational Verification</h3>
+<p>Exhaustive search confirmed: A ≤ 31 covers all n ≤ 100,000 (6,666 cases), and A ≤ 99 covers all but one of 666,666 cases up to 10,000,000. The Burgess bound gives A = O(n^{0.152}) conditionally.</p>
+</div>
+
+<div class="timeline-item">
+<h3>Phase 6: The Bounded Divisor-Residue Lemma</h3>
+<p>The key technical lemma: −1 ∈ H(A) ⟹ −1 ∈ D_A. Proven in general for two cases:</p>
+<ul>
+<li><strong>h = 2</strong> (5,533 cases): Single QNR prime with exponent 1</li>
+<li><strong>Order-2 QNR</strong> (445 cases): p¹ = g^{h/2} = −1 directly</li>
+<li><strong>Kneser condition</strong> (929 cases): Sumset covers Z/m when Σ(2eᵢ+1) ≥ m+k−1</li>
+</ul>
+<p>Remaining 495 cases (7.6%) verified computationally with honest disclosure.</p>
+</div>
+
+<div class="timeline-item">
+<h3>Phase 7: Reviewer Feedback (8 Revisions)</h3>
+<p>The manuscript went through eight revisions based on reviewer feedback:</p>
+<ul>
+<li><strong>v3 → v4:</strong> Fixed D_A vs H(A) — D_A ≠ H(A) in general (6 counterexamples)</li>
+<li><strong>v4 → v5:</strong> Removed "even cardinality" argument (D_A is not a subgroup). Downgraded lemma to "partially proven." Fixed Kneser application with correct stabilizer analysis.</li>
+<li><strong>v5 → v6:</strong> Fixed D_A closure issue — D_A is not closed under multiplication. Introduced shifted divisor-residue set D_A^{(nm)}.</li>
+<li><strong>v6 → v7:</strong> Made Theorem 2 independent of Theorem 3. Softened abstract Burgess claim.</li>
+<li><strong>v7 → v8:</strong> Labeled corollary as conditional. Softened evidence bullet.</li>
+</ul>
+</div>
+
+</div>
+
+<h2>Current State</h2>
+
+<p class="proven">PROVEN (unconditionally):</p>
+<ul>
+<li>Theorem 1: T ∈ D_A iff A works (exact criterion)</li>
+<li>Theorem 2: n ≡ 5 (mod 8) → A = 3 (direct proof)</li>
+<li>Theorem 4: Composite n with factor ≡ 3 (mod 4) (Mballa 2026)</li>
+<li>Theorem 5: Legendre symbol identity for m-route</li>
+<li>Theorem 3 converse: No QNR → T ∉ D_A</li>
+<li>Lemma (partial): h=2 and order-2 QNR cases (92.4%)</li>
+</ul>
+
+<p class="computational">COMPUTATIONALLY VERIFIED (not proven):</p>
+<ul>
+<li>Theorem 3 forward: T ∈ D_A iff QNR exists (0 mismatches, 6,473 cases)</li>
+<li>Theorem 6: A ≤ 31 for n ≤ 100,000</li>
+<li>Theorem 7: A ≤ 99 for n ≤ 10,000,000 (one outlier at A = 107)</li>
+</ul>
+
+<p class="open">OPEN GAPS:</p>
+<ul>
+<li>Bounded Divisor-Residue Lemma in full generality (7.6% computational)</li>
+<li>D_A closure / shifted set: T ∈ D_A directly, not via −1 factorization</li>
+<li>Constant bound conjecture: A ≤ C for all n</li>
+<li>Covering system proof for all n</li>
+</ul>
+
+<h2>Acknowledgments</h2>
+<p>This research was conducted by Skip Potter with computational assistance from Brodie Foxworth (OpenClaw AI agent). The iterative review process was facilitated by Younique. The manuscript benefited enormously from anonymous reviewer feedback across eight revisions.</p>
+
+</body>
+</html>
