@@ -32,7 +32,7 @@ admissible n, there must exist bounded A ≡ 3 (mod 4) and a divisor P of
 - Theorem 2: Prime n ≡ 5 (mod 8) always admits A = 3 (direct proof)
 - Theorem 5: Legendre symbol identity for the m-route
 - Theorem 3 converse: No QNR → T ∉ D_A (unconditional)
-- Bounded Divisor-Residue Lemma: Proven for h=2, order-2 QNR, and Kneser-trivial-stabilizer cases (73.1%); computational/candidate for remaining 26.9%
+- Bounded Divisor-Residue Lemma: Proven for h=2 and order-2 QNR cases; Kneser-trivial-stabilizer cases under review pending corrected subgroup discrete-log computation (36.5% proven; 63.5% candidate/computational)
 
 **Claimed (preprint, pending independent verification):**
 - Theorem 4: Composite n with factor ≡ 3 (mod 4) — claimed/proposed via Mballa 2026

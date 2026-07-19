@@ -8,9 +8,12 @@ categorizing cases into:
   - Case 2a: order-2 QNR exists (proven general)
   - Case 2b: Kneser condition (proven general under hypotheses)
   - Case 2c: Computational verification (remaining cases)
+
+KEY FIX (round 5): Uses TRUE discrete logs relative to a generator u of H(A),
+not multiplicative orders. The order of p mod A is NOT the same as dlog_u(p).
 """
 
-from sympy import factorint, isprime, gcd, primitive_root
+from sympy import factorint, isprime, gcd, primitive_root, ntheory
 from math import lcm
 from functools import reduce
 import json
@@ -74,25 +77,45 @@ def compute_H_A(n, A):
     return H
 
 
-def compute_stabilizer(S, A, m, gen_dlogs, nx_factors, A_val):
+def subgroup_generator(A, H):
+    """Find a generator u of H(A) such that ord_A(u) = |H(A)|."""
+    h = len(H)
+    for u in sorted(H):
+        if u == 1:
+            continue
+        # Check if u generates all of H
+        seen = {1}
+        cur = u
+        while cur not in seen:
+            seen.add(cur)
+            cur = (cur * u) % A
+        if len(seen) == h:
+            return u
+    return 1
+
+
+def dlog_table(A, u, h):
+    """Build discrete log table: dlog[x] = j where u^j ≡ x (mod A)."""
+    table = {}
+    cur = 1
+    for j in range(h):
+        table[cur] = j
+        cur = (cur * u) % A
+    return table
+
+
+def compute_stabilizer(S, m):
     """Compute the additive stabilizer of S' in Z/mZ.
     
-    The Kneser argument is about the additive sumset
-    S' = {Σ s_i * a_i mod m : 0 ≤ a_i ≤ 2e_i} ⊆ Z/mZ.
-    
-    The stabilizer that matters is:
     stab(S') = {t ∈ Z/mZ : S' + t = S'} (additive translation).
-    
     For Kneser's theorem, we need |stab(S')| = 1 (trivial = {0}).
     """
     if not S or len(S) == 0:
         return {0}
     
-    # S is already a set of residues mod m (the shifted sumset)
-    # Check which translations t preserve S
     stab = {0}
     for t in range(1, m):
-        if all((s + t) % m in S for s in S) and all(any((s2 + t) % m == s1 for s2 in S) for s1 in S):
+        if all((s + t) % m in S for s in S):
             stab.add(t)
     return stab
 
@@ -150,16 +173,24 @@ def verify_lemma(max_n=100000, A_values=None):
                 k = len(orders)
                 sum_range = sum(2 * e + 1 for _, e in orders.values())
                 if sum_range >= m_val + k - 1:
-                    # Compute the actual additive sumset S' in Z/mZ
-                    # S' = {sum s_i * a_i mod m : 0 <= a_i <= 2e_i}
-                    # where s_i = dlog_g(p_i) mod m and m = h/2
+                    # Compute TRUE discrete logs relative to generator u of H(A)
+                    u = subgroup_generator(A, H)
+                    log = dlog_table(A, u, h)
+                    
+                    # Verify: u^h ≡ 1 (mod A) and -1 ≡ u^{h/2} (mod A)
+                    assert pow(u, h, A) == 1, f"u^h != 1 for n={n} A={A} u={u} h={h}"
+                    assert pow(u, h // 2, A) == A - 1, f"u^(h/2) != -1 for n={n} A={A} u={u} h={h}"
+                    
+                    # Get true dlog coordinates s_i for each prime factor
                     gen_dlogs_mod_m = []
                     gen_exps = []
-                    for p, (d, e) in orders.items():
-                        gen_dlogs_mod_m.append(d % m_val)
+                    for p, (order, e) in orders.items():
+                        s_i = log[p % A]  # TRUE discrete log, not order
+                        assert pow(u, s_i, A) == p % A, f"dlog check failed: u^{s_i} != {p % A} mod {A}"
+                        gen_dlogs_mod_m.append(s_i % m_val)
                         gen_exps.append(2 * e)
                     
-                    # Build S' by iterating over all exponent combinations
+                    # Build S' = {sum s_i * a_i mod m : 0 <= a_i <= 2e_i}
                     S_prime = {0}
                     for s_i, max_a in zip(gen_dlogs_mod_m, gen_exps):
                         new_S = set()
@@ -169,7 +200,7 @@ def verify_lemma(max_n=100000, A_values=None):
                         S_prime = new_S
                     
                     # Check additive stabilizer in Z/mZ
-                    stab = compute_stabilizer(S_prime, A, m_val, gen_dlogs_mod_m, nx_factors, A)
+                    stab = compute_stabilizer(S_prime, m_val)
                     if len(stab) == 1:
                         cat2b_kneser += 1
                     else:
@@ -193,8 +224,9 @@ def verify_lemma(max_n=100000, A_values=None):
     print(f"  Case 2b-Size-only (non-trivial stabilizer, CANDIDATE): {cat2b_size_only}")
     print(f"  Case 2b-Computational: {cat2b_comp}")
     proven = cat1 + cat2a + cat2b_kneser
-    print(f"  Proven generally: {proven} ({100*proven/total:.1f}%)" if total > 0 else "")
-    print(f"  Computational / candidate: {cat2b_size_only + cat2b_comp} ({100*(cat2b_size_only+cat2b_comp)/total:.1f}%)" if total > 0 else "")
+    comp = cat2b_size_only + cat2b_comp
+    print(f"  Proven generally: {proven} ({100*proven/total:.1f}%)")
+    print(f"  Computational / candidate: {comp} ({100*comp/total:.1f}%)")
     
     return lemma_counterexamples
 

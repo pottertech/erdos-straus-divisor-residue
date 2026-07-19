@@ -242,8 +242,8 @@ Case & Count & Status \\
 \midrule
 $h=2$ & 1,768 & proven generally \\
 order-2 QNR ($h>2$) & 1,919 & proven generally \\
-Kneser, trivial additive stabilizer in $\Z/m\Z$ & 3,697 & proven under hypotheses \\
-Size-only, non-trivial stabilizer & 911 & candidate (not proven) \\
+Kneser, trivial additive stabilizer in $\Z/m\Z$ & 0 & under review (dlog corrected) \\
+Size-only, non-trivial stabilizer & 4,608 & candidate (not proven) \\
 Computational-only & 1,801 & computational \\
 \midrule
 Total ($-1\in D_A$) & 10,096 & zero failures in tested range \\
@@ -276,12 +276,16 @@ This handles all composite $n\equiv 1\pmod 4$ having a prime factor congruent to
 \subsection{Legendre Symbol Identity for the $m$-Route}
 
 \begin{theorem}[Legendre Symbol Identity]
-For any prime $p$ dividing $m=(n+A)/4$, the Legendre symbol satisfies
+Let $n$ be prime with $n\equiv 1\pmod 4$, let $A$ be an odd prime with $A\equiv 3\pmod 4$, and let $p$ be an odd prime divisor of $m=(n+A)/4$ with $p\nmid A$. Then
 \[
 \leg{p}{A}=\leg{n}{p}.
 \]
 Thus $p$ is a quadratic non-residue modulo $A$ if and only if $n$ is a quadratic non-residue modulo $p$.
 \end{theorem}
+
+\begin{remark}
+Theorem 5 is stated for prime $A$. For composite $A$ in the covering set (e.g., $A=15,27$), the Legendre symbol should be replaced by the Jacobi symbol; the identity holds computationally but is not stated as a theorem here.
+\end{remark}
 
 \begin{proof}
 Since $p\mid m=(n+A)/4$, we have $A\equiv -n\pmod p$. By quadratic reciprocity, since $n\equiv 1\pmod 4$,
@@ -483,7 +487,7 @@ $A\le C$ for all $n$ & conjecture & open \\
 \begin{enumerate}
 \item \textbf{Bounded Divisor-Residue Lemma in full generality.} Prove that $-1\in H(A)$ implies $-1\in D_A((nx)^2)$, or characterize the precise exceptions.
 
-\item \textbf{$D_A$ closure and shifted divisor-residue set.} Since $D_A$ is not closed under multiplication, prove $T\in D_A$ directly whenever a quadratic non-residue prime factor exists, or prove the appropriate shifted-set statement.
+\item \textbf{Centered divisor-residue set and $D_A$ closure.} The clean formulation uses the \emph{centered divisor-residue set}. Let $N=nx=nm$ with factorization $N=\prod p_i^{e_i}$. A divisor $P\mid N^2$ has $P=\prod p_i^{\alpha_i}$ with $0\le\alpha_i\le 2e_i$. The target condition $P\equiv -N\pmod A$ is equivalent to $PN^{-1}\equiv -1\pmod A$, where $PN^{-1}=\prod p_i^{\alpha_i-e_i}$. Define the centered set $C_A(N)=\{\prod p_i^{\delta_i}\pmod A : -e_i\le\delta_i\le e_i\}$. Then $A$ works $\Longleftrightarrow -1\in C_A(N)$. \textbf{Open problem:} prove that when some prime factor of $N$ is a QNR modulo prime $A$, the centered set $C_A(N)$ contains $-1$. This symmetric formulation directly captures the exponent budget and is cleaner than the shifted-set approach.
 
 \item \textbf{Constant bound conjecture.} Prove $A\le C$ for some absolute constant.
 
