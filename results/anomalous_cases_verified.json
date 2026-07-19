@@ -1,0 +1,805 @@
+{
+  "description": "Cases where -1 \u2208 D_A (full) but -1 \u2209 D_A^(nm) (shifted/tight set)",
+  "count": 61,
+  "method": "compute_D_A(tight=False) vs compute_D_A(tight=True) for prime A, n \u2264 1000",
+  "cases": [
+    {
+      "n": 13,
+      "A": 19,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": null,
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 13,
+      "A": 31,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": null,
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 37,
+      "A": 11,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": {
+        "x": 12,
+        "y": 42,
+        "z": 1036,
+        "A": 11,
+        "P": 18,
+        "Q": 10952,
+        "T": 7,
+        "nx": 444,
+        "m": 12
+      },
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 37,
+      "A": 23,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": null,
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 49,
+      "A": 23,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": {
+        "x": 18,
+        "y": 441,
+        "z": 42,
+        "A": 23,
+        "P": 9261,
+        "Q": 84,
+        "T": 15,
+        "nx": 882,
+        "m": 18
+      },
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 73,
+      "A": 31,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": null,
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 97,
+      "A": 23,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": null,
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 109,
+      "A": 23,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": null,
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 121,
+      "A": 31,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": null,
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 157,
+      "A": 19,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": {
+        "x": 44,
+        "y": 314314,
+        "z": 364,
+        "A": 19,
+        "P": 5965058,
+        "Q": 8,
+        "T": 8,
+        "nx": 6908,
+        "m": 44
+      },
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 181,
+      "A": 19,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": null,
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 181,
+      "A": 23,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": {
+        "x": 51,
+        "y": 24616,
+        "z": 408,
+        "A": 23,
+        "P": 556937,
+        "Q": 153,
+        "T": 15,
+        "nx": 9231,
+        "m": 51
+      },
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 193,
+      "A": 11,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": null,
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 217,
+      "A": 19,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": {
+        "x": 59,
+        "y": 3658,
+        "z": 826,
+        "A": 19,
+        "P": 56699,
+        "Q": 2891,
+        "T": 3,
+        "nx": 12803,
+        "m": 59
+      },
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 241,
+      "A": 31,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": null,
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 253,
+      "A": 19,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": {
+        "x": 68,
+        "y": 1518,
+        "z": 2244,
+        "A": 19,
+        "P": 11638,
+        "Q": 25432,
+        "T": 10,
+        "nx": 17204,
+        "m": 68
+      },
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 253,
+      "A": 31,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": null,
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 277,
+      "A": 11,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": {
+        "x": 72,
+        "y": 2493,
+        "z": 6648,
+        "A": 11,
+        "P": 7479,
+        "Q": 53184,
+        "T": 10,
+        "nx": 19944,
+        "m": 72
+      },
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 277,
+      "A": 23,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": null,
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 289,
+      "A": 23,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": {
+        "x": 78,
+        "y": 3757,
+        "z": 1326,
+        "A": 23,
+        "P": 63869,
+        "Q": 7956,
+        "T": 21,
+        "nx": 22542,
+        "m": 78
+      },
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 301,
+      "A": 23,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": {
+        "x": 81,
+        "y": 16254,
+        "z": 1134,
+        "A": 23,
+        "P": 349461,
+        "Q": 1701,
+        "T": 22,
+        "nx": 24381,
+        "m": 81
+      },
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 301,
+      "A": 31,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": null,
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 313,
+      "A": 23,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": {
+        "x": 84,
+        "y": 269493,
+        "z": 1148,
+        "A": 23,
+        "P": 6172047,
+        "Q": 112,
+        "T": 20,
+        "nx": 26292,
+        "m": 84
+      },
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 313,
+      "A": 31,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": null,
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 361,
+      "A": 11,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": {
+        "x": 93,
+        "y": 4712,
+        "z": 8664,
+        "A": 11,
+        "P": 18259,
+        "Q": 61731,
+        "T": 10,
+        "nx": 33573,
+        "m": 93
+      },
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 373,
+      "A": 7,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": {
+        "x": 95,
+        "y": 382698,
+        "z": 5130,
+        "A": 7,
+        "P": 2643451,
+        "Q": 475,
+        "T": 6,
+        "nx": 35435,
+        "m": 95
+      },
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 397,
+      "A": 11,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": null,
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 397,
+      "A": 19,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": {
+        "x": 104,
+        "y": 433524,
+        "z": 2184,
+        "A": 19,
+        "P": 8195668,
+        "Q": 208,
+        "T": 18,
+        "nx": 41288,
+        "m": 104
+      },
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 397,
+      "A": 23,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": {
+        "x": 105,
+        "y": 1820,
+        "z": 433524,
+        "A": 23,
+        "P": 175,
+        "Q": 9929367,
+        "T": 14,
+        "nx": 41685,
+        "m": 105
+      },
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 421,
+      "A": 19,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": {
+        "x": 110,
+        "y": 69465,
+        "z": 2526,
+        "A": 19,
+        "P": 1273525,
+        "Q": 1684,
+        "T": 12,
+        "nx": 46310,
+        "m": 110
+      },
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 421,
+      "A": 23,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": null,
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 469,
+      "A": 23,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": null,
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 493,
+      "A": 23,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": {
+        "x": 129,
+        "y": 42398,
+        "z": 2958,
+        "A": 23,
+        "P": 911557,
+        "Q": 4437,
+        "T": 21,
+        "nx": 63597,
+        "m": 129
+      },
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 517,
+      "A": 31,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": null,
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 577,
+      "A": 23,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": {
+        "x": 150,
+        "y": 3765,
+        "z": 7241350,
+        "A": 23,
+        "P": 45,
+        "Q": 166464500,
+        "T": 22,
+        "nx": 86550,
+        "m": 150
+      },
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 589,
+      "A": 23,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": {
+        "x": 153,
+        "y": 4712,
+        "z": 23256,
+        "A": 23,
+        "P": 18259,
+        "Q": 444771,
+        "T": 20,
+        "nx": 90117,
+        "m": 153
+      },
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 601,
+      "A": 19,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": null,
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 601,
+      "A": 31,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": null,
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 613,
+      "A": 19,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": null,
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 649,
+      "A": 31,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": {
+        "x": 170,
+        "y": 9735,
+        "z": 5610,
+        "A": 31,
+        "P": 191455,
+        "Q": 63580,
+        "T": 30,
+        "nx": 110330,
+        "m": 170
+      },
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 661,
+      "A": 23,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": null,
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 673,
+      "A": 11,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": {
+        "x": 171,
+        "y": 792794,
+        "z": 10602,
+        "A": 11,
+        "P": 8605651,
+        "Q": 1539,
+        "T": 10,
+        "nx": 115083,
+        "m": 171
+      },
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 673,
+      "A": 31,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": null,
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 709,
+      "A": 19,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": {
+        "x": 182,
+        "y": 6825,
+        "z": 1382550,
+        "A": 19,
+        "P": 637,
+        "Q": 26139412,
+        "T": 10,
+        "nx": 129038,
+        "m": 182
+      },
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 733,
+      "A": 7,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": {
+        "x": 185,
+        "y": 162726,
+        "z": 21990,
+        "A": 7,
+        "P": 1003477,
+        "Q": 18325,
+        "T": 6,
+        "nx": 135605,
+        "m": 185
+      },
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 733,
+      "A": 23,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": {
+        "x": 189,
+        "y": 1477728,
+        "z": 6048,
+        "A": 23,
+        "P": 33849207,
+        "Q": 567,
+        "T": 15,
+        "nx": 138537,
+        "m": 189
+      },
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 757,
+      "A": 19,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": null,
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 757,
+      "A": 23,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": {
+        "x": 195,
+        "y": 21059740,
+        "z": 6420,
+        "A": 23,
+        "P": 484226405,
+        "Q": 45,
+        "T": 22,
+        "nx": 147615,
+        "m": 195
+      },
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 757,
+      "A": 31,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": null,
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 781,
+      "A": 31,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": null,
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 793,
+      "A": 11,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": null,
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 793,
+      "A": 19,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": {
+        "x": 203,
+        "y": 14152,
+        "z": 21112,
+        "A": 19,
+        "P": 107909,
+        "Q": 240149,
+        "T": 8,
+        "nx": 160979,
+        "m": 203
+      },
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 817,
+      "A": 7,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": {
+        "x": 206,
+        "y": 52839,
+        "z": 44118,
+        "A": 7,
+        "P": 201571,
+        "Q": 140524,
+        "T": 6,
+        "nx": 168302,
+        "m": 206
+      },
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 829,
+      "A": 31,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": null,
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 841,
+      "A": 19,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": null,
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 853,
+      "A": 19,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": {
+        "x": 218,
+        "y": 4183965,
+        "z": 9810,
+        "A": 19,
+        "P": 79309381,
+        "Q": 436,
+        "T": 18,
+        "nx": 185954,
+        "m": 218
+      },
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 901,
+      "A": 7,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": {
+        "x": 227,
+        "y": 120310,
+        "z": 38590,
+        "A": 7,
+        "P": 637643,
+        "Q": 65603,
+        "T": 6,
+        "nx": 204527,
+        "m": 227
+      },
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 901,
+      "A": 23,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": {
+        "x": 231,
+        "y": 9328,
+        "z": 302736,
+        "A": 23,
+        "P": 6413,
+        "Q": 6754797,
+        "T": 19,
+        "nx": 208131,
+        "m": 231
+      },
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 949,
+      "A": 31,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": {
+        "x": 245,
+        "y": 7644,
+        "z": 398580,
+        "A": 31,
+        "P": 4459,
+        "Q": 12123475,
+        "T": 26,
+        "nx": 232505,
+        "m": 245
+      },
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 973,
+      "A": 23,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": null,
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    },
+    {
+      "n": 997,
+      "A": 23,
+      "neg1_in_D_A": true,
+      "neg1_in_shifted_D_A": false,
+      "witness": {
+        "x": 255,
+        "y": 745756,
+        "z": 11220,
+        "A": 23,
+        "P": 16898153,
+        "Q": 3825,
+        "T": 7,
+        "nx": 254235,
+        "m": 255
+      },
+      "note": "-1 in D_A via a divisor path not available in the shifted set D_A^(nm)"
+    }
+  ]
+}

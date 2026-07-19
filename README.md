@@ -11,9 +11,8 @@ documentation for the divisor-residue approach to the Erdős–Straus conjecture
 - `code/verify.py` — SymPy verification of key theorems and computational results
 - `code/search_solutions.py` — exhaustive search for Erdős–Straus solutions
 - `code/verify_lemma.py` — verification of the Bounded Divisor-Residue Lemma
+- `verify_all.py` — one-click verification script (fast / full / full-10m modes)
 - `docs/research-journey.html` — narrative account of the research process
-- `references/` — reference notes
-- `CITATION.cff` — citation metadata
 - `results/` — pre-generated computational artifacts (search results, distributions, outliers)
 - `references/` — reference notes
 - `CITATION.cff` — citation metadata
@@ -49,6 +48,27 @@ admissible n, there must exist bounded A ≡ 3 (mod 4) and a divisor P of
 ## Verification
 
 The repo distinguishes **fast CI smoke tests** from **full verification runs**.
+
+### Environment
+
+- Python 3.12+
+- SymPy ≥ 1.13.1 (exact rational arithmetic — no floating point)
+- See `requirements.txt` for pinned dependencies
+
+### One-click verification
+
+```bash
+pip install -r requirements.txt
+
+# Fast smoke test (n ≤ 1000, ~30s) — what CI runs
+python3 verify_all.py
+
+# Full verification (n ≤ 100,000, ~2min)
+python3 verify_all.py --full
+
+# Complete verification (n ≤ 10,000,000, ~10min)
+python3 verify_all.py --full-10m
+```
 
 ### Fast CI (runs on every push, ~30s)
 
@@ -88,11 +108,21 @@ Pre-generated computational artifacts are committed in `results/`:
 | `results/search_10m_summary.json` | Theorem 7: 666,666 cases up to 10M, A ≤ 99 |
 | `results/outlier_8803369.json` | Witness for the single outlier n = 8,803,369 |
 | `results/a_distribution_100k.csv` | A-value distribution for n ≤ 100,000 |
+| `results/anomalous_cases_verified.json` | Cases where -1 ∈ D_A but -1 ∉ D_A^(nm) (shifted set failures) |
 | `results/README.md` | How artifacts were generated |
 
 Regenerate with the commands in the **Full computational verification** section above.
 
-## Status
+## Known Outlier
+
+The single outlier **n = 8,803,369** requires **A = 107** (exceeding the A ≤ 99 bound).
+This is documented in `results/outlier_8803369.json` with full witness details:
+
+- x = 2,200,869, y = 181,085,300,330, z = 3,293,760,527,702,370
+- Verified: 4/8803369 = 1/2200869 + 1/181085300330 + 1/3293760527702370 ✅
+
+This is a **verified manual exception**, not a code bug. If you run the 10M search
+and see 1 uncovered case, this is expected.
 
 ## Status
 
