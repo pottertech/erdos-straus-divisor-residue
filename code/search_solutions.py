@@ -15,6 +15,23 @@ import sys
 
 def find_solution_for_A(n, A):
     """Find Erdős–Straus solution for given n, A. Returns (x, y, z) or None."""
+    wit = find_witness(n, A)
+    if wit is None:
+        return None
+    return (wit['x'], wit['y'], wit['z'])
+
+
+def find_witness(n, A):
+    """Find Erdős–Straus solution and return full witness details.
+    
+    Returns a witness dict with all intermediate values:
+        x, y, z: the decomposition 4/n = 1/x + 1/y + 1/z
+        A: the A-parameter used
+        P, Q: the divisor pair of (nx)² with P ≡ T (mod A)
+        T: target residue -n²·4⁻¹ mod A
+        nx = n*m, m = (n+A)/4
+    Or None if no solution found for this A.
+    """
     if (n + A) % 4 != 0:
         return None
     x = (n + A) // 4
@@ -42,7 +59,11 @@ def find_solution_for_A(n, A):
                 y = y_num // A
                 z = z_num // A
                 if y > 0 and z > 0:
-                    return (x, y, z)
+                    return {
+                        'x': x, 'y': y, 'z': z,
+                        'A': A, 'P': P, 'Q': Q,
+                        'T': T, 'nx': nx, 'm': m,
+                    }
     return None
 
 
@@ -65,16 +86,15 @@ def search_range(max_n, A_values=None):
         for A in A_values:
             if gcd(n, A) > 1:
                 continue
-            sol = find_solution_for_A(n, A)
-            if sol is not None:
+            wit = find_witness(n, A)
+            if wit is not None:
                 best_A = A
-                best_sol = sol
+                best_sol = wit
                 break
 
         if best_sol is not None:
-            x, y, z = best_sol
             solutions[str(n)] = {
-                'x': x, 'y': y, 'z': z,
+                'x': best_sol['x'], 'y': best_sol['y'], 'z': best_sol['z'],
                 'A': best_A,
                 'is_prime': bool(isprime(n))
             }
@@ -128,5 +148,34 @@ def main():
         print(f"\n  Uncovered values: {uncovered[:20]}{'...' if len(uncovered) > 20 else ''}")
 
 
+def print_witness(n, max_A=200):
+    """Print full witness details for a specific n."""
+    A_values = [a for a in range(3, max_A + 1, 4)]
+    print(f"Witness search for n={n}:")
+    print(f"  n mod 12 = {n % 12}, n mod 5 = {n % 5}")
+    for A in A_values:
+        if gcd(n, A) > 1:
+            continue
+        wit = find_witness(n, A)
+        if wit is not None:
+            print(f"\n  Found with A={A}:")
+            print(f"    x = {wit['x']}, y = {wit['y']}, z = {wit['z']}")
+            print(f"    P = {wit['P']}, Q = {wit['Q']}")
+            print(f"    T = {wit['T']} (target residue mod A)")
+            print(f"    nx = {wit['nx']}, m = {wit['m']}")
+            from fractions import Fraction
+            lhs = Fraction(4, n)
+            rhs = Fraction(1, wit['x']) + Fraction(1, wit['y']) + Fraction(1, wit['z'])
+            print(f"    Verify: 4/{n} = 1/{wit['x']} + 1/{wit['y']} + 1/{wit['z']} = {rhs}  {'✅' if lhs == rhs else '❌'}")
+            return wit
+    print(f"\n  No solution found with A ≤ {max_A}")
+    return None
+
+
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) > 1 and sys.argv[1] == '--witness':
+        n = int(sys.argv[2])
+        max_A = int(sys.argv[3]) if len(sys.argv) > 3 else 200
+        print_witness(n, max_A)
+    else:
+        main()

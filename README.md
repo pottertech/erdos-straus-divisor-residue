@@ -14,7 +14,10 @@ documentation for the divisor-residue approach to the Erdős–Straus conjecture
 - `docs/research-journey.html` — narrative account of the research process
 - `references/` — reference notes
 - `CITATION.cff` — citation metadata
-- `.github/workflows/verify.yml` — automated verification on push
+- `results/` — pre-generated computational artifacts (search results, distributions, outliers)
+- `references/` — reference notes
+- `CITATION.cff` — citation metadata
+- `.github/workflows/verify.yml` — automated verification on push (fast smoke test)
 
 ## Summary
 
@@ -43,12 +46,53 @@ admissible n, there must exist bounded A ≡ 3 (mod 4) and a divisor P of
 3. Constant bound conjecture (A ≤ C for all n)
 4. Covering system proof ({3,7,11,15,19,23,31} for all n, not just n ≤ 100K)
 
-## Running the Verification
+## Verification
+
+The repo distinguishes **fast CI smoke tests** from **full verification runs**.
+
+### Fast CI (runs on every push, ~30s)
 
 ```bash
 pip install -r requirements.txt
 python3 code/verify.py
 ```
+
+Checks all theorems on a small subset (n ≤ 1000, Theorem 1 on n ≤ 500)
+for quick feedback. This is what GitHub Actions runs.
+
+### Full computational verification (requires local run)
+
+```bash
+# Theorem 6: A ≤ 31 covers all n ≤ 100,000
+python3 code/search_solutions.py 100000 31 results/search_100k.json
+
+# Theorem 7: A ≤ 99 covers all but 1 of 666,666 cases up to 10,000,000
+python3 code/search_solutions.py 10000000 99 results/search_10m_summary.json
+
+# Bounded Divisor-Residue Lemma (full categorization)
+python3 code/verify_lemma.py 100000
+
+# Witness for the outlier n = 8,803,369
+python3 code/search_solutions.py --witness 8803369 200
+```
+
+Pre-generated result artifacts are committed in `results/` (see below).
+
+## Result Artifacts
+
+Pre-generated computational artifacts are committed in `results/`:
+
+| File | Description |
+|------|-------------|
+| `results/search_100k.json` | Theorem 6: all n ≤ 100,000 covered with A ≤ 31 |
+| `results/search_10m_summary.json` | Theorem 7: 666,666 cases up to 10M, A ≤ 99 |
+| `results/outlier_8803369.json` | Witness for the single outlier n = 8,803,369 |
+| `results/a_distribution_100k.csv` | A-value distribution for n ≤ 100,000 |
+| `results/README.md` | How artifacts were generated |
+
+Regenerate with the commands in the **Full computational verification** section above.
+
+## Status
 
 ## Status
 

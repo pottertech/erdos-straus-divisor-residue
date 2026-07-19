@@ -74,6 +74,37 @@ def compute_H_A(n, A):
     return H
 
 
+def compute_stabilizer(S, A):
+    """Compute the stabilizer of S' = S ∩ ⟨g₁,...,gₖ⟩ in (Z/AZ)*.
+    
+    The stabilizer is {s ∈ H(A) : s*S' = S'}, where S' is the set of
+    residues achievable by the generators. For the Kneser condition,
+    we need |Stab(S')| = 1 (trivial stabilizer).
+    """
+    if not S or S == {1}:
+        return {1}
+    # Build H from generators implied by S
+    gens = set(S)
+    H = {1}
+    changed = True
+    while changed:
+        changed = False
+        new = set()
+        for g in gens:
+            for s in H:
+                v = (s * g) % A
+                if v not in H:
+                    new.add(v)
+                    changed = True
+        H |= new
+    
+    stab = {1}
+    for h in H:
+        if all((h * s) % A in S for s in S) and all(any((h * s2) % A == s1 for s2 in S) for s1 in S):
+            stab.add(h)
+    return stab
+
+
 def verify_lemma(max_n=100000, A_values=None):
     """Verify Bounded Divisor-Residue Lemma."""
     if A_values is None:
@@ -81,7 +112,8 @@ def verify_lemma(max_n=100000, A_values=None):
     
     cat1 = 0      # h = 2 (proven general)
     cat2a = 0     # order-2 QNR (proven general)
-    cat2b_kneser = 0  # Kneser condition (proven general)
+    cat2b_kneser = 0  # Kneser condition with trivial stabilizer (proven general)
+    cat2b_size_only = 0  # Size threshold met but stabilizer non-trivial (candidate, not proven)
     cat2b_comp = 0   # Computational verification
     failures = 0
     
@@ -126,11 +158,18 @@ def verify_lemma(max_n=100000, A_values=None):
                 k = len(orders)
                 sum_range = sum(2 * e + 1 for _, e in orders.values())
                 if sum_range >= m_val + k - 1:
-                    cat2b_kneser += 1
+                    # Check stabilizer of the shifted set
+                    # The shifted set S' consists of residues from generators with reduced exponents
+                    gens_residues = {p % A for p in nx_factors if gcd(p, A) == 1}
+                    stab = compute_stabilizer(gens_residues, A)
+                    if len(stab) == 1:
+                        cat2b_kneser += 1
+                    else:
+                        cat2b_size_only += 1
                 else:
                     cat2b_comp += 1
     
-    total = cat1 + cat2a + cat2b_kneser + cat2b_comp
+    total = cat1 + cat2a + cat2b_kneser + cat2b_size_only + cat2b_comp
     
     print(f"\n{'='*60}")
     print(f"Bounded Divisor-Residue Lemma Verification")
@@ -142,10 +181,12 @@ def verify_lemma(max_n=100000, A_values=None):
     print()
     print(f"  Case 1 (h=2, PROVEN): {cat1}")
     print(f"  Case 2a (order-2 QNR, PROVEN): {cat2a}")
-    print(f"  Case 2b-Kneser (PROVEN): {cat2b_kneser}")
+    print(f"  Case 2b-Kneser (trivial stabilizer, PROVEN): {cat2b_kneser}")
+    print(f"  Case 2b-Size-only (non-trivial stabilizer, CANDIDATE): {cat2b_size_only}")
     print(f"  Case 2b-Computational: {cat2b_comp}")
-    print(f"  Proven generally: {cat1 + cat2a + cat2b_kneser} ({100*(cat1+cat2a+cat2b_kneser)/total:.1f}%)" if total > 0 else "")
-    print(f"  Computational only: {cat2b_comp} ({100*cat2b_comp/total:.1f}%)" if total > 0 else "")
+    proven = cat1 + cat2a + cat2b_kneser
+    print(f"  Proven generally: {proven} ({100*proven/total:.1f}%)" if total > 0 else "")
+    print(f"  Computational / candidate: {cat2b_size_only + cat2b_comp} ({100*(cat2b_size_only+cat2b_comp)/total:.1f}%)" if total > 0 else "")
     
     return failures
 

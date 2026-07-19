@@ -1,4 +1,4 @@
-name: Verify
+name: Verify (fast smoke test)
 
 on:
   push:
@@ -15,4 +15,5 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install -r requirements.txt
-      - run: python code/verify.py
+      - name: Fast smoke test (n ≤ 1000)
+        run: python code/verify.py

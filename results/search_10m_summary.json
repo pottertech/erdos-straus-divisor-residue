@@ -1,0 +1,30 @@
+{
+  "max_n": 10000000,
+  "max_A": 99,
+  "admissible_count": 666666,
+  "covered": 666665,
+  "uncovered_count": 1,
+  "uncovered_values": [
+    8803369
+  ],
+  "a_distribution": {
+    "3": 586399,
+    "7": 58848,
+    "11": 18371,
+    "15": 1238,
+    "19": 942,
+    "23": 555,
+    "27": 91,
+    "31": 156,
+    "35": 17,
+    "39": 23,
+    "43": 5,
+    "47": 15,
+    "51": 1,
+    "55": 2,
+    "59": 2
+  },
+  "elapsed_seconds": 294.1,
+  "method": "residue-DP membership check (compute_D_A)",
+  "note": "Membership-only check; does not reconstruct (x,y,z) witnesses. Use search_solutions.py for full witness output."
+}
