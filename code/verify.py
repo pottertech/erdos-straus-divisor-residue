@@ -293,10 +293,10 @@ def main():
     
     # Bounded Divisor-Residue Lemma
     print("\n--- Lemma: -1 ∈ H(A) ⟹ -1 ∈ D_A ---")
-    fails = verify_lemma(prime_A_cases)
-    print(f"  Failures: {fails}")
-    print(f"  Note: {fails} cases where -1 ∈ H(A) but -1 ∉ D_A — these are the known")
-    print(f"        computational-only gap (7.6% of cases, documented in manuscript)")
+    lemma_counterexamples = verify_lemma(prime_A_cases)
+    print(f"  Known lemma counterexamples / open cases: {lemma_counterexamples}")
+    print("  Note: these are expected open cases, not code failures.")
+    print("  See verify_lemma.py for disjoint classification and proof-status categories.")
     # Don't assert — the lemma is only partially proven; these failures are expected
     
     # D_A vs H(A) membership
