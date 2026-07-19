@@ -102,7 +102,7 @@ This is the set of residues R such that R·(n·m) is an actual divisor of (nx)²
 
 **Computational verification:** We verified directly that T ∈ D_A((nx)²) with **zero mismatches** across all 10,096 prime-A cases where −1 ∈ D_A. In 50 of these cases, −1 ∉ D_A^{(nm)} (the shifted set), yet T ∈ D_A via a different divisor path — not the (−1)·(n·m) factorization. This supports the criterion computationally, but the proof cannot rely solely on the −1 → n·m multiplication path.
 
-**Status:** The converse is proven unconditionally. The forward direction is verified computationally (0 mismatches, 10,096 cases) and proven for the h = 2, order-2 QNR, and Kneser-trivial-stabilizer sub-cases via the Bounded Divisor-Residue Lemma. A complete proof requires showing that T ∈ D_A directly — either by proving the lemma in full generality AND resolving the closure issue, or by finding a direct argument that bypasses the −1 factorization. ∎
+**Status:** The converse is proven unconditionally. The forward direction is verified computationally (0 mismatches, 10,096 cases) and proven for the h = 2 and order-2 QNR sub-cases via the Bounded Divisor-Residue Lemma. Kneser-type sufficient conditions remain under review after corrected discrete-log computation. A complete proof requires showing that T ∈ D_A directly — either by proving the lemma in full generality AND resolving the closure issue, or by finding a direct argument that bypasses the −1 factorization. ∎
 
 ### 3.3 The Bounded Divisor-Residue Lemma
 
@@ -112,11 +112,11 @@ This is the set of residues R such that R·(n·m) is an actual divisor of (nx)²
 
 We must show that h/2 lies in the bounded sumset
 $$S = \left\{\sum_i s_i a_i \pmod{h} : 0 \leq a_i \leq 2e_i\right\}$$
-where s_i = dlog_g(p_i) mod h and e_i = v_{p_i}(nx) for each prime factor p_i of nx with gcd(p_i, A) = 1.
+where s_i = dlog_u(p_i) mod h and e_i = v_{p_i}(nx) for each prime factor p_i of nx with gcd(p_i, A) = 1.
 
 We consider three cases.
 
-**Case 1: h = 2.** Then −1 = g, and any QNR prime p (with ord(p) = 2, so dlog s = 1) gives p^1 ≡ −1 (mod A) with exponent a = 1 ≤ 2e (since e ≥ 1 for any prime factor of nx). This covers 1,768 of 10,096 cases. **This case is proven in general.**
+**Case 1: h = 2.** Since h = 2, the nontrivial element of H(A) is −1 = u^{h/2} = u. Any QNR prime p (with ord(p) = 2, so dlog s = 1) gives p^1 ≡ −1 (mod A) with exponent a = 1 ≤ 2e (since e ≥ 1 for any prime factor of nx). This covers 1,768 of 10,096 cases. **This case is proven in general.**
 
 **Case 2: h = 2m with m > 1 and m odd.** By the Chinese Remainder Theorem, Z/hZ ≅ Z/2 × Z/m. Under this decomposition, −1 = (1, 0): the first component requires an odd contribution from QNR primes (those with even order, hence odd dlog), and the second component requires the sum to vanish mod m.
 
@@ -134,7 +134,7 @@ For the Z/m component, define S' = {Σ s_i a_i mod m : 0 ≤ a_i ≤ 2e_i} ⊆ Z
 
 $$|S'| \geq \sum_i |A_i| - (k-1)|H|$$
 
-If H is trivial (|H| = 1) and Σ|A_i| = Σ(2e_i + 1) ≥ m + k − 1, then |S'| ≥ m, so S' = Z/m and 0 ∈ S'. This covers 929 cases. **This case is proven in general** under the stated hypotheses (trivial stabilizer and sufficient sum of exponent ranges).
+If H is trivial (|H| = 1) and Σ|A_i| = Σ(2e_i + 1) ≥ m + k − 1, then |S'| ≥ m, so S' = Z/m and 0 ∈ S'. Under the corrected true discrete-log computation, no tested cases currently fall into the trivial-stabilizer Kneser bucket. The condition remains a valid sufficient condition, but it does not currently account for any of the tested cases.
 
 For the remaining cases where H is nontrivial or Σ(2e_i + 1) < m + k − 1, we verify computationally:
 

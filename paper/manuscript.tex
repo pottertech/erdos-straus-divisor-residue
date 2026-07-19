@@ -206,7 +206,7 @@ For $A$ prime and $\gcd(n,A)=1$, if $-1\in H(A)$, then $-1\in D_A((nx)^2)$ in th
 \end{lemma}
 
 \begin{proof}[Proof sketch and tested classification]
-Let $h=|H(A)|$. Since $-1\in H(A)$, $h$ is even. Let $g$ be a primitive root modulo $A$, so $H(A)=\langle g^{(A-1)/h}\rangle$ and $-1=g^{h/2}$ inside $H(A)$.
+Let $h=|H(A)|$. Since $-1\in H(A)$, $h$ is even. Let $g$ be a primitive root modulo $A$, and let $u=g^{(A-1)/h}$ be a generator of $H(A)$. Since $-1\in H(A)$ and $h$ is even, $-1=u^{h/2}$ (the unique element of order 2). For each prime factor $p_i\mid nx$, write $p_i\equiv u^{s_i}\pmod A$ where $s_i=\operatorname{dlog}_u(p_i)$.
 
 We must show that $h/2$ lies in the bounded sumset
 \[
@@ -214,7 +214,7 @@ S=\left\{\sum_i s_i\alpha_i\pmod h:0\le \alpha_i\le 2e_i\right\},
 \]
 where $s_i$ is the discrete logarithm of $p_i$ in $H(A)$ and $e_i=v_{p_i}(nx)$.
 
-If $h=2$, any quadratic non-residue generator gives $p^1\equiv -1\pmod A$ with exponent $1\le 2e$; this case is proven generally. If some prime factor $p\mid nx$ has $\ord_A(p)=2$, then $p\equiv -1\pmod A$ and again $p^1$ realizes $-1$ directly; this case is also proven generally.
+If $h=2$, the nontrivial element of $H(A)$ is $-1=u^{h/2}=u$. Any quadratic non-residue generator gives $p^1\equiv -1\pmod A$ with exponent $1\le 2e$; this case is proven generally. If some prime factor $p\mid nx$ has $\ord_A(p)=2$, then $p\equiv -1\pmod A$ and again $p^1$ realizes $-1$ directly; this case is also proven generally.
 
 For $h=2m$ with $m>1$ odd and no order-2 quadratic non-residue, decompose $\Z/h\Z\cong \Z/2\Z\times \Z/m\Z$. The $\Z/2\Z$ component is supplied by a single quadratic non-residue. The remaining condition is a bounded sumset condition in $\Z/m\Z$.
 
@@ -230,7 +230,7 @@ If $\Stab(S')$ is trivial and
 \[
 \sum_i |A_i|=\sum_i(2e_i+1)\ge m+k-1,
 \]
-then Kneser's theorem gives $|S'|\ge m$, hence $S'=\Z/m\Z$ and the required residue is present. This sub-case is proven under the stated hypotheses.
+then Kneser's theorem gives $|S'|\ge m$, hence $S'=\Z/m\Z$ and the required residue is present. Under the corrected true discrete-log computation, no tested cases currently fall into the trivial-stabilizer Kneser bucket. The condition remains a valid sufficient condition, but it does not currently account for any of the tested cases.
 
 The remaining tested cases are verified computationally. A general proof of the full lemma remains open.
 \end{proof}
