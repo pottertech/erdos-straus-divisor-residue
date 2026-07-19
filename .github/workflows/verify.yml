@@ -1,4 +1,4 @@
-name: Verify (fast smoke test)
+name: Verify (fast smoke test + PDF build check)
 
 on:
   push:
@@ -17,3 +17,32 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Fast smoke test (n ≤ 1000)
         run: python code/verify.py
+
+  pdf-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install TeX
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y texlive-latex-base texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra
+      - name: Rebuild PDF from TeX
+        run: |
+          cd paper
+          pdflatex -interaction=nonstopmode manuscript.tex
+          pdflatex -interaction=nonstopmode manuscript.tex
+          cp manuscript.pdf ../docs/manuscript.pdf
+      - name: Check if committed PDF matches rebuilt PDF
+        run: |
+          git checkout -- docs/manuscript.pdf
+          cd paper
+          pdflatex -interaction=nonstopmode manuscript.tex
+          pdflatex -interaction=nonstopmode manuscript.tex
+          # Compare hashes
+          REBUILT=$(sha256sum manuscript.pdf | cut -d' ' -f1)
+          COMMITTED=$(sha256sum ../docs/manuscript.pdf | cut -d' ' -f1)
+          echo "Rebuilt:  $REBUILT"
+          echo "Committed: $COMMITTED"
+          if [ "$REBUILT" != "$COMMITTED" ]; then
+            echo "::warning::Committed PDF does not match rebuilt PDF. Run pdflatex and commit the updated docs/manuscript.pdf"
+          fi

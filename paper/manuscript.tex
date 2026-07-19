@@ -86,7 +86,7 @@ Divisor-Residue Lemma that is partially proven and computationally
 verified. We prove unconditionally that n ≡ 5 (mod 8) always admits A =
 3. We also describe a conditional analytic route, via Burgess-type
 bounds for least prime quadratic non-residues in arithmetic
-progressions, that would give A = O(n\^{}\{1/(4√e)+ε\}).
+progressions, that would give \(A = O(n^{1/(4\sqrt{e})+\varepsilon})\).
 Computationally, A ≤ 31 covers all 6,666 cases up to n = 100,000, and A
 ≤ 99 covers all but one of 666,666 cases up to n = 10,000,000.
 
@@ -488,12 +488,12 @@ A & Count & Percentage & Cumulative \\
 \textbf{Proposition 8 (Analytic Route via Burgess-type Bounds).}
 \emph{Conditional on a standard least-prime-QNR-in-AP estimate: for n
 prime, n ≡ 1 (mod 4), there exists a prime A ≡ 3 (mod 4) with (A/n) = −1
-and A = O(n\^{}\{1/(4√e)+ε\}) for any ε \textgreater{} 0. Such A yields
+and \(A = O(n^{1/(4\sqrt{e})+\varepsilon})\) for any ε \textgreater{} 0. Such A yields
 an Erdős--Straus solution by the Corollary to Theorem 3.}
 
 \textbf{Proof sketch.} The Burgess bound {[}Burgess 1963{]} applied to
 the character sum ∑\_\{p ≤ X, p ≡ 3 (mod 4)\} (p/n) gives that this sum
-is o(π(X; 4, 3)) for X = n\^{}\{1/(4√e)+ε\}. Since the sum is nonzero
+is o(π(X; 4, 3)) for \(X = n^{1/(4\sqrt{e})+\varepsilon}\). Since the sum is nonzero
 for large X (by the non-vanishing of L-functions), there exists a prime
 p ≡ 3 (mod 4) with (p/n) = −1 and p ≤ X. This requires the Burgess bound
 for characters in arithmetic progressions, which is a standard extension
@@ -634,7 +634,7 @@ A ≤ 31 covers all n ≤ 100K & \textbf{Verified} (Theorem 6) & n ≤
 100,000 \\
 A ≤ 99 covers all but 1 of n ≤ 10M & \textbf{Verified} (Theorem 7) & n ≤
 10,000,000 \\
-A = O(n\^{}\{1/(4√e)+ε\}) suffices & \textbf{Proposition (conditional)}
+\(A = O(n^{1/(4\sqrt{e})+\varepsilon})\) suffices & \textbf{Proposition (conditional)}
 (Proposition 8, Burgess) & All n \\
 A = O((log n)²) suffices & \textbf{Conditional} (GRH) & All n \\
 A ≤ C (constant) for all n & \textbf{Conjecture} & All n \\
