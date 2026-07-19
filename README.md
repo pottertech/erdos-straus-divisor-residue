@@ -38,12 +38,13 @@ admissible n, there must exist bounded A ≡ 3 (mod 4) and a divisor P of
 - Theorem 4: Composite n with factor ≡ 3 (mod 4) — claimed/proposed via Mballa 2026
 
 **Computational results (verified, not proven):**
-- Theorem 3 forward direction: T ∈ D_A iff QNR exists (0 mismatches, 10,096 cases)
+- Theorem 3 forward direction: computationally supported; 10,096 positive (−1 ∈ D_A) cases classified, with 821 lemma-failure/alternative-path cases identified
 - Theorem 6: A ≤ 31 covers all n ≤ 100,000
 - Theorem 7: A ≤ 99 covers all but 1 of 666,666 cases up to 10,000,000
+- Proposition 8: Conditional analytic route via Burgess-type bounds (not verified by computational suite; requires analytic number theory review)
 
 **Open gaps (honestly identified):**
-1. Bounded Divisor-Residue Lemma in full generality (7.6% of cases computational only)
+1. Bounded Divisor-Residue Lemma in full generality: candidate/computational categories remain after the proven (h=2), order-2 QNR, and Kneser-trivial-stabilizer cases
 2. D_A closure / shifted divisor-residue set (T ∈ D_A directly, not via −1 factorization)
 3. Constant bound conjecture (A ≤ C for all n)
 4. Covering system proof ({3,7,11,15,19,23,31} for all n, not just n ≤ 100K)
