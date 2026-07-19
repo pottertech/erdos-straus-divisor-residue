@@ -58,7 +58,11 @@ Note: D_A((nx)²) is a subset of the subgroup H(A) = ⟨p mod A : p | nx⟩ ⊆ 
 
 $$T = -n^2 \cdot 4^{-1} \pmod{A} \quad \text{lies in} \quad D_A((nx)^2).$$
 
-**Proof.** By construction: A yields a solution iff there exists a divisor P | (nx)² with P ≡ T (mod A) and y = (P + nx)/A > 0, z = (Q + nx)/A > 0 where Q = (nx)²/P. The congruence condition is P ≡ T (mod A), which is exactly T ∈ D_A((nx)²). The positivity condition (y, z > 0) is automatically satisfied: since P | (nx)² and P, Q > 0, we have P + nx > 0 and Q + nx > 0. (Positivity was verified computationally across all 6,666 test cases — see Section 3.6.) ∎
+**Proof.** By construction: A yields a solution iff there exists a divisor P | (nx)² with P ≡ T (mod A) and y = (P + nx)/A > 0, z = (Q + nx)/A > 0 where Q = (nx)²/P. The congruence condition is P ≡ T (mod A), which is exactly T ∈ D_A((nx)²).
+
+**Integrality of y and z.** Since T = −n²·4⁻¹ (mod A) and m ≡ n·4⁻¹ (mod A), we have T ≡ −n·m (mod A). So P ≡ −nx (mod A), i.e., A | (P + nx), giving y = (P + nx)/A ∈ Z. Since gcd(nx, A) = 1, P is invertible mod A. From PQ = (nx)², we get Q ≡ (nx)²·P⁻¹ ≡ (nx)²·(−nx)⁻¹ ≡ −nx (mod A). Thus A | (Q + nx), giving z = (Q + nx)/A ∈ Z.
+
+**Positivity.** Since P | (nx)² and P, Q > 0, we have P + nx > 0 and Q + nx > 0. As y, z are positive integers, the decomposition 4/n = 1/x + 1/y + 1/z is valid. (Positivity was verified computationally across all 6,666 test cases — see Section 3.6.) ∎
 
 **Verification.** The target T = −n·m (mod A) since m ≡ n·4⁻¹ (mod A). We verified that T ∈ D_A((nx)²) coincides exactly with the existence of Erdős–Straus solutions across all 6,666 test cases (n ≤ 100,000, n ≡ 1 mod 12, n ≢ 0 mod 5), with **zero mismatches**.
 
@@ -72,7 +76,7 @@ $$T = -n^2 \cdot 4^{-1} \pmod{A} \quad \text{lies in} \quad D_A((nx)^2).$$
 
 **Theorem 2.** *For n prime, n ≡ 5 (mod 8): A = 3 yields an Erdős–Straus solution.*
 
-**Proof.** When n ≡ 5 (mod 8), we have n + 3 ≡ 0 (mod 8), so m₃ = (n+3)/4 is even. Therefore 2 | m₃, and 2 is a prime factor of nx = n·m₃. Since 2 mod 3 = 2 ≡ −1 (mod 3), taking P = 2 gives P ≡ −1 ≡ −n²·4⁻¹ (mod 3) (because n ≡ 1 mod 3 since n ≡ 1 mod 12, so n²·4⁻¹ ≡ 1·1 ≡ 1 mod 3, and −1 ≡ 2 mod 3). The resulting y = (2 + nx)/3 and z = ((nx)²/2 + nx)/3 are positive by Theorem 1. So A = 3 works directly, without invoking Theorem 3. ∎
+**Proof.** When n ≡ 5 (mod 8), we have n + 3 ≡ 0 (mod 8), so m₃ = (n+3)/4 is even. Therefore 2 | m₃, and 2 is a prime factor of nx = n·m₃. Since 2 mod 3 = 2 ≡ −1 (mod 3), taking P = 2 gives P ≡ −1 ≡ −n²·4⁻¹ (mod 3) (because n is prime and n ≠ 3, so n² ≡ 1 (mod 3), and 4⁻¹ ≡ 1 (mod 3), giving n²·4⁻¹ ≡ 1 (mod 3), and −1 ≡ 2 (mod 3)). The resulting y = (2 + nx)/3 and z = ((nx)²/2 + nx)/3 are positive by Theorem 1. So A = 3 works directly, without invoking Theorem 3. ∎
 
 ### 3.2 Reduction to Quadratic Non-Residue Condition
 
@@ -96,7 +100,7 @@ By the Bounded Divisor-Residue Lemma (§3.3), −1 ∈ H(A) ⟹ −1 ∈ D_A (pr
 $$D_A^{(nm)}((nx)^2) = \left\{ \prod p_i^{\alpha_i} \bmod A : 0 \leq \alpha_i \leq 2v_{p_i}(nx) - v_{p_i}(nm) \right\}$$
 This is the set of residues R such that R·(n·m) is an actual divisor of (nx)². The correct condition is −1 ∈ D_A^{(nm)}, not merely −1 ∈ D_A.
 
-**Computational verification:** We verified directly that T ∈ D_A((nx)²) with **zero mismatches** across all 6,473 prime-A cases. In 50 of these cases, −1 ∉ D_A^{(nm)} (the shifted set), yet T ∈ D_A via a different divisor path — not the (−1)·(n·m) factorization. This shows the theorem is correct but the proof cannot rely solely on the −1 → n·m multiplication path.
+**Computational verification:** We verified directly that T ∈ D_A((nx)²) with **zero mismatches** across all 6,473 prime-A cases. In 50 of these cases, −1 ∉ D_A^{(nm)} (the shifted set), yet T ∈ D_A via a different divisor path — not the (−1)·(n·m) factorization. This supports the criterion computationally, but the proof cannot rely solely on the −1 → n·m multiplication path.
 
 **Status:** The converse is proven unconditionally. The forward direction is verified computationally (0 mismatches, 6,473 cases) and proven for the h = 2 and order-2 QNR sub-cases via the Bounded Divisor-Residue Lemma. A complete proof requires showing that T ∈ D_A directly — either by proving the lemma in full generality AND resolving the closure issue, or by finding a direct argument that bypasses the −1 factorization. ∎
 

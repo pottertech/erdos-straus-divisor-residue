@@ -32,7 +32,7 @@ admissible n, there must exist bounded A ≡ 3 (mod 4) and a divisor P of
 - Theorem 4: Composite n with factor ≡ 3 (mod 4) (Mballa 2026)
 - Theorem 5: Legendre symbol identity for the m-route
 - Theorem 3 converse: No QNR → T ∉ D_A (unconditional)
-- Bounded Divisor-Residue Lemma: Proven for h=2 and order-2 QNR cases (92.4%)
+- Bounded Divisor-Residue Lemma: Proven for h=2, order-2 QNR, and Kneser cases (92.4%); computational for remaining 7.6%
 
 **Computational results (verified, not proven):**
 - Theorem 3 forward direction: T ∈ D_A iff QNR exists (0 mismatches, 6,473 cases)
