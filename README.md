@@ -11,7 +11,7 @@ documentation for the divisor-residue approach to the Erdős–Straus conjecture
 - `docs/manuscript.pdf` — compiled PDF
 - `code/verify.py` — SymPy verification of key theorems and computational results
 - `code/search_solutions.py` — exhaustive search for Erdős–Straus solutions
-- `code/verify_lemma.py` — verification of the Bounded Divisor-Residue Lemma
+- `code/verify_lemma.py` — verification of the Partial −1 Route (proven subcases + failure categorization)
 - `verify_all.py` — one-click verification script (fast / full / full-10m modes)
 - `docs/research-journey.html` — narrative account of the research process
 - `results/` — pre-generated computational artifacts (search results, distributions, outliers)

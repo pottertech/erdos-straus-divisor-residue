@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Verification of the Bounded Divisor-Residue Lemma.
+Partial -1 Route Verification.
 
 Tests the implication -1 ∈ H(A) ⟹ -1 ∈ D_A for prime A,
 categorizing cases into:
@@ -9,8 +9,8 @@ categorizing cases into:
   - Case 2b: Kneser condition (proven general under hypotheses)
   - Case 2c: Computational verification (remaining cases)
 
-KEY FIX (round 5): Uses TRUE discrete logs relative to a generator u of H(A),
-not multiplicative orders. The order of p mod A is NOT the same as dlog_u(p).
+Note: The general implication FAILS in 821 of 10,096 tested cases.
+This script categorizes both successes and failures.
 """
 
 from sympy import factorint, isprime, gcd, primitive_root, ntheory
@@ -120,8 +120,8 @@ def compute_stabilizer(S, m):
     return stab
 
 
-def verify_lemma(max_n=100000, A_values=None):
-    """Verify Bounded Divisor-Residue Lemma."""
+def verify_minus_one_route(max_n=100000, A_values=None):
+    """Verify Partial -1 Route."""
     if A_values is None:
         A_values = [3, 7, 11, 15, 19, 23, 27, 31]
     
@@ -130,7 +130,7 @@ def verify_lemma(max_n=100000, A_values=None):
     cat2b_kneser = 0  # Kneser condition with trivial stabilizer (proven general)
     cat2b_size_only = 0  # Size threshold met but stabilizer non-trivial (candidate, not proven)
     cat2b_comp = 0   # Computational verification
-    lemma_counterexamples = 0
+    minus_one_route_failures = 0
     
     for n in range(13, max_n + 1):
         if n % 12 != 1 or n % 5 == 0:
@@ -159,7 +159,7 @@ def verify_lemma(max_n=100000, A_values=None):
                 continue  # -1 not in H(A), skip
             
             if neg1 not in D:
-                lemma_counterexamples += 1
+                minus_one_route_failures += 1
                 print(f"  KNOWN OPEN CASE: n={n} A={A} h={h}")
                 continue
             
@@ -211,12 +211,12 @@ def verify_lemma(max_n=100000, A_values=None):
     total = cat1 + cat2a + cat2b_kneser + cat2b_size_only + cat2b_comp
     
     print(f"\n{'='*60}")
-    print(f"Bounded Divisor-Residue Lemma Verification")
+    print(f"Partial -1 Route Verification")
     print(f"{'='*60}")
     print(f"  n range: 13 to {max_n}")
     print(f"  A values: {A_values}")
     print(f"  Prime-A cases: {total}")
-    print(f"  Known lemma counterexamples / open cases: {lemma_counterexamples}")
+    print(f"  Known -1 route failures / open cases: {minus_one_route_failures}")
     print()
     print(f"  Case 1 (h=2, PROVEN): {cat1}")
     print(f"  Case 2a (order-2 QNR, PROVEN): {cat2a}")
@@ -228,14 +228,14 @@ def verify_lemma(max_n=100000, A_values=None):
     print(f"  Proven generally: {proven} ({100*proven/total:.1f}%)")
     print(f"  Computational / candidate: {comp} ({100*comp/total:.1f}%)")
     
-    return lemma_counterexamples
+    return minus_one_route_failures
 
 
 if __name__ == "__main__":
     max_n = int(sys.argv[1]) if len(sys.argv) > 1 else 100000
-    lemma_counterexamples = verify_lemma(max_n)
-    if lemma_counterexamples > 0:
-        print(f"\nℹ️ {lemma_counterexamples} known lemma counterexamples / open cases (not code failures)")
+    minus_one_route_failures = verify_minus_one_route(max_n)
+    if minus_one_route_failures > 0:
+        print(f"\nℹ️ {minus_one_route_failures} known -1 route failures / open cases (not code failures)")
         sys.exit(0)
     else:
         print(f"\n✅ All cases verified — zero counterexamples!")
