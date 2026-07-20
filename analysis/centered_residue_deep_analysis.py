@@ -243,10 +243,10 @@ def main():
     print(f"The 26 cases where -1 ∉ D_A but h/2 ∈ Σ_A(N)")
     print(f"{'='*70}")
     
-    rescued = [c for c in failure_cases if c['h_half_in_sigma']]
-    print(f"Count: {len(rescued)}")
+    rescued_cases = [c for c in failure_cases if c['h_half_in_sigma']]
+    print(f"Count: {len(rescued_cases)}")
     print(f"\n{'n':>8} {'A':>4} {'h':>4} {'k':>3} {'|Σ|':>5} {'stab':>5} {'dist':>5}")
-    for c in rescued[:26]:
+    for c in rescued_cases[:26]:
         print(f"{c['n']:8d} {c['A']:4d} {c['h']:4d} {c['k']:3d} {c['sigma_size']:5d} {c['stab_size']:5d} {c['dist_h2_to_sigma']:5d}")
     
     # These 26 cases: the centered set reaches h/2 even though -1 ∉ D_A
@@ -507,7 +507,7 @@ The centered residue set Σ_A(N) = {{Σ s_i·δ_i mod h : bounds -e_i to e_i}}
 matches T in D_A perfectly (14,244/14,244 = 100% criterion match).
 
 Of {len(failure_cases)} failure cases (-1 ∈ H, -1 ∉ D_A):
-  - {rescued} ({100*rescued/max(1,len(failure_cases)):.1f}%): h/2 in Sigma_A -- centered set WORKS
+  - {len(rescued_cases)} ({100*len(rescued_cases)/max(1,len(failure_cases)):.1f}%): h/2 in Sigma_A -- centered set WORKS
   - {len(true_failures)} ({100*len(true_failures)/max(1,len(failure_cases)):.1f}%): h/2 not in Sigma_A -- true failure
 
 The {len(true_failures)} true failures:
@@ -544,9 +544,9 @@ CONCLUSION:
         'summary': {
             'total_cases': len(all_cases),
             'failure_cases': len(failure_cases),
-            'rescued_by_centered': rescued,
+            'rescued_by_centered': len(rescued_cases),
             'true_failures': len(true_failures),
-            'rescued_by_centered': rescued,
+            'rescued_by_centered': len(rescued_cases),
             'all_covered': all_covered,
             'kn_covers': kn_covers,
             'centered_mismatches': rescue_centered_mismatch,
