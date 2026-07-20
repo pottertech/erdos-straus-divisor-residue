@@ -210,11 +210,7 @@ For prime $A$ and $\gcd(n,A)=1$, the implication $-1\in H(A)\Rightarrow -1\in D_
 Outside these subcases, the implication is not valid in general. In the tested range, 821 cases have $-1\in H(A)$ but $-1\notin D_A((nx)^2)$. Nevertheless, the target $T$ may still lie in $D_A$ through alternative divisor paths.
 \end{lemma}
 
-\begin{lemma}[Bounded Divisor-Residue, partially proven and computationally verified]
-For $A$ prime and $\gcd(n,A)=1$, if $-1\in H(A)$, then $-1\in D_A((nx)^2)$ in the proven sub-cases below and in all tested cases.
-\end{lemma}
-
-\begin{proof}[Proof sketch and tested classification]
+\begin{proof}[Proof of the proven subcases]
 Let $h=|H(A)|$. Since $-1\in H(A)$, $h$ is even. Let $g$ be a primitive root modulo $A$, and let $u=g^{(A-1)/h}$ be a generator of $H(A)$. Since $-1\in H(A)$ and $h$ is even, $-1=u^{h/2}$ (the unique element of order 2). For each prime factor $p_i\mid nx$, write $p_i\equiv u^{s_i}\pmod A$ where $s_i=\operatorname{dlog}_u(p_i)$.
 
 We must show that $h/2$ lies in the bounded sumset
