@@ -226,6 +226,25 @@ The single-A analysis reveals that for each A, there exist n values where T ∉ 
 
 **Proof.** Verified by exhaustive computation. For each of the 783 prime n values where at least one A yields a gap (T ∉ D_A), we confirmed that at least one other A in the covering set succeeds. Zero uncovered n values. See the analysis below. ∎
 
+**Theorem 9a (Extended Covering Set, n ≤ 10,000,000).** *For every prime n ≤ 10,000,000 with n ≡ 1 (mod 12), n ≢ 0 (mod 5): there exists A ≤ 59 (A ≡ 3 mod 4) such that T ∈ D_A((nx)²), with one exception (n = 8,803,369, which requires A = 107).*
+
+**Proof.** Verified by exhaustive computation over 166,011 primes. The covering set {3, 7, 11, 15, 19, 23, 27, 31} covers 165,946 of 166,011 primes (99.96%). The remaining 65 cases require larger A values:
+
+| Min A needed | Count | A prime? |
+|-------------|-------|---------|
+| 35 | 17 | No (5×7) |
+| 39 | 22 | No (3×13) |
+| 43 | 5 | Yes |
+| 47 | 15 | Yes |
+| 51 | 1 | No (3×17) |
+| 55 | 2 | No (5×11) |
+| 59 | 2 | Yes |
+| 107 | 1 | Yes (n=8,803,369) |
+
+All 65 cases are covered by A ≤ 59, except the known outlier n = 8,803,369 requiring A = 107 (consistent with Theorem 7). ∎
+
+**Remark.** The covering set {3, 7, 11, 15, 19, 23, 27, 31} is sufficient for n ≤ 100,000 but NOT for n ≤ 10,000,000. The 65 uncovered cases first appear around n ≈ 119,000. Extending the covering set to include A ∈ {35, 39, 43, 47, 51, 55, 59} would cover all n ≤ 10,000,000 except the known outlier. The constant bound conjecture holds with C = 107 for n ≤ 10,000,000, and with C = 59 for n < 8,800,000.
+
 #### 3.8.1 Gap Case Analysis
 
 Among 14,244 prime-A cases (6 A values × primes n ≤ 100,000 in the target residue class):
@@ -440,6 +459,7 @@ Verified the conjecture computationally up to n = 10¹⁷. Our work provides a s
 | A = O((log n)²) suffices | **Conditional** (GRH) | All n |
 | A ≤ C (constant) for all n | **Conjecture** | All n |
 | Covering set {3,7,11,15,19,23,27,31} covers all n ≤ 100K | **Verified** (Theorem 9, new in v9) | n ≤ 100,000 |
+| Extended covering set: A ≤ 59 covers all n ≤ 10M (except outlier) | **Verified** (Theorem 9a, new in v9a) | n ≤ 10,000,000 |
 | Shifted set D_A^{(nm)} is a dead end for anomalous cases | **Verified** (new in v9) | n ≤ 100,000 |
 | 891 gap cases all rescued by covering set | **Verified** (new in v9) | n ≤ 100,000 |
 | Non-trivial-stab gap: nm ∉ S → structural obstruction | **Verified** (new in v9) | 193 cases |
@@ -457,7 +477,7 @@ Verified the conjecture computationally up to n = 10¹⁷. Our work provides a s
 
 3. **Constant bound conjecture:** Prove A ≤ C for some absolute constant. This is stronger than GRH implies.
 
-4. **Covering system proof:** Prove that {3, 7, 11, 15, 19, 23, 31} (or {3, 7, 11, 19, 23, 31}) covers all n, not just those up to 100,000. This requires showing that for every prime n ≡ 1 (mod 12), n ≢ 0 (mod 5), at least one of these A values yields T ∈ D_A. The covering set analysis (§3.8) shows this holds computationally with zero failures, but a general proof requires either: (a) an analytic argument that the least QNR prime ≡ 3 (mod 4) is bounded by a constant, or (b) a combinatorial argument exploiting the structure of the covering set.
+4. **Covering system proof:** Prove that {3, 7, 11, 15, 19, 23, 31} (or {3, 7, 11, 19, 23, 31}) covers all n, not just those up to 100,000. **Note (v9a):** The 10M verification shows this set is NOT sufficient — 65 cases need A > 31. The extended covering set with A ≤ 59 covers all n ≤ 10M except the known outlier (n=8,803,369, A=107). A general proof requires either: (a) an analytic argument that the least QNR prime ≡ 3 (mod 4) is bounded by a constant, or (b) a combinatorial argument exploiting the structure of the covering set. The 10M data shows the constant bound conjecture holds with C = 107.
 
 5. **Full proof of Proposition 8:** Provide a fully sourced proof combining the Burgess bound with PNT in AP for the least prime ≡ 3 (mod 4) that is QNR mod n.
 
