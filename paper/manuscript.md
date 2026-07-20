@@ -1,7 +1,6 @@
 # A Divisor-Residue Criterion for Bounded A-Parameters in the Erdős–Straus Conjecture
 
-**Authors:** Skip Potter  
-**AI Assistance:** Brodie Foxworth (OpenClaw agent) — computational verification, framework development, manuscript preparation
+**Author:** Kevin Potter
 
 **Date:** July 18, 2026 (Revision 8)
 
@@ -356,6 +355,12 @@ Verified the conjecture computationally up to n = 10¹⁷. Our work provides a s
 
 ---
 
+## AI Assistance Disclosure
+
+The author used Brodie Foxworth, an AI research agent, to assist with computational verification, development of the divisor-residue criterion, and manuscript preparation under the direction of the author. Brodie Foxworth is not an author. The author reviewed all mathematical claims, computations, citations, and conclusions, and accepts full responsibility for the manuscript.
+
+---
+
 ## References
 
 1. Erdős, P. (1950). "Az egyenlet egész számú megoldásairól." *Mat. Lapok* 1, 192–210.
@@ -375,4 +380,4 @@ Verified the conjecture computationally up to n = 10¹⁷. Our work provides a s
 
 ---
 
-*Computational tools: Python 3.13, SymPy 1.14.0. All computations verified with exact rational arithmetic. AI assistance: Brodie Foxworth (OpenClaw agent) performed computational verification, developed the divisor-residue criterion, and prepared this manuscript under the direction of the author.*
+*Computational tools: Python 3.13, SymPy 1.14.0. All computations verified with exact rational arithmetic.*
