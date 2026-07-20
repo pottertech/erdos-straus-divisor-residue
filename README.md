@@ -2,8 +2,16 @@
 
 [![Verify](https://github.com/pottertech/erdos-straus-divisor-residue/actions/workflows/verify.yml/badge.svg)](https://github.com/pottertech/erdos-straus-divisor-residue/actions/workflows/verify.yml)
 
-This repository contains the manuscript, verification code, and research
-documentation for the divisor-residue approach to the Erdős–Straus conjecture.
+**Author:** Kevin Potter
+
+This repository contains the manuscript, verification code, computational
+results, and research analysis for the divisor-residue approach to the
+Erdős–Straus conjecture.
+
+> **⚠️ Status:** This is a research note / preprint. It is **NOT** a proof of
+> the Erdős–Straus conjecture. It presents a new framework, proven partial
+> results, strong computational evidence, and honestly identified open
+> problems.
 
 ## Contents
 
@@ -15,39 +23,65 @@ documentation for the divisor-residue approach to the Erdős–Straus conjecture
 - `verify_all.py` — one-click verification script (fast / full / full-10m modes)
 - `docs/research-journey.html` — narrative account of the research process
 - `results/` — pre-generated computational artifacts (search results, distributions, outliers)
+- `analysis/` — research analysis scripts and findings, organized by topic
 - `references/` — reference notes
 - `CITATION.cff` — citation metadata
 - `.github/workflows/verify.yml` — automated verification on push (fast smoke test)
 
-## Summary
+## Proven Results
 
-We present a divisor-residue criterion for the Erdős–Straus conjecture in the
-residue class n ≡ 1 (mod 12), n ≢ 0 (mod 5). We introduce a parameter A = 4x − n
-and reduce the conjecture to a **bounded divisor-residue condition**: for each
-admissible n, there must exist bounded A ≡ 3 (mod 4) and a divisor P of
-(n(n+A)/4)² satisfying P ≡ −n²·4⁻¹ (mod A) with positive y, z.
+- **Theorem 1 (Divisor-Residue Criterion):** Exact criterion — T ∈ D_A if and
+  only if A yields an Erdős–Straus solution for n.
+- **Theorem 2 (n ≡ 5 mod 8):** Prime n ≡ 5 (mod 8) always admits A = 3 (direct proof).
+- **Theorem 5 (Legendre Identity):** Legendre symbol identity for the m-route.
+- **Theorem 3 Converse:** No QNR → T ∉ D_A (unconditional).
+- **Partial −1 Route Result:** Proven for h=2 and order-2 QNR cases. The general
+  implication −1 ∈ H(A) ⇒ −1 ∈ D_A fails in 821 tested cases, so the forward
+  direction must be proved by direct T ∈ D_A, centered-set, or alternative
+  divisor-path methods.
 
-**Proven results:**
-- Theorem 1: Exact divisor-residue criterion (T ∈ D_A iff A works)
-- Theorem 2: Prime n ≡ 5 (mod 8) always admits A = 3 (direct proof)
-- Theorem 5: Legendre symbol identity for the m-route
-- Theorem 3 converse: No QNR → T ∉ D_A (unconditional)
-- Partial -1-route result: proven for h=2 and order-2 QNR cases. The general implication -1 ∈ H(A) ⇒ -1 ∈ D_A fails in 821 tested cases, so the forward direction must be proved by direct T ∈ D_A, centered-set, or alternative divisor-path methods
+## Computational Results (Verified, Not Proven)
 
-**Claimed (preprint, pending independent verification):**
-- Theorem 4: Composite n with factor ≡ 3 (mod 4) — claimed/proposed via Mballa 2026
+- **Theorem 3 forward direction:** Computationally supported; 10,096 positive
+  (−1 ∈ D_A) cases classified, with 821 lemma-failure/alternative-path cases
+  identified.
+- **Theorem 6 (A ≤ 31, n ≤ 100K):** All admissible n ≤ 100,000 covered with A ≤ 31.
+- **Theorem 7 (A ≤ 99, n ≤ 10M):** 666,665 of 666,666 cases up to 10,000,000
+  covered with A ≤ 99. Single outlier: n = 8,803,369 (requires A = 107).
+- **Theorem 9 (Covering Set, n ≤ 100K):** The prime covering set
+  {3, 7, 11, 19, 23, 31} suffices for all n ≤ 100,000.
+- **Theorem 9a (A ≤ 59, n ≤ 10M):** Extended covering verified to 10,000,000
+  with A ≤ 59 (see `results/covering_set_10m.json`).
+- **Theorem 10 (Parity Obstruction):** Parity-based obstruction identified for
+  certain residue classes.
 
-**Computational results (verified, not proven):**
-- Theorem 3 forward direction: computationally supported; 10,096 positive (−1 ∈ D_A) cases classified, with 821 lemma-failure/alternative-path cases identified
-- Theorem 6: A ≤ 31 covers all n ≤ 100,000
-- Theorem 7: A ≤ 99 covers all but 1 of 666,666 cases up to 10,000,000
-- Proposition 8: Conditional analytic route via Burgess-type bounds (not verified by computational suite; requires analytic number theory review)
+## Open Problems
 
-**Open gaps (honestly identified):**
-1. Direct T ∈ D_A criterion: the original -1-route fails in 821 cases; prove a direct criterion, likely through the centered divisor-residue set C_A(N)
-2. D_A closure / shifted divisor-residue set (T ∈ D_A directly, not via −1 factorization)
-3. Constant bound conjecture (A ≤ C for all n)
-4. Covering system proof ({3,7,11,15,19,23,31} for all n, not just n ≤ 100K)
+1. **General −1 Route / Centered Residue:** The original −1-route fails in 821
+   cases. Prove a direct criterion, likely through the centered divisor-residue
+   set C_A(N). See `analysis/item1_lemma/` for computational groundwork.
+2. **Shifted Divisor-Residue Set:** **RESOLVED — dead end.** The shifted set
+   D_A^(nm) approach produces zero successes among anomalous cases. See
+   `analysis/item2_gap/shifted_set_findings.md`.
+3. **Constant Bound Conjecture:** A ≤ C for all n (computational evidence
+   supports but does not prove).
+4. **Covering System Proof:** Extend the covering set {3, 7, 11, 19, 23, 31}
+   to all n, not just n ≤ 100K. This is the current research frontier. See
+   `analysis/covering_set/` for verification scripts and results.
+5. **Burgess Bound Route:** Fully sourced analytic argument via Burgess-type
+   bounds for the least quadratic non-residue. See
+   `analysis/proof_artifacts/proposition8_sourced.md` for the complete argument
+   with references.
+
+## Analysis Directory Structure
+
+| Subdirectory | Contents |
+|---|---|
+| `analysis/item1_lemma/` | Centered residue analysis, computational cases, lemma findings |
+| `analysis/item2_gap/` | Shifted set analysis, Kneser gap analysis, anomalous case classification, trivial stabilizer analysis |
+| `analysis/item2_quotient/` | Quotient gap analysis, quotient deep analysis, quotient lifting analysis |
+| `analysis/covering_set/` | Covering set verification (100K & 10M), covering system proof, per-h analysis, m-route sufficiency |
+| `analysis/proof_artifacts/` | Case-by-case proof, short signed representation analysis, Proposition 8 (Burgess) sourced argument |
 
 ## Verification
 
@@ -93,7 +127,7 @@ python3 code/search_solutions.py 100000 31 results/search_100k.json
 # Theorem 7: A ≤ 99 covers all but 1 of 666,666 cases up to 10,000,000
 python3 code/search_solutions.py 10000000 99 results/search_10m_summary.json
 
-# Bounded Divisor-Residue Lemma (full categorization)
+# Partial −1 Route (full categorization)
 python3 code/verify_lemma.py 100000
 
 # Witness for the outlier n = 8,803,369
@@ -112,7 +146,8 @@ Pre-generated computational artifacts are committed in `results/`:
 | `results/search_10m_summary.json` | Theorem 7: 666,666 cases up to 10M, A ≤ 99 |
 | `results/outlier_8803369.json` | Witness for the single outlier n = 8,803,369 |
 | `results/a_distribution_100k.csv` | A-value distribution for n ≤ 100,000 |
-| `results/anomalous_cases_verified.json` | Cases where -1 ∈ D_A but -1 ∉ D_A^(nm) (shifted set failures) |
+| `results/anomalous_cases_verified.json` | Cases where −1 ∈ D_A but −1 ∉ D_A^(nm) (shifted set failures) |
+| `results/covering_set_10m.json` | Theorem 9a: covering set verification up to 10,000,000 |
 | `results/README.md` | How artifacts were generated |
 
 Regenerate with the commands in the **Full computational verification** section above.
@@ -128,13 +163,14 @@ This is documented in `results/outlier_8803369.json` with full witness details:
 This is a **verified manual exception**, not a code bug. If you run the 10M search
 and see 1 uncovered case, this is expected.
 
-## Status
-
-This manuscript is a research note / preprint and has not been peer reviewed.
-It does NOT claim a proof of the Erdős–Straus conjecture. It presents a new
-framework, proven partial results, and strong computational evidence with
-honestly identified gaps.
-
 ## License
 
 MIT — see `LICENSE` for details.
+
+## AI Assistance Disclosure
+
+This research was developed with the assistance of AI tools (OpenClaw / Claude).
+All mathematical arguments were reviewed, verified computationally with exact
+arithmetic (SymPy), and checked by the author. The AI assisted with computational
+verification, manuscript preparation, and code development. The mathematical
+content, analysis, and conclusions are the responsibility of the author.

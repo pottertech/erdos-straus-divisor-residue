@@ -10,6 +10,6 @@
 __pycache__/
 *.pyc
 .DS_Store
-*.json
-# Exception: committed result artifacts
-!results/*.json
+# CI-generated artifacts (not committed)
+results/search_100k_ci.json
+results/search_10m_ci.json

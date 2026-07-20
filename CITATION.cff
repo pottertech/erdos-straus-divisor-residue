@@ -4,13 +4,8 @@ message: "If you use this work, please cite it as below."
 type: article
 authors:
   - family-names: Potter
-    given-names: "Skip"
+    given-names: "Kevin"
     affiliation: "Potter's Quill Publishing"
-contributors:
-  - name: "Brodie Foxworth"
-    type: "other"
-    affiliation: "OpenClaw AI Agent"
-    note: "Computational verification, framework development, manuscript preparation"
 keywords:
   - Erdős–Straus conjecture
   - unit fractions
@@ -25,6 +20,6 @@ preferred-citation:
   title: "A Divisor-Residue Criterion for Bounded A-Parameters in the Erdős–Straus Conjecture"
   authors:
     - family-names: Potter
-      given-names: "Skip"
+      given-names: "Kevin"
   year: 2026
   notes: "Research note / preprint"

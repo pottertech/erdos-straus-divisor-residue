@@ -75,22 +75,22 @@ def main():
     
     # 3. Bounded Divisor-Residue Lemma categorization
     if mode in ('--full', '--full-10m'):
-        print("\n[3/4] Bounded Divisor-Residue Lemma (verify_lemma.py, n ≤ 100,000)...")
+        print("\n[3/4] Partial −1 Route (verify_lemma.py, n ≤ 100,000)...")
         ok, out, err, t = run_script(
             REPO_ROOT / 'code' / 'verify_lemma.py',
             ['100000'],
             timeout=300
         )
-        results.append(('Lemma categorization', ok, t))
+        results.append(('Partial −1 Route categorization', ok, t))
         print(f"      {'✅ PASS' if ok else '❌ FAIL'} ({t:.1f}s)")
         if not ok:
             print(err[:500])
-            # Failures in the lemma are the known computational gap — report but don't fail
+            # Failures in the partial route are the known computational gap — report but don't fail
             print("      Note: failures are the known computational gap (7.6%), not a code bug")
-        # Don't set all_pass = False for known lemma failures
+        # Don't set all_pass = False for known partial route failures
     else:
-        print("\n[3/4] Lemma categorization: Skipped (use --full to run)")
-        results.append(('Lemma categorization', None, 0))
+        print("\n[3/4] Partial −1 Route: Skipped (use --full to run)")
+        results.append(('Partial −1 Route categorization', None, 0))
     
     # 4. Theorem 7: A ≤ 99 covers all but 1 of 666,666 cases up to 10,000,000
     if mode == '--full-10m':

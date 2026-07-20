@@ -22,9 +22,18 @@ Pre-generated computational artifacts for the Erdős–Straus divisor-residue ma
 - **Contents**: Distribution of A-values used for `n ≤ 100,000`.
 - **Key stat**: `A = 3` covers 83.0% of cases.
 
+### `anomalous_cases_verified.json`
+- **Contents**: Cases where `−1 ∈ D_A` but `−1 ∉ D_A^(nm)` (shifted set failures).
+- **Key result**: 2,213 anomalous cases; shifted set is a confirmed dead end (0 successes).
+
+### `covering_set_10m.json`
+- **Contents**: Theorem 9a — covering set verification for all primes `n ≤ 10,000,000` with `A ≤ 59`.
+- **Method**: `python3 analysis/covering_set/covering_set_10m.py`
+- **Result**: 166,011 primes checked; 165,855 covered by prime A-values, 91 by composite-only, with 65 uncovered (requiring larger A).
+
 ## Regenerating
 
-All artifacts can be regenerated from the code in `code/`:
+All artifacts can be regenerated from the code in `code/` and `analysis/`:
 
 ```bash
 # Full 100K witnesses (slow, ~2 minutes)
@@ -35,6 +44,9 @@ python3 code/search_solutions.py 10000000 99 results/search_10m_full.json
 
 # Outlier witness
 python3 code/search_solutions.py --witness 8803369 200
+
+# Covering set verification up to 10M
+python3 analysis/covering_set/covering_set_10m.py
 ```
 
 ## Verification
