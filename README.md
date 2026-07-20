@@ -32,7 +32,7 @@ admissible n, there must exist bounded A ≡ 3 (mod 4) and a divisor P of
 - Theorem 2: Prime n ≡ 5 (mod 8) always admits A = 3 (direct proof)
 - Theorem 5: Legendre symbol identity for the m-route
 - Theorem 3 converse: No QNR → T ∉ D_A (unconditional)
-- Bounded Divisor-Residue Lemma: Proven for h=2 and order-2 QNR cases; Kneser-trivial-stabilizer cases under review pending corrected subgroup discrete-log computation (36.5% proven; 63.5% candidate/computational)
+- Partial -1-route result: proven for h=2 and order-2 QNR cases. The general implication -1 ∈ H(A) ⇒ -1 ∈ D_A fails in 821 tested cases, so the forward direction must be proved by direct T ∈ D_A, centered-set, or alternative divisor-path methods
 
 **Claimed (preprint, pending independent verification):**
 - Theorem 4: Composite n with factor ≡ 3 (mod 4) — claimed/proposed via Mballa 2026
@@ -44,7 +44,7 @@ admissible n, there must exist bounded A ≡ 3 (mod 4) and a divisor P of
 - Proposition 8: Conditional analytic route via Burgess-type bounds (not verified by computational suite; requires analytic number theory review)
 
 **Open gaps (honestly identified):**
-1. Bounded Divisor-Residue Lemma in full generality: candidate/computational categories remain after the proven (h=2), order-2 QNR, and Kneser-trivial-stabilizer cases
+1. Direct T ∈ D_A criterion: the original -1-route fails in 821 cases; prove a direct criterion, likely through the centered divisor-residue set C_A(N)
 2. D_A closure / shifted divisor-residue set (T ∈ D_A directly, not via −1 factorization)
 3. Constant bound conjecture (A ≤ C for all n)
 4. Covering system proof ({3,7,11,15,19,23,31} for all n, not just n ≤ 100K)
