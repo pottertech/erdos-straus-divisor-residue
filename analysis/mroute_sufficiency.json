@@ -1,0 +1,11 @@
+{
+  "total_primes": 2374,
+  "direct_route_failures": 59,
+  "m_route_rescued": 59,
+  "m_route_not": 0,
+  "direct_fail_but_covered": 59,
+  "qnr_and_T_in_D": 10438,
+  "qnr_and_T_not_in_D": 2519,
+  "no_qnr_and_T_in_D": 1255,
+  "no_qnr_and_T_not_in_D": 4780
+}
