@@ -7,8 +7,8 @@ Tests:
 2. Theorem 2: n ≡ 5 (mod 8) → A = 3 works
 3. Theorem 3: T ∈ D_A iff QNR exists (converse proven, forward computational)
 4. Theorem 5: Legendre symbol identity (p/A) = (n/p)
-5. Bounded Divisor-Residue Lemma: -1 ∈ H(A) ⟹ -1 ∈ D_A
-6. D_A vs H(A): -1 membership equivalence
+5. Partial -1 Route: -1 ∈ H(A) ⟹ -1 ∈ D_A (proven subcases only; 821 known failures)
+6. D_A vs H(A): -1 membership comparison
 7. D_A closure: shifted divisor-residue set D_A^{(nm)}
 8. Theorem 6: A ≤ 31 covers all n ≤ 100,000
 """
@@ -196,7 +196,7 @@ def verify_theorem5(cases):
     return mismatches
 
 
-def verify_lemma(cases):
+def verify_minus_one_route(cases):
     """-1 ∈ H(A) ⟹ -1 ∈ D_A."""
     failures = 0
     for n, A in cases:
@@ -211,7 +211,7 @@ def verify_lemma(cases):
 
 
 def verify_DA_HA_membership(cases):
-    """-1 ∈ D_A iff -1 ∈ H(A)."""
+    """Compare -1 membership in D_A vs H(A). The equivalence fails in 821 cases."""
     mismatches = 0
     for n, A in cases:
         H = compute_H_A(n, A)
@@ -291,16 +291,16 @@ def main():
     print(f"  Mismatches: {mismatches}")
     assert mismatches == 0, "Theorem 5 has mismatches!"
     
-    # Bounded Divisor-Residue Lemma
+    # Partial -1 Route
     print("\n--- Lemma: -1 ∈ H(A) ⟹ -1 ∈ D_A ---")
-    lemma_counterexamples = verify_lemma(prime_A_cases)
-    print(f"  Known lemma counterexamples / open cases: {lemma_counterexamples}")
+    minus_one_route_failures = verify_minus_one_route(prime_A_cases)
+    print(f"  Known -1 route failures / open cases: {minus_one_route_failures}")
     print("  Note: these are expected open cases, not code failures.")
-    print("  See verify_lemma.py for disjoint classification and proof-status categories.")
+    print("  See code/verify_lemma.py for disjoint classification and proof-status categories.")
     # Don't assert — the lemma is only partially proven; these failures are expected
     
     # D_A vs H(A) membership
-    print("\n--- -1 ∈ D_A iff -1 ∈ H(A) ---")
+    print("\n--- -1 route comparison: D_A vs H(A) ---")
     mismatches = verify_DA_HA_membership(prime_A_cases)
     print(f"  Mismatches: {mismatches}")
     print(f"  Note: same {mismatches} cases as the lemma above — known computational gap")

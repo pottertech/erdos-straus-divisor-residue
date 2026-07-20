@@ -89,7 +89,7 @@ The target T = −n·m (mod A). We analyze two directions:
 
 **(⟹) Converse (proven unconditionally):** If no prime factor of nx is a QNR mod A, then all generators of H(A) have odd order, so h = |H(A)| is odd, and −1 ∉ H(A). Since D_A ⊆ H(A), we have −1 ∉ D_A. Since T = −(n·m) and n·m ∈ H(A) (as a product of generators), T ∈ D_A would imply T·(n·m)^{−1} = −1 ∈ H(A), contradicting h odd. Hence T ∉ D_A.
 
-**(⟸) Forward direction (conditional on Lemma + computational verification):** If some prime p | nx is a QNR mod A, then p has even order, so h = |H(A)| is even and −1 ∈ H(A).
+**(⟸) Forward direction (computationally supported; proven in partial subcases):** If some prime p | nx is a QNR mod A, then p has even order, so h = |H(A)| is even and −1 ∈ H(A).
 
 The forward direction relies on the implication −1 ∈ H(A) ⟹ −1 ∈ D_A. This implication is proven for h = 2 and order-2 QNR cases (§3.3), but **fails in 821 tested cases**. In those cases, T may still lie in D_A via alternative divisor paths (see analysis/centered_residue_analysis.json). The forward direction is therefore computationally supported but not fully proven.
 
