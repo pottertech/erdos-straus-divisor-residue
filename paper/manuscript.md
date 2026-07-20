@@ -79,9 +79,9 @@ $$T = -n^2 \cdot 4^{-1} \pmod{A} \quad \text{lies in} \quad D_A((nx)^2).$$
 
 ### 3.2 Reduction to Quadratic Non-Residue Condition
 
-**Theorem 3 (Prime A Criterion, conditional on forward direction).** *For A prime, gcd(n, A) = 1, and n prime with n ≡ 1 (mod 4):*
+**Theorem 3a (Converse, proven).** *For A prime, gcd(n, A) = 1, and n prime with n ≡ 1 (mod 4): if no prime factor of nx is a quadratic non-residue mod A, then T ∉ D_A((nx)²).*
 
-$$T \in D_A((nx)^2) \iff \text{some prime factor } p \text{ of } nx \text{ is a quadratic non-residue mod } A.$$
+**Computational Criterion 3b (Forward direction, computationally verified).** *For A prime, gcd(n, A) = 1, and n prime with n ≡ 1 (mod 4): if some prime factor p of nx is a quadratic non-residue mod A, then T ∈ D_A((nx)²). Verified with zero mismatches across all tested cases (n ≤ 100,000), but not fully proven — the general −1 route fails in 821 cases, and the forward direction relies on the covering set property (Theorem 9) or direct T ∈ D_A methods.*
 
 **Proof.** For A prime, (Z/AZ)* is cyclic of order A − 1. Since A ≡ 3 (mod 4), (A−1)/2 is odd. The element −1 is the unique element of order 2.
 
@@ -133,6 +133,10 @@ The Z/2 component is satisfied by any single QNR prime with exponent 1.
 For the Z/m component, define S' = {Σ s_i a_i mod m : 0 ≤ a_i ≤ 2e_i} ⊆ Z/m. We need 0 ∈ S' (with the Z/2 constraint satisfied simultaneously, which is handled by the QNR exponent).
 
 **Case 2a: An order-2 QNR prime exists.** If some prime p | nx has ord_A(p) = 2 (i.e., p ≡ −1 (mod A)), then dlog_u(p) = h/2, so p^1 = u^{h/2} = −1 directly, with exponent 1 ≤ 2e. This covers 1,919 cases. **This case is proven in general.**
+
+The above two subcases complete the proof of the Partial −1 Route Result. The remaining cases are computational/candidate analysis, not part of the proven subcases.
+
+**Computational/candidate analysis (Case 2b and beyond):**
 
 **Case 2b: No order-2 QNR prime exists, h > 2.** We apply Kneser's theorem. Let S' = A_1 + A_2 + ... + A_k be the sumset of the exponent sets in Z/m, where A_i = {0, s_i, 2s_i, ..., 2e_i · s_i} and k is the number of distinct prime factors of nx (with gcd(p_i, A) = 1). Let H = stab(S') be the stabilizer (period) of S' in Z/m. By Kneser's theorem:
 

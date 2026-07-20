@@ -285,26 +285,27 @@ def main():
     print(f"  Failures: {fails}")
     assert fails == 0, "Theorem 2 has failures!"
     
-    # Theorem 5
-    print("\n--- Theorem 5: (p/A) = (n/p) for p | m_A ---")
-    mismatches = verify_theorem5(cases)
+    # Theorem 5 (prime A only — theorem is scoped to odd prime A)
+    print("\n--- Theorem 5: (p/A) = (n/p) for p | m_A (prime A only) ---")
+    prime_A_cases_5 = [(n, A) for n, A in cases if isprime(A)]
+    mismatches = verify_theorem5(prime_A_cases_5)
     print(f"  Mismatches: {mismatches}")
     assert mismatches == 0, "Theorem 5 has mismatches!"
     
     # Partial -1 Route
-    print("\n--- Lemma: -1 ∈ H(A) ⟹ -1 ∈ D_A ---")
+    print("\n--- Partial -1 Route: -1 ∈ H(A) vs -1 ∈ D_A ---")
     minus_one_route_failures = verify_minus_one_route(prime_A_cases)
     print(f"  Known -1 route failures / open cases: {minus_one_route_failures}")
     print("  Note: these are expected open cases, not code failures.")
     print("  See code/verify_lemma.py for disjoint classification and proof-status categories.")
-    # Don't assert — the lemma is only partially proven; these failures are expected
+    # Don't assert — the route is only partially proven; these failures are expected
     
     # D_A vs H(A) membership
     print("\n--- -1 route comparison: D_A vs H(A) ---")
     mismatches = verify_DA_HA_membership(prime_A_cases)
     print(f"  Mismatches: {mismatches}")
-    print(f"  Note: same {mismatches} cases as the lemma above — known computational gap")
-    # Don't assert — same known gap as the lemma
+    print(f"  Note: same {mismatches} cases as the -1 route above — known computational gap")
+    # Don't assert — same known gap as the -1 route
     
     # Theorem 3
     print("\n--- Theorem 3: T ∈ D_A iff QNR exists (prime A) ---")
