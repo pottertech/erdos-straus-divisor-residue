@@ -43,7 +43,7 @@ Erdős–Straus conjecture.
 ## Computational Results (Verified, Not Proven)
 
 - **Theorem 3 forward direction:** Computationally supported; 10,096 positive
-  (−1 ∈ D_A) cases classified, with 821 lemma-failure/alternative-path cases
+  (−1 ∈ D_A) cases classified, with 821 -1-route failure / alternative-path cases
   identified.
 - **Theorem 6 (A ≤ 31, n ≤ 100K):** All admissible n ≤ 100,000 covered with A ≤ 31.
 - **Theorem 7 (A ≤ 99, n ≤ 10M):** 666,665 of 666,666 cases up to 10,000,000

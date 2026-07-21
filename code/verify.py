@@ -158,8 +158,9 @@ def verify_theorem2():
     return failures
 
 
-def verify_theorem3(cases):
-    """T ∈ D_A iff QNR exists."""
+def check_theorem3_forward_evidence(cases):
+    """Computational check of T ∈ D_A iff QNR exists for tested prime-A cases.
+    Converse is proven; forward direction is computational evidence only."""
     mismatches = 0
     for n, A in cases:
         D = compute_D_A(n, A)
@@ -308,8 +309,8 @@ def main():
     # Don't assert — same known gap as the -1 route
     
     # Theorem 3
-    print("\n--- Theorem 3: T ∈ D_A iff QNR exists (prime A) ---")
-    mismatches = verify_theorem3(prime_A_cases)
+    print("\n--- Theorem 3a/3b: converse proof + forward computational evidence ---")
+    mismatches = check_theorem3_forward_evidence(prime_A_cases)
     print(f"  Mismatches: {mismatches}")
     print(f"  Note: {mismatches} mismatches — the forward direction (QNR → T ∈ D_A)")
     print(f"        is computational, not proven. The converse (no QNR → T ∉ D_A) is proven.")

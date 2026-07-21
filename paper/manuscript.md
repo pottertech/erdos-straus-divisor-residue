@@ -83,7 +83,7 @@ $$T = -n^2 \cdot 4^{-1} \pmod{A} \quad \text{lies in} \quad D_A((nx)^2).$$
 
 **Computational Criterion 3b (Forward direction, computationally verified).** *For A prime, gcd(n, A) = 1, and n prime with n ≡ 1 (mod 4): if some prime factor p of nx is a quadratic non-residue mod A, then T ∈ D_A((nx)²). Verified with zero mismatches across all tested cases (n ≤ 100,000), but not fully proven — the general −1 route fails in 821 cases, and the forward direction relies on the covering set property (Theorem 9) or direct T ∈ D_A methods.*
 
-**Proof.** For A prime, (Z/AZ)* is cyclic of order A − 1. Since A ≡ 3 (mod 4), (A−1)/2 is odd. The element −1 is the unique element of order 2.
+**Proof of Theorem 3a and computational status of Criterion 3b.** For A prime, (Z/AZ)* is cyclic of order A − 1. Since A ≡ 3 (mod 4), (A−1)/2 is odd. The element −1 is the unique element of order 2.
 
 The target T = −n·m (mod A). We analyze two directions:
 
