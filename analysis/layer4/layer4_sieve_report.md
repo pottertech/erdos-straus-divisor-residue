@@ -5,6 +5,14 @@
 **Total primes:** 166011
 **Unresolved:** 0
 
+## Important caveats
+
+1. **Success criterion:** For prime A, success is determined by exact centered criterion (h/2 ∈ Σ_A(N) via Legendre symbol and discrete log computation). For composite A (15, 27, 35, etc.), the script uses Jacobi symbols as a signal — Jacobi -1 is necessary but not sufficient for QNR modulo composite A. Composite A results should be treated as approximate. The prime A results (3, 7, 11, 19, 23, 31, 43, 47, 59, 107) are rigorous.
+
+2. **Route labels:** "direct_n_qnr" means (A/n) = -1 was detected and the centered sumset reached h/2 computationally. This is NOT a proof — it is computational verification. See `proof_obligations.md` for the distinction between proven and computationally verified routes.
+
+3. **Residue table:** `first_working_residue_table.csv` shows which residue classes of n mod 4A contain primes whose FIRST working A is that value. It does NOT contain gap analysis. Gap classes are not populated.
+
 ## First Working A Distribution
 
 | A | Count | % | Cumulative % |
@@ -28,15 +36,17 @@
 
 ## Route Type Distribution
 
-| Route | Count | % |
-|-------|-------|---|
-| direct_n_qnr (Direct n-QNR route) | 11116 | 6.70% |
-| m_route (M-route) | 8843 | 5.33% |
-| order_2 (Order-2 route) | 146052 | 87.98% |
+| Route | Count | % | Proof Status |
+|-------|-------|---|-------------|
+| order_2 (Order-2 route) | 146052 | 87.98% | **Proven** (Theorem 3.3, Case 2a) |
+| direct_n_qnr (Direct n-QNR route) | 11116 | 6.70% | **Computationally verified** (proof pending via centered criterion) |
+| m_route (M-route) | 8843 | 5.33% | **Open** (Theorem 5 gives identity, not sufficiency) |
 
 ## Key Findings
 
 1. **Coverage:** 166011/166011 primes covered (100.0000%)
 2. **Max A needed:** 107
-3. **Most common first A:** 3
-4. **Dominant route:** order_2
+3. **Most common first A:** 3 (78.47%)
+4. **Dominant route:** order_2 (87.98%)
+5. **Only 3 route families appear** — no exceptional, long-signed, or two-term-centered routes needed as first working A
+6. **Outlier n=8,803,369:** Extreme QR prime, fails all A ≤ 103 (no-QNR or gap), rescued by A=107 direct route. See `outlier_8803369_analysis.md`.

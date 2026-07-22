@@ -1,0 +1,21 @@
+# First Working A Residue Classes (NOT a gap analysis)
+# This table shows which residue classes of n mod 4A are covered by the FIRST working A.
+# Gap classes are NOT populated — this is not a complete cover/gap analysis.
+# For gap analysis, see route_counts.json and layer4_sieve_report.md
+A,modulus,first_working_classes,cover_pct
+3,12,1,100.0%
+7,28,6,100.0%
+11,44,9,100.0%
+15,60,2,100.0%
+19,76,18,100.0%
+23,92,22,100.0%
+27,108,9,100.0%
+31,124,30,100.0%
+35,140,2,100.0%
+39,156,2,100.0%
+43,172,4,100.0%
+47,188,8,100.0%
+51,204,1,100.0%
+55,220,2,100.0%
+59,236,1,100.0%
+107,428,1,100.0%
