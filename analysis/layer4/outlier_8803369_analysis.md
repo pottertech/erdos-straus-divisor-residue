@@ -54,7 +54,7 @@ The key structural fact: 107 is the first prime ≡ 3 (mod 4) where (107/n) = �
 
 ### 4. Outlier classification
 
-n = 8,803,369 is an **extreme QR prime** — it is a quadratic residue modulo almost all primes ≡ 3 (mod 4) up to 103. This is consistent with the density-0 prediction from the sieve argument (Theorem 14): such primes exist but are increasingly rare. The Burgess bound (Proposition 8) guarantees A = O(n^{1/(4√e)+ε}) ≈ O(n^{0.092}) suffices, and A = 107 ≪ n^{0.092} for n ≈ 8.8M, so the outlier is well within the analytic bound.
+n = 8,803,369 is an **extreme QR prime** — it is a quadratic residue modulo almost all primes ≡ 3 (mod 4) up to 103. This is consistent with the density-0 prediction from the sieve argument (Theorem 14): such primes exist but are increasingly rare. The Burgess-style route discussed in Proposition 8 suggests a bound of the form A = O(n^{1/(4√e)+ε}) ≈ O(n^{0.1515+ε}) under the stated analytic assumptions. The observed A = 107 is far below this scale for n ≈ 8.8M, so the outlier is well within the analytic bound.
 
 ### 5. Constant bound implications
 

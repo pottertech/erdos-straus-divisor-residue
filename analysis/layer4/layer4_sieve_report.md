@@ -42,9 +42,17 @@
 | direct_n_qnr (Direct n-QNR route) | 11116 | 6.70% | **Computationally verified** (proof pending via centered criterion) |
 | m_route (M-route) | 8843 | 5.33% | **Open** (Theorem 5 gives identity, not sufficiency) |
 
+## Coverage Breakdown
+
+- **Exact prime-A first-working coverage:** 164,896 / 166,011 primes (99.33%) — rigorous, using exact Legendre symbol and centered criterion computation
+- **Composite-A first-working cases:** 1,115 / 166,011 primes (0.67%) — heuristic, using Jacobi symbol route classification. These 1,115 cases (A=15: 951, A=27: 123, A=35: 16, A=39: 22, A=51: 1, A=55: 2) require exact T ∈ D_A recheck before being treated as rigorous evidence.
+- **Unresolved:** 0
+
+The 100% Layer 4 coverage count should be read as exact for prime-A first-working cases and heuristic/route-classified for composite-A first-working cases until composite A values are rechecked by direct T ∈ D_A membership.
+
 ## Key Findings
 
-1. **Coverage:** 166011/166011 primes covered (100.0000%)
+1. **Coverage:** 166,011/166,011 primes covered (100.0000%) — see coverage breakdown above for exact vs heuristic split
 2. **Max A needed:** 107
 3. **Most common first A:** 3 (78.47%)
 4. **Dominant route:** order_2 (87.98%)
