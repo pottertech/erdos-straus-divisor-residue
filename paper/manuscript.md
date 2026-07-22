@@ -338,6 +338,7 @@ Verified the conjecture computationally up to n = 10¹⁷. Our work provides a s
 | A = O(n^{1/(4√e)+ε}) suffices | **Proposition (conditional)** (Proposition 8, Burgess) | All n |
 | A = O((log n)²) suffices | **Conditional** (GRH) | All n |
 | A ≤ C (constant) for all n | **Conjecture** | All n |
+| Layer 4 sieve: route classification + exact coverage | **Exact computational verification** | 166,011 primes n ≤ 10M |
 
 ---
 

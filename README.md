@@ -55,6 +55,12 @@ Erdős–Straus conjecture.
   outlier n = 8,803,369 requires A = 107 (see `results/covering_set_10m.json`).
 - **Theorem 10 (Parity Obstruction):** Parity-based obstruction identified for
   certain residue classes.
+- **Layer 4 Sieve (n ≤ 10M, exact computational coverage):** Full route
+  classification of all 166,011 admissible primes up to 10,000,000. Three route
+  families identified: order-2 (88%), direct n-QNR (6.7%), m-route (5.3%).
+  Composite-A first-working cases rechecked by exact T ∈ D_A: 1,078 confirmed,
+  37 Jacobi false positives reclassified to prime-A rescue values. Zero
+  unresolved cases. See `analysis/layer4/` for full report.
 
 ## Open Problems
 
