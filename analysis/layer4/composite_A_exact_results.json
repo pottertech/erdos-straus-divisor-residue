@@ -1,0 +1,298 @@
+{
+  "total_checked": 1115,
+  "exact_works": 1078,
+  "exact_fails": 37,
+  "by_A": {
+    "15": {
+      "total": 951,
+      "works": 951,
+      "fails": 0
+    },
+    "27": {
+      "total": 123,
+      "works": 91,
+      "fails": 32
+    },
+    "39": {
+      "total": 22,
+      "works": 20,
+      "fails": 2
+    },
+    "35": {
+      "total": 16,
+      "works": 13,
+      "fails": 3
+    },
+    "51": {
+      "total": 1,
+      "works": 1,
+      "fails": 0
+    },
+    "55": {
+      "total": 2,
+      "works": 2,
+      "fails": 0
+    }
+  },
+  "failures": [
+    {
+      "n": 67369,
+      "A": 27,
+      "route": "m_route",
+      "D_size": 13,
+      "T": 23
+    },
+    {
+      "n": 87481,
+      "A": 27,
+      "route": "m_route",
+      "D_size": 9,
+      "T": 20
+    },
+    {
+      "n": 118801,
+      "A": 39,
+      "route": "direct_n_qnr",
+      "D_size": 23,
+      "T": 17
+    },
+    {
+      "n": 219409,
+      "A": 27,
+      "route": "m_route",
+      "D_size": 17,
+      "T": 8
+    },
+    {
+      "n": 246241,
+      "A": 27,
+      "route": "m_route",
+      "D_size": 17,
+      "T": 20
+    },
+    {
+      "n": 415969,
+      "A": 27,
+      "route": "m_route",
+      "D_size": 17,
+      "T": 8
+    },
+    {
+      "n": 436801,
+      "A": 35,
+      "route": "m_route",
+      "D_size": 18,
+      "T": 26
+    },
+    {
+      "n": 789721,
+      "A": 27,
+      "route": "m_route",
+      "D_size": 17,
+      "T": 26
+    },
+    {
+      "n": 806521,
+      "A": 27,
+      "route": "m_route",
+      "D_size": 17,
+      "T": 23
+    },
+    {
+      "n": 878641,
+      "A": 35,
+      "route": "m_route",
+      "D_size": 16,
+      "T": 26
+    },
+    {
+      "n": 944329,
+      "A": 27,
+      "route": "m_route",
+      "D_size": 13,
+      "T": 23
+    },
+    {
+      "n": 1041121,
+      "A": 27,
+      "route": "m_route",
+      "D_size": 15,
+      "T": 20
+    },
+    {
+      "n": 1748041,
+      "A": 27,
+      "route": "m_route",
+      "D_size": 13,
+      "T": 8
+    },
+    {
+      "n": 1779649,
+      "A": 27,
+      "route": "m_route",
+      "D_size": 13,
+      "T": 26
+    },
+    {
+      "n": 1856089,
+      "A": 27,
+      "route": "m_route",
+      "D_size": 9,
+      "T": 20
+    },
+    {
+      "n": 1915201,
+      "A": 39,
+      "route": "direct_n_qnr",
+      "D_size": 23,
+      "T": 38
+    },
+    {
+      "n": 2315161,
+      "A": 27,
+      "route": "m_route",
+      "D_size": 15,
+      "T": 11
+    },
+    {
+      "n": 2497609,
+      "A": 27,
+      "route": "m_route",
+      "D_size": 9,
+      "T": 20
+    },
+    {
+      "n": 2636929,
+      "A": 27,
+      "route": "m_route",
+      "D_size": 9,
+      "T": 20
+    },
+    {
+      "n": 2671729,
+      "A": 27,
+      "route": "m_route",
+      "D_size": 13,
+      "T": 26
+    },
+    {
+      "n": 3655369,
+      "A": 27,
+      "route": "m_route",
+      "D_size": 13,
+      "T": 20
+    },
+    {
+      "n": 3751801,
+      "A": 27,
+      "route": "m_route",
+      "D_size": 17,
+      "T": 17
+    },
+    {
+      "n": 4197601,
+      "A": 27,
+      "route": "m_route",
+      "D_size": 15,
+      "T": 11
+    },
+    {
+      "n": 4214641,
+      "A": 27,
+      "route": "m_route",
+      "D_size": 17,
+      "T": 14
+    },
+    {
+      "n": 4437721,
+      "A": 27,
+      "route": "m_route",
+      "D_size": 15,
+      "T": 20
+    },
+    {
+      "n": 5143609,
+      "A": 27,
+      "route": "m_route",
+      "D_size": 9,
+      "T": 20
+    },
+    {
+      "n": 5371081,
+      "A": 27,
+      "route": "m_route",
+      "D_size": 13,
+      "T": 26
+    },
+    {
+      "n": 5596369,
+      "A": 27,
+      "route": "m_route",
+      "D_size": 13,
+      "T": 26
+    },
+    {
+      "n": 6279289,
+      "A": 27,
+      "route": "m_route",
+      "D_size": 17,
+      "T": 8
+    },
+    {
+      "n": 6403321,
+      "A": 27,
+      "route": "m_route",
+      "D_size": 15,
+      "T": 20
+    },
+    {
+      "n": 6728401,
+      "A": 27,
+      "route": "m_route",
+      "D_size": 9,
+      "T": 20
+    },
+    {
+      "n": 6854761,
+      "A": 27,
+      "route": "m_route",
+      "D_size": 9,
+      "T": 20
+    },
+    {
+      "n": 7140961,
+      "A": 27,
+      "route": "m_route",
+      "D_size": 13,
+      "T": 20
+    },
+    {
+      "n": 7559161,
+      "A": 35,
+      "route": "m_route",
+      "D_size": 18,
+      "T": 26
+    },
+    {
+      "n": 8871769,
+      "A": 27,
+      "route": "m_route",
+      "D_size": 9,
+      "T": 20
+    },
+    {
+      "n": 9328321,
+      "A": 27,
+      "route": "m_route",
+      "D_size": 15,
+      "T": 2
+    },
+    {
+      "n": 9711529,
+      "A": 27,
+      "route": "m_route",
+      "D_size": 17,
+      "T": 8
+    }
+  ]
+}
