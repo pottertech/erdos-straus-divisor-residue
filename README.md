@@ -50,8 +50,9 @@ Erdős–Straus conjecture.
   are covered with A ≤ 99. The single outlier is n = 8,803,369, which requires A = 107.
 - **Theorem 9 (Covering Set, n ≤ 100K):** The prime covering set
   {3, 7, 11, 19, 23, 31} suffices for all n ≤ 100,000.
-- **Theorem 9a (A ≤ 59, n ≤ 10M):** Extended covering verified to 10,000,000
-  with A ≤ 59 (see `results/covering_set_10m.json`).
+- **Computation 9a (A-distribution, n ≤ 10M):** Among the 666,665 admissible
+  cases covered with A ≤ 99, the largest A actually used is 59. The single
+  outlier n = 8,803,369 requires A = 107 (see `results/covering_set_10m.json`).
 - **Theorem 10 (Parity Obstruction):** Parity-based obstruction identified for
   certain residue classes.
 
@@ -147,7 +148,7 @@ Pre-generated computational artifacts are committed in `results/`:
 | `results/outlier_8803369.json` | Witness for the single outlier n = 8,803,369 |
 | `results/a_distribution_100k.csv` | A-value distribution for n ≤ 100,000 |
 | `results/anomalous_cases_verified.json` | Cases where −1 ∈ D_A but −1 ∉ D_A^(nm) (shifted set failures) |
-| `results/covering_set_10m.json` | Theorem 9a: covering set verification up to 10,000,000 |
+| `results/covering_set_10m.json` | Computation 9a: covering set A-distribution up to 10,000,000 |
 | `results/README.md` | How artifacts were generated |
 
 Regenerate with the commands in the **Full computational verification** section above.

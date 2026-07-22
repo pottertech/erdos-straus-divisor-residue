@@ -189,11 +189,11 @@ This handles all composite n ≡ 1 (mod 4) having a prime factor ≡ 3 (mod 4). 
 
 **Theorem 6 (Computational — n ≤ 100,000).** *For all 6,666 integers n ≡ 1 (mod 12), n ≢ 0 (mod 5), with 13 ≤ n ≤ 100,000: there exists A ∈ {3, 7, 11, 15, 19, 23, 27, 31} yielding an Erdős–Straus solution. The maximum A required is 31.*
 
-**Theorem 7 (Computational — n ≤ 10,000,000).** *For all 666,666 integers n ≡ 1 (mod 12), n ≢ 0 (mod 5), with 13 ≤ n ≤ 10,000,000: there exists A ≤ 99 yielding an Erdős–Straus solution, with one exception (n = 8,803,369, which requires A = 107). The maximum A required (excluding the outlier) is 59.*
+**Computation 7 (n ≤ 10,000,000).** *Among the 666,666 admissible integers n ≡ 1 (mod 12), n ≢ 0 (mod 5), with 13 ≤ n ≤ 10,000,000, exact residue-DP computation finds that 666,665 are covered with A ≤ 99. The single uncovered value under this bound is n = 8,803,369, which is handled by A = 107. Among the covered cases, the maximum A required is 59.*
 
 **Verification details:**
 - Theorem 6: All 6,666 values tested by exact computation (SymPy, exact rational arithmetic). The covering set {3, 7, 11, 15, 19, 23, 27, 31} was verified to cover every case.
-- Theorem 7: 666,666 values tested with A ranging over {3, 7, 11, ..., 99} (all A ≡ 3 mod 4, A ≤ 99). One case (n = 8,803,369, prime) requires A = 107.
+- Computation 7: 666,666 values tested with A ranging over {3, 7, 11, ..., 99} (all A ≡ 3 mod 4, A ≤ 99). One case (n = 8,803,369, prime) requires A = 107.
 - The 666,666 count refers to all integers (not just primes) in the residue class. Only prime n need be tested (composites reduce to prime factors), but the verification included all integers for completeness.
 
 **Distribution of minimal A (n ≤ 100,000):**
@@ -283,8 +283,8 @@ The covering set {3, 7, 11, 15, 19, 23, 31} (verified for n ≤ 100,000) operate
 
 **Evidence:**
 - A ≤ 31 for all n ≤ 100,000 (6,666 cases, Theorem 6)
-- A ≤ 99 for all n ≤ 10,000,000 except one outlier (666,665 of 666,666 cases, Theorem 7)
-- A ≤ 107 for all n ≤ 10,000,000 (Theorem 7)
+- A ≤ 99 for all n ≤ 10,000,000 except one outlier (666,665 of 666,666 cases, Computation 7)
+- A ≤ 107 for all n ≤ 10,000,000 (Computation 7)
 - A Burgess-type least-prime-QNR-in-AP estimate would give A = O(n^{0.152}) (Proposition 8, conditional)
 - GRH gives A = O((log n)²)
 
@@ -334,7 +334,7 @@ Verified the conjecture computationally up to n = 10¹⁷. Our work provides a s
 | Composite n with factor ≡ 3 mod 4: A = p works | **Claimed** (Theorem 4, Mballa 2026 preprint) | All such composite n |
 | (p/A) = (n/p) for p | m_A (m-route identity) | **Proven** (Theorem 5) | Any prime p dividing (n+A)/4 |
 | A ≤ 31 covers all n ≤ 100K | **Verified** (Theorem 6) | n ≤ 100,000 |
-| A ≤ 99 covers all but 1 of n ≤ 10M | **Verified** (Theorem 7) | n ≤ 10,000,000 |
+| A ≤ 99 covers all but 1 of n ≤ 10M | **Verified** (Computation 7) | n ≤ 10,000,000 |
 | A = O(n^{1/(4√e)+ε}) suffices | **Proposition (conditional)** (Proposition 8, Burgess) | All n |
 | A = O((log n)²) suffices | **Conditional** (GRH) | All n |
 | A ≤ C (constant) for all n | **Conjecture** | All n |
