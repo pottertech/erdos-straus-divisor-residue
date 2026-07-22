@@ -62,8 +62,8 @@ The 37 composite-A false positives were reclassified to their prime-A rescue val
 
 1. **Jacobi symbol is unreliable for composite A** — it overcounts success by ~3.3% (37/1,115). This confirms Mark Kruelle's caveat that Jacobi -1 is necessary but not sufficient for QNR modulo composite A.
 
-2. **A=15 is safe** — all 951 cases confirmed by exact D_A. This is because 15 = 3 × 5, and the Chinese Remainder Theorem decomposes D_{15} ≅ D_3 × D_5, making the Jacobi check reliable for this specific composite.
+2. **A=15 passed on the tested first-working cases** — all 951 A=15 cases were confirmed by exact D_A. This suggests the Jacobi shortcut was reliable for this tested subset, but the exact D_A check remains the authority. The CRT decomposition modulo 15 may explain why A=15 behaved better than prime-power composites such as A=27.
 
 3. **A=27 is the worst offender** (32/123 = 26% false positive rate). This is because 27 = 3³, and the Jacobi symbol mod 27 doesn't capture the cubic residue structure needed for exact D_A membership.
 
-4. **Prime A values are fully rigorous** — all prime-A first-working cases use exact Legendre symbol computation and centered criterion, not Jacobi.
+4. **Prime-A cases are exact computational checks** — they use Legendre/discrete-log/centered-set computation rather than the composite-A Jacobi shortcut. This does not constitute a general proof, only exact computational verification for the tested range.
