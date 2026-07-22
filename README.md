@@ -46,8 +46,8 @@ Erdős–Straus conjecture.
   (−1 ∈ D_A) cases classified, with 821 -1-route failure / alternative-path cases
   identified.
 - **Theorem 6 (A ≤ 31, n ≤ 100K):** All admissible n ≤ 100,000 covered with A ≤ 31.
-- **Theorem 7 (A ≤ 99, n ≤ 10M):** 666,665 of 666,666 cases up to 10,000,000
-  covered with A ≤ 99. Single outlier: n = 8,803,369 (requires A = 107).
+- **Computation 7 (A ≤ 99, n ≤ 10M):** 666,665 of 666,666 admissible cases up to 10,000,000
+  are covered with A ≤ 99. The single outlier is n = 8,803,369, which requires A = 107.
 - **Theorem 9 (Covering Set, n ≤ 100K):** The prime covering set
   {3, 7, 11, 19, 23, 31} suffices for all n ≤ 100,000.
 - **Theorem 9a (A ≤ 59, n ≤ 10M):** Extended covering verified to 10,000,000
@@ -124,7 +124,7 @@ for quick feedback. This is what GitHub Actions runs.
 # Theorem 6: A ≤ 31 covers all n ≤ 100,000
 python3 code/search_solutions.py 100000 31 results/search_100k.json
 
-# Theorem 7: A ≤ 99 covers all but 1 of 666,666 cases up to 10,000,000
+# Computation 7: A ≤ 99 covers all but 1 of 666,666 cases up to 10,000,000
 python3 code/search_solutions.py 10000000 99 results/search_10m_summary.json
 
 # Partial −1 Route (full categorization)
@@ -143,7 +143,7 @@ Pre-generated computational artifacts are committed in `results/`:
 | File | Description |
 |------|-------------|
 | `results/search_100k.json` | Theorem 6: all n ≤ 100,000 covered with A ≤ 31 |
-| `results/search_10m_summary.json` | Theorem 7: 666,666 cases up to 10M, A ≤ 99 |
+| `results/search_10m_summary.json` | Computation 7: 666,666 cases up to 10M, A ≤ 99 |
 | `results/outlier_8803369.json` | Witness for the single outlier n = 8,803,369 |
 | `results/a_distribution_100k.csv` | A-value distribution for n ≤ 100,000 |
 | `results/anomalous_cases_verified.json` | Cases where −1 ∈ D_A but −1 ∉ D_A^(nm) (shifted set failures) |
