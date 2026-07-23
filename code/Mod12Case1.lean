@@ -113,12 +113,12 @@ computational evidence and density arguments.
 -- or finding a correct closed-form parametric formula.
 -- This remains a non-trivial open problem in number theory.
 
-/-- CONJECTURE (not proven): The remaining open case of the Erdős–Straus conjecture.
-For every n ≥ 13 with n ≡ 1 (mod 12) and 5 ∤ n, there exist positive integers
-x, y, z such that 4/n = 1/x + 1/y + 1/z.
-
-Evidence: 166,011 computational certificates for all admissible primes n ≤ 10M.
-No closed-form proof is known. -/
+-- CONJECTURE (not proven): The remaining open case of the Erdős–Straus conjecture.
+-- For every n ≥ 13 with n ≡ 1 (mod 12) and 5 ∤ n, there exist positive integers
+-- x, y, z such that 4/n = 1/x + 1/y + 1/z.
+--
+-- Evidence: 166,011 computational certificates for all admissible primes n ≤ 10M.
+-- No closed-form proof is known.
 axiom erdos_straus_mod_12_1_not_div_5_conjecture (n : Nat) (h1 : n ≥ 13) (h2 : n % 12 = 1) (h3 : n % 5 ≠ 0) :
     IsErdosStraus n
 
