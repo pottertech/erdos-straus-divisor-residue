@@ -38,11 +38,11 @@ jobs:
           cd paper
           pdflatex -interaction=nonstopmode manuscript.tex
           pdflatex -interaction=nonstopmode manuscript.tex
-          # Compare hashes
           REBUILT=$(sha256sum manuscript.pdf | cut -d' ' -f1)
           COMMITTED=$(sha256sum ../docs/manuscript.pdf | cut -d' ' -f1)
           echo "Rebuilt:  $REBUILT"
           echo "Committed: $COMMITTED"
           if [ "$REBUILT" != "$COMMITTED" ]; then
-            echo "::warning::Committed PDF does not match rebuilt PDF. Run pdflatex and commit the updated docs/manuscript.pdf"
+            echo "::error::Committed PDF does not match rebuilt PDF. Run pdflatex and commit the updated docs/manuscript.pdf"
+            exit 1
           fi
