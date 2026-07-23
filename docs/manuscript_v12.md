@@ -178,6 +178,8 @@ When all of Layers 1–4 fail (all 5 m_A simultaneously all-QR), the extended co
 
 **Status:** 66 cases up to 10M (0.04%), all rescued. Maximum A needed: 139 (n = 4,766,689). Zero unrescued cases.
 
+**Note on max A:** The earlier Layer 4 first-working scan reported A = 107 as the largest first-working A under the original extended-A order. After exact composite-A reclassification and rescue-chain decomposition, the corrected covering/rescue set includes A = 139, with n = 4,766,689 as the largest-A rescue-chain case. These are different summaries: first-working scan versus corrected rescue-chain covering set. The A = 107 case (n = 8,803,369) remains the largest value in the earlier prime-A first-working scan before v12 rescue-chain refinement.
+
 **Coverage summary (n ≤ 10M, 166,011 primes):**
 
 | Layer | Coverage | Proof | Cases |
@@ -188,6 +190,8 @@ When all of Layers 1–4 fail (all 5 m_A simultaneously all-QR), the extended co
 | 4: M-route | 0.6% | Computational | 1,078 |
 | 5: Extended covering set | 0.04% | Computational | 66 |
 | **Total proven (1–3)** | **99.31%** | | 164,867 |
+
+Layers 1–3 account for 99.31% of tested prime cases by proven route families; Layers 4–5 account for the remaining cases by exact computation.
 
 The density-0 sieve bound (Theorem 14) combined with the Burgess bound (Proposition 8) already proves the Erdős–Straus conjecture for all primes n ≡ 1 mod 12, n ≢ 0 mod 5, with A = O(n^{1/(4√e)+ε}). The constant bound C = 139 holds computationally for n ≤ 10M.
 

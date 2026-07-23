@@ -61,6 +61,11 @@ Erdős–Straus conjecture.
   Composite-A first-working cases rechecked by exact T ∈ D_A: 1,078 confirmed,
   37 Jacobi false positives reclassified to prime-A rescue values. Zero
   unresolved cases. See `analysis/layer4/` for full report.
+- **Preliminary Lean 4 formalization:** `analysis/layer4/CenteredEquivalence.lean`
+  proves the centered-bijection lemma and most of the n ≡ 5 mod 8 construction.
+  One algebraic identity remains marked by `sorry`; Theorem 3a is currently a
+  placeholder. This is included as a formalization track, not as completed
+  machine-checked proof.
 
 ## Open Problems
 
