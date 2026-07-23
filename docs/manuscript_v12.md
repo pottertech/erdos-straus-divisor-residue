@@ -193,7 +193,7 @@ When all of Layers 1–4 fail (all 5 m_A simultaneously all-QR), the extended co
 
 Layers 1–3 account for 99.31% of tested prime cases by proven route families; Layers 4–5 account for the remaining cases by exact computation.
 
-The density-0 sieve bound (Theorem 14) combined with the Burgess bound (Proposition 8) already proves the Erdős–Straus conjecture for all primes n ≡ 1 mod 12, n ≢ 0 mod 5, with A = O(n^{1/(4√e)+ε}). The constant bound C = 139 holds computationally for n ≤ 10M.
+The Burgess-style estimate gives an analytic upper-bound route under the stated hypotheses. Combining it with the covering-set framework suggests A = O(n^{1/(4√e)+ε}) for the remaining prime cases, but the manuscript should not claim this as a completed proof until the sieve and covering assumptions are fully formalized. The constant bound C = 139 holds computationally for n ≤ 10M.
 
 ### 3.3 Partial −1 Route Result
 
