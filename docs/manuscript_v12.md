@@ -176,9 +176,7 @@ When A = 3 is inapplicable AND n is QR mod all of {7, 11, 19, 23, 31}, the m-rou
 
 When all of Layers 1–4 fail (all 5 m_A simultaneously all-QR), the extended covering set {3, 7, 11, 19, 23, 31, 43, 59, 107, 131, 139} provides rescue via m-route with larger A values.
 
-**Status:** 66 cases up to 10M (0.04%), all rescued. Maximum A needed: 139 (n = 4,766,689). Zero unrescued cases.
-
-**Note on max A:** The earlier Layer 4 first-working scan reported A = 107 as the largest first-working A under the original extended-A order. After exact composite-A reclassification and rescue-chain decomposition, the corrected covering/rescue set includes A = 139, with n = 4,766,689 as the largest-A rescue-chain case. These are different summaries: first-working scan versus corrected rescue-chain covering set. The A = 107 case (n = 8,803,369) remains the largest value in the earlier prime-A first-working scan before v12 rescue-chain refinement.
+**Status:** 66 cases up to 10M (0.04%), all rescued. The earlier rescue-chain decomposition reported a maximum rescue-chain value A = 139 for n = 4,766,689. This is superseded by the direct certificate search: the generated certificates find a working A ≤ 107 for every admissible prime n ≤ 10M. In particular, n = 4,766,689 is certified with A = 39, while n = 8,803,369 is certified with A = 107. Thus the current exact computational certificate bound is A ≤ 107 for the tested range. Zero unrescued cases.
 
 **Coverage summary (n ≤ 10M, 166,011 primes):**
 
@@ -193,7 +191,7 @@ When all of Layers 1–4 fail (all 5 m_A simultaneously all-QR), the extended co
 
 Layers 1–3 account for 99.31% of tested prime cases by proven route families; Layers 4–5 account for the remaining cases by exact computation.
 
-The Burgess-style estimate gives an analytic upper-bound route under the stated hypotheses. Combining it with the covering-set framework suggests A = O(n^{1/(4√e)+ε}) for the remaining prime cases, but the manuscript should not claim this as a completed proof until the sieve and covering assumptions are fully formalized. The constant bound C = 139 holds computationally for n ≤ 10M.
+The Burgess-style estimate gives an analytic upper-bound route under the stated hypotheses. Combining it with the covering-set framework suggests A = O(n^{1/(4√e)+ε}) for the remaining prime cases, but the manuscript should not claim this as a completed proof until the sieve and covering assumptions are fully formalized. The tested certificate bound C = 107 holds computationally for the admissible primes n ≤ 10M.
 
 ### 3.3 Partial −1 Route Result
 
@@ -326,7 +324,7 @@ The single-A analysis reveals that for each A, there exist n values where T ∉ 
 
 All 65 cases are covered by A ≤ 59, except the known outlier n = 8,803,369 requiring A = 107 (consistent with Theorem 7). ∎
 
-**Remark.** The covering set {3, 7, 11, 15, 19, 23, 27, 31} is sufficient for n ≤ 100,000 but NOT for n ≤ 10,000,000. The 65 uncovered cases first appear around n ≈ 119,000. Extending the covering set to include A ∈ {35, 39, 43, 47, 51, 55, 59} would cover all n ≤ 10,000,000 except the known outlier. The constant bound conjecture holds with C = 107 for n ≤ 10,000,000, and with C = 59 for n < 8,800,000.
+**Remark.** The covering set {3, 7, 11, 15, 19, 23, 27, 31} is sufficient for n ≤ 100,000 but NOT for n ≤ 10,000,000. The 65 uncovered cases first appear around n ≈ 119,000. Extending the covering set to include A ∈ {35, 39, 43, 47, 51, 55, 59} would cover all n ≤ 10,000,000 except the known outlier. The tested certificate bound holds with C = 107 for n ≤ 10,000,000, and with C = 59 for n < 8,800,000.
 
 #### 3.8.1 Gap Case Analysis
 
@@ -737,7 +735,7 @@ The covering set {3, 7, 11, 15, 19, 23, 27, 31} (verified for n ≤ 100,000) ope
 
 **Proof.** For n ≡ 5 (mod 8): A = 3 works by Theorem 2 (proven unconditionally). For n ≡ 1 (mod 8): the covering set {3, 7, 11, 19, 23, 31} provides coverage via a combination of direct and m-routes. When (7/n) = −1, A = 7 works directly (Jacobi identity). When (7/n) = 1, A = 3 or A = 7 m-route covers most cases; the residual hard cases (where both m₃ and m₇/2 are all-QR) are rescued by A = 11 (most common), A = 19, or A = 23. Verified computationally: 0 uncovered cases among 166,011 primes up to 10M (Theorem 9a). The key structural identity m₃ = 2·(m₇/2) − 1 ensures gcd(m₃, m₇/2) = 1, so m₃ and m₇/2 use disjoint prime sets. ∎
 
-**Remark.** The covering set {3, 7, 11, 15, 19, 23, 27, 31} was verified for n ≤ 100,000 in Theorem 9, and the extended covering set with A ≤ 59 covers all n ≤ 10M except the known outlier (n = 8,803,369, A = 107). The constant bound conjecture holds with C = 107 for n ≤ 10M. A heuristic Mertens-type argument (§5.1) suggests C exists for all primes but does not yield an explicit finite bound.
+**Remark.** The covering set {3, 7, 11, 15, 19, 23, 27, 31} was verified for n ≤ 100,000 in Theorem 9, and the extended covering set with A ≤ 59 covers all n ≤ 10M except the known outlier (n = 8,803,369, A = 107). The tested certificate bound holds with C = 107 for n ≤ 10M. A heuristic Mertens-type argument (§5.1) suggests C exists for all primes but does not yield an explicit finite bound.
 
 ### 5.1 Heuristic Argument for the Constant Bound (New in v11)
 
