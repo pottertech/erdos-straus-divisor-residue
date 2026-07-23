@@ -29,53 +29,10 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install -r requirements.txt
-      - name: Verify certificates
+      - name: Verify certificates (per-record)
         run: python analysis/layer4/verify_certificates.py
-      - name: Check certificate count, max-A, uniqueness
-        run: |
-          python3 -c "
-          import json, sys
-          EXPECTED_COUNT = 166011
-          EXPECTED_MAX_A = 107
-          records = []
-          parse_errors = 0
-          seen_n = set()
-          duplicates = 0
-          with open('results/layer4_certificates.jsonl', encoding='utf-8-sig') as f:
-              for line in f:
-                  line = line.strip()
-                  if not line:
-                      continue
-                  try:
-                      cert = json.loads(line)
-                      n = cert.get('n', 0)
-                      if n in seen_n:
-                          duplicates += 1
-                      seen_n.add(n)
-                      records.append(cert)
-                  except json.JSONDecodeError:
-                      parse_errors += 1
-          count = len(records)
-          max_a = max((r.get('A', 0) for r in records), default=0)
-          unique_n = len(seen_n)
-          errors = []
-          if parse_errors > 0:
-              errors.append(f'Parse errors: {parse_errors}')
-          if count != EXPECTED_COUNT:
-              errors.append(f'Count: {count} != {EXPECTED_COUNT}')
-          if max_a != EXPECTED_MAX_A:
-              errors.append(f'Max A: {max_a} != {EXPECTED_MAX_A}')
-          if duplicates > 0:
-              errors.append(f'Duplicates: {duplicates}')
-          if unique_n != count:
-              errors.append(f'Unique n: {unique_n} != count: {count}')
-          print(f'Records: {count}, Parse errors: {parse_errors}, Unique: {unique_n}, Duplicates: {duplicates}, Max A: {max_a}')
-          if errors:
-              for e in errors:
-                  print(f'  FAIL: {e}')
-              sys.exit(1)
-          print('All certificate checks PASS')
-          "
+      - name: Check certificate dataset integrity
+        run: python analysis/layer4/check_certificate_dataset.py
 
   audit:
     runs-on: ubuntu-latest

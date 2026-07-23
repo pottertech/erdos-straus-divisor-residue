@@ -5,16 +5,14 @@
 # Runs all verification checks and reports status clearly.
 #
 # Usage:
-#   bash scripts/audit_all.sh          # convenience mode (SKIP allowed)
-#   bash scripts/audit_all.sh --strict  # release/reviewer mode (no skips)
+#   bash scripts/audit_all.sh            # convenience mode (SKIP allowed)
+#   bash scripts/audit_all.sh --strict   # release/reviewer mode (no skips)
 #
 # In strict mode:
 #   - missing Lake fails
 #   - missing certificate file fails
 #   - any skipped core check fails
 # ============================================
-
-set -e
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$REPO_ROOT"
@@ -73,9 +71,9 @@ fi
 echo ""
 
 # ============================================
-# 2. Certificate verification
+# 2. Certificate verification (per-record)
 # ============================================
-echo "--- 2. CERTIFICATE VERIFICATION ---"
+echo "--- 2. CERTIFICATE VERIFICATION (per-record) ---"
 CERT_STATUS="SKIP"
 if [ -f "results/layer4_certificates.jsonl" ]; then
     if python3 analysis/layer4/verify_certificates.py 2>&1; then
@@ -100,80 +98,28 @@ fi
 echo ""
 
 # ============================================
-# 3. Certificate count, max-A, uniqueness, and domain coverage
+# 3. Certificate dataset integrity (count, max-A, uniqueness, domain)
 # ============================================
-echo "--- 3. CERTIFICATE COUNT, MAX-A, UNIQUENESS, DOMAIN ---"
-if [ -f "results/layer4_certificates.jsonl" ]; then
-    python3 -c "
-import json, sys
-
-EXPECTED_COUNT = $EXPECTED_CERT_COUNT
-EXPECTED_MAX_A = $EXPECTED_MAX_A
-
-records = []
-parse_errors = 0
-seen_n = set()
-duplicates = 0
-
-with open('results/layer4_certificates.jsonl', encoding='utf-8-sig') as f:
-    for line in f:
-        line = line.strip()
-        if not line:
-            continue
-        try:
-            cert = json.loads(line)
-            n = cert.get('n', 0)
-            if n in seen_n:
-                duplicates += 1
-            seen_n.add(n)
-            records.append(cert)
-        except json.JSONDecodeError:
-            parse_errors += 1
-
-count = len(records)
-max_a = max((r.get('A', 0) for r in records), default=0)
-unique_n = len(seen_n)
-
-errors = []
-
-if parse_errors > 0:
-    errors.append(f'Parse errors: {parse_errors} (expected: 0)')
-if count != EXPECTED_COUNT:
-    errors.append(f'Count: {count} (expected: {EXPECTED_COUNT})')
-if max_a != EXPECTED_MAX_A:
-    errors.append(f'Max A: {max_a} (expected: {EXPECTED_MAX_A})')
-if duplicates > 0:
-    errors.append(f'Duplicate n values: {duplicates} (expected: 0)')
-if unique_n != count:
-    errors.append(f'Unique n values: {unique_n} != record count: {count}')
-
-print(f'Records: {count} (expected: {EXPECTED_COUNT})')
-print(f'Parse errors: {parse_errors} (expected: 0)')
-print(f'Unique n values: {unique_n}')
-print(f'Duplicates: {duplicates} (expected: 0)')
-print(f'Max A: {max_a} (expected: {EXPECTED_MAX_A})')
-
-if errors:
-    print('Count/max-A/uniqueness check: FAIL ❌')
-    for e in errors:
-        print(f'  {e}')
-    sys.exit(1)
-else:
-    print('Count/max-A/uniqueness check: PASS ✅')
-    sys.exit(0)
-" 2>&1
-    if [ $? -eq 0 ]; then
+echo "--- 3. CERTIFICATE DATASET INTEGRITY ---"
+DATASET_STATUS="SKIP"
+if [ -f "results/layer4_certificates.jsonl" ] && [ -f "analysis/layer4/check_certificate_dataset.py" ]; then
+    if python3 analysis/layer4/check_certificate_dataset.py 2>&1; then
+        DATASET_STATUS="PASS"
         pass
+        echo "Dataset integrity: PASS ✅"
     else
+        DATASET_STATUS="FAIL"
         fail
+        echo "Dataset integrity: FAIL ❌"
     fi
 else
     if [ "$STRICT" = true ]; then
+        DATASET_STATUS="FAIL"
         fail
-        echo "Certificate count check: FAIL ❌ (file not found — strict mode)"
+        echo "Dataset integrity: FAIL ❌ (file not found — strict mode)"
     else
         skip
-        echo "Certificate count check: SKIP ⚠️ (file not found)"
+        echo "Dataset integrity: SKIP ⚠️ (file not found)"
     fi
 fi
 echo ""
@@ -217,6 +163,7 @@ echo "  AUDIT SUMMARY"
 echo "================================================================"
 echo "Lean build:              $LEAN_STATUS"
 echo "Certificate verification: $CERT_STATUS"
+echo "Dataset integrity:       $DATASET_STATUS"
 echo "sorry proof terms:       $SORRY_COUNT (expected: 0)"
 echo "axioms/conjectures:      $AXIOM_COUNT (intentional)"
 echo "Pass: $PASS_COUNT  Fail: $FAIL_COUNT  Skip: $SKIP_COUNT"
