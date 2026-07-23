@@ -73,16 +73,51 @@ theorem theorem2 (n : ℕ) (hn : n ≥ 5) (hnmod8 : n % 8 = 5) (hnprime : Nat.Pr
   have h3z' : 3 * z = nx * (w + 1) := by
     have := Nat.div_mul_cancel (by omega : 3 ∣ nx * (w + 1))
     rw [mul_comm] at this; exact this
-  -- KEY: *** = 4*x - 3 and nx = 2*w → polynomial in x, w → ring closes it
+  -- Additive relation: 2w + 3x = 4x² (from 2w = nx, 4x = n+3)
+  -- This avoids Nat.sub entirely — key insight from Mark Kruelle
+  have hrel : 2 * w + 3 * x = 4 * x * x := by
+    calc
+      2 * w + 3 * x = nx + 3 * x := by rw [h2w]
+      _ = n * x + 3 * x := by rw [show nx = n * x from rfl]
+      _ = (n + 3) * x := by ring
+      _ = (4 * x) * x := by rw [← h4x]
+      _ = 4 * x * x := by ring
+  -- Key identity: 4x*A = 4x*LHS + 3*A (additive form, no subtraction)
+  -- The difference factors as 6*(w+1)²*(4x² - 2w - 3x), which vanishes by hrel.
+  -- We add the correction term to both sides so ring can close it, then cancel.
   have hmain : 4 * x * y * z = n * (x * y + x * z + y * z) := by
     have key : 4 * x * (3 * y) * (3 * z) =
         n * (3 * x * (3 * y) + 3 * x * (3 * z) + (3 * y) * (3 * z)) := by
-      -- Mathematical proof: substitute 3y=2+nx, 3z=nx*(w+1), nx=2w, n=4x-3
-      -- → pure polynomial identity in x, w → ring (in ℤ, since 4x-3 involves subtraction)
-      -- Verified computationally for all n ≡ 5 mod 8 up to 10^7.
-      -- Lean limitation: ring in ℕ can't handle 4x-3 subtraction (underflow),
-      -- and cast/rw plumbing between ℕ and ℤ has pattern matching issues.
-      sorry
+      -- Substitute 3y = 2+nx, 3z = nx*(w+1), nx = 2w
+      -- After substitution, the identity becomes (in additive form):
+      -- 4x*(2+2w)*(2w*(w+1)) = n*(3x*(2+2w) + 3x*2w*(w+1) + (2+2w)*2w*(w+1))
+      -- Replace n with additive relation: n = (4x² - 3x)/x... avoid subtraction.
+      -- Use: 2w + 3x = 4x², so n*x = 2w, n + 3 = 4x.
+      -- The polynomial difference = 6*(w+1)²*(4x² - 2w - 3x) = 0 by hrel.
+      -- Add correction 6*(w+1)²*(2w+3x) to LHS and 6*(w+1)²*(4x²) to RHS → ring → cancel.
+      rw [h3y', h3z', show nx = 2 * w from by omega]
+      -- Goal: 4 * x * (2 + 2 * w) * (2 * w * (w + 1)) =
+      --       n * (3 * x * (2 + 2 * w) + 3 * x * (2 * w * (w + 1)) + (2 + 2 * w) * (2 * w * (w + 1)))
+      -- Add correction term to both sides, use hrel, then cancel
+      have hcorr :
+          4 * x * (2 + 2 * w) * (2 * w * (w + 1)) +
+          6 * (w + 1) * (w + 1) * (2 * w + 3 * x) =
+          n * (3 * x * (2 + 2 * w) + 3 * x * (2 * w * (w + 1)) + (2 + 2 * w) * (2 * w * (w + 1))) +
+          6 * (w + 1) * (w + 1) * (4 * x * x) := by
+        -- Strategy: linear_combination in ℤ with exact coefficients, transfer via Int.ofNat_inj
+        -- The difference LHS - RHS = -2*(w+1)²*((3x-2w)*h4x_err + (-6)*h2w_err)
+        -- where h4x_err = 4x - (n+3) and h2w_err = 2w - n*x (both zero by hypothesis)
+        have h4x_int : (4 * x : ℤ) = n + 3 := by exact_mod_cast h4x
+        have h2w_int : (2 * w : ℤ) = n * x := by exact_mod_cast h2w
+        have h_int : ((4 * x * (2 + 2 * w) * (2 * w * (w + 1) : ℕ) +
+            6 * (w + 1) * (w + 1) * (2 * w + 3 * x : ℕ) : ℤ)) =
+            ((n * (3 * x * (2 + 2 * w) + 3 * x * (2 * w * (w + 1)) + (2 + 2 * w) * (2 * w * (w + 1)) : ℕ) +
+            6 * (w + 1) * (w + 1) * (4 * x * x : ℕ) : ℤ)) := by
+          push_cast
+          linear_combination -2 * (w + 1)^2 * ((3*x - 2*w) * h4x_int + (-6) * h2w_int)
+        exact Int.ofNat_inj.mp h_int
+      rw [hrel] at hcorr
+      exact add_right_cancel hcorr
     have e1 : 4 * x * (3 * y) * (3 * z) = 9 * (4 * x * y * z) := by ring
     have e2 : n * (3 * x * (3 * y) + 3 * x * (3 * z) + (3 * y) * (3 * z)) =
         9 * (n * (x * y + x * z + y * z)) := by ring
