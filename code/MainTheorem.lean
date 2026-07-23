@@ -142,16 +142,63 @@ theorem erdos_straus_not_mod_12_1 (n : ℕ) (hn : n ≥ 2) (h : n % 12 ≠ 1) :
   exact absurd h1_12 h
 
 -- ============================================
+-- THEOREM: Open class partially resolved by theorem2
+-- ============================================
+-- The broad unresolved residue class is n ≡ 1 (mod 12), 5 ∤ n, n ≥ 13.
+-- Within that class, the prime subfamily n ≡ 5 (mod 8) is proven
+-- separately by theorem2 in CenteredEquivalence.lean.
+-- This theorem makes that integration explicit.
+
+theorem erdos_straus_open_class_except_prime_5_mod_8
+    (n : ℕ) (hn : n ≥ 2)
+    (h_not_open : ¬(n % 12 = 1 ∧ n % 5 ≠ 0 ∧ n ≥ 13
+      ∧ ¬(Nat.Prime n ∧ n % 8 = 5))) :
+    IsErdosStraus n := by
+  have hclass := residue_classification n hn
+  rcases hclass with h0 | h2 | h4 | h7 | h10 | ⟨h1_12, h5_0⟩ | ⟨h1_12, h5_ne0⟩
+  · exact mod_3_zero n hn h0
+  · exact mod_3_two n hn h2
+  · exact mod_12_four n (by omega) h4
+  · exact mod_12_seven n (by omega) h7
+  · exact mod_12_ten n (by omega) h10
+  · exact mod_12_one_mod_5_zero n (by omega) h1_12 h5_0
+  · -- n ≡ 1 (mod 12), 5 ∤ n: the open class
+    -- Either n < 13 (covered by small cases) or n ≥ 13
+    by_cases h_ge13 : n ≥ 13
+    · -- n ≥ 13: either prime ∧ n ≡ 5 mod 8 (theorem2) or excluded by hypothesis
+      by_cases h_prime_5mod8 : Nat.Prime n ∧ n % 8 = 5
+      · -- Proven by theorem2
+        exact theorem2 n (by omega) h_prime_5mod8.2 h_prime_5mod8.1
+      · -- Excluded by h_not_open
+        exfalso
+        exact h_not_open ⟨h1_12, h5_ne0, h_ge13, fun h => absurd h h_prime_5mod8⟩
+    · -- n < 13: covered by small cases (n = 1 excluded by hn ≥ 2)
+      -- n ≡ 1 mod 12, n ≥ 2, n < 13 → n = 1 (excluded) — contradiction
+      exfalso
+      have : n = 12 * (n / 12) + n % 12 := (Nat.div_add_mod n 12).symm
+      rw [h1_12] at this
+      have h_div : n / 12 = 0 := by omega
+      rw [h_div, Nat.zero_mul, Nat.add_zero] at this
+      omega
+
+-- ============================================
 -- SUMMARY
 -- ============================================
+-- Lean status: zero `sorry` proof terms remain. The final residue class
+-- is represented explicitly as an axiom (axiomatic placeholder), not as
+-- a proven theorem.
+--
 -- The Erdős-Straus conjecture is machine-verified for:
 --   • All n ≢ 1 (mod 12)  [erdos_straus_not_mod_12_1]
 --   • All n < 13          [erdos_straus_small]
 --   • All n ≡ 1 (mod 12) with 5 | n  [mod_12_one_mod_5_zero]
 --   • All primes n ≡ 5 (mod 8)       [theorem2 in CenteredEquivalence.lean]
 --
--- The only remaining open case is:
---   • n ≡ 1 (mod 12), 5 ∤ n, n ≥ 13  [conjecture in Mod12Case1.lean]
+-- The broad unresolved residue class is:
+--   • n ≡ 1 (mod 12), 5 ∤ n, n ≥ 13  [axiom in Mod12Case1.lean]
+--
+-- Within that class, the prime subfamily n ≡ 5 (mod 8) is proven
+-- separately by theorem2, integrated in erdos_straus_open_class_except_prime_5_mod_8.
 --
 -- Computational verification: 166,011 certificates for all admissible
 -- primes n ≤ 10M (Layer 4), with independent verification via
