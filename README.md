@@ -61,11 +61,19 @@ Erdős–Straus conjecture.
   Composite-A first-working cases rechecked by exact T ∈ D_A: 1,078 confirmed,
   37 Jacobi false positives reclassified to prime-A rescue values. Zero
   unresolved cases. See `analysis/layer4/` for full report.
-- **Preliminary Lean 4 formalization:** `analysis/layer4/CenteredEquivalence.lean`
-  proves the centered-bijection lemma and most of the n ≡ 5 mod 8 construction.
-  One algebraic identity remains marked by `sorry`; Theorem 3a is currently a
-  placeholder. This is included as a formalization track, not as completed
-  machine-checked proof.
+- **Lean 4 formalization:** `code/CenteredEquivalence.lean` proves the
+  centered-bijection lemma and the n ≡ 5 mod 8 construction (theorem2) with
+  zero `sorry` — using `linear_combination` + `Int.ofNat_inj` (Zify strategy).
+  `code/Identities.lean` proves 6 modular identities with `ring`.
+  `code/MainTheorem.lean` adds a coverage theorem and main theorem combining
+  all proven cases. Zero `sorry` proof terms remain. The final residue class
+  (n ≡ 1 mod 12, 5 ∤ n, n ≥ 13) is represented explicitly as an `axiom` with
+  a docstring marking it as CONJECTURE (not proven). This is an axiomatic
+  placeholder, not a machine-checked proof for that case.
+  Theorem2 (n ≡ 5 mod 8, n prime) is integrated via
+  `erdos_straus_except_residual_open_class`.
+  Computational certificates (166,011 verified primes n ≤ 10M) are maintained
+  as a separate auditable layer in `results/layer4_certificates.jsonl`.
 
 ## Open Problems
 

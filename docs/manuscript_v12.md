@@ -18,7 +18,7 @@ New in v10: Problems #7 and #8 are resolved. Theorem 11 (Per-h Gap Bound) proves
 
 Computationally, A ≤ 31 covers all 6,666 cases up to n = 100,000, and A ≤ 99 covers all but one of 666,666 cases up to n = 10,000,000.
 
-New in v11: Problem #5 (Burgess bound) is fully proven (8-step proof, Proposition 8). Problems #3/#4 (constant bound) are refined: C = 31 for primes ≤ 10M (Theorem 13). The key structural identity m₃ = 2·(m₇/2) − 1 (coprimality) provides the mechanism. A heuristic Mertens-type argument (§5.1) suggests C exists for all primes. All 8 open problems are now resolved or refined.
+New in v11: Problem #5 (Burgess bound) is fully proven (8-step proof, Proposition 8). Problems #3/#4 (certificate bound) are refined: C = 31 for primes ≤ 10M (Theorem 13). The key structural identity m₃ = 2·(m₇/2) − 1 (coprimality) provides the mechanism. A heuristic Mertens-type argument (§5.1) suggests C exists for all primes. All 8 open problems are now resolved or refined.
 
 ---
 
@@ -731,7 +731,7 @@ The covering set {3, 7, 11, 15, 19, 23, 27, 31} (verified for n ≤ 100,000) ope
 
 ## 5. The Constant Bound Conjecture
 
-**Theorem 13 (Constant Bound for Primes, computationally verified).** *For every prime n ≤ 10,000,000 with n ≡ 1 (mod 12), n ≢ 0 (mod 5): there exists A ≤ 31 with A ≡ 3 (mod 4) and T ∈ D_A((nx)²). The constant bound holds with C = 31 for primes n ≤ 10,000,000.*
+**Theorem 13 (Certificate Bound for Primes, computationally verified).** *For every prime n ≤ 10,000,000 with n ≡ 1 (mod 12), n ≢ 0 (mod 5): there exists A ≤ 31 with A ≡ 3 (mod 4) and T ∈ D_A((nx)²). The tested certificate bound holds with C = 31 for primes n ≤ 10,000,000.*
 
 **Proof.** For n ≡ 5 (mod 8): A = 3 works by Theorem 2 (proven unconditionally). For n ≡ 1 (mod 8): the covering set {3, 7, 11, 19, 23, 31} provides coverage via a combination of direct and m-routes. When (7/n) = −1, A = 7 works directly (Jacobi identity). When (7/n) = 1, A = 3 or A = 7 m-route covers most cases; the residual hard cases (where both m₃ and m₇/2 are all-QR) are rescued by A = 11 (most common), A = 19, or A = 23. Verified computationally: 0 uncovered cases among 166,011 primes up to 10M (Theorem 9a). The key structural identity m₃ = 2·(m₇/2) − 1 ensures gcd(m₃, m₇/2) = 1, so m₃ and m₇/2 use disjoint prime sets. ∎
 
@@ -873,7 +873,7 @@ Verified the conjecture computationally up to n = 10¹⁷. Our work provides a s
 
 2. ~~**D_A closure and the shifted divisor-residue set:**~~ **RESOLVED (v9).** The shifted set D_A^{(nm)} is a dead end: T ∈ D_A^{(nm)} in 0 of 2,213 anomalous cases. The correct proof mechanism is the covering set property (Theorem 9), not the −1 factorization path. The 1,322 cases where T ∈ D_A via alternative paths use genuinely different exponent vectors, not the (−1)·(nm) multiplication.
 
-3. **Constant bound conjecture:** Theorem 13 verifies C = 31 for primes ≤ 10M (corrected from earlier C = 7 claim). The covering set {3,7,11,19,23,31} suffices for primes ≤ 10M. A heuristic Mertens-type argument (§5.1) suggests C exists for all primes but does not yield an explicit bound. **Status: partially resolved — computational verification complete, formal proof open.**
+3. **Certificate bound conjecture:** Theorem 13 verifies C = 31 for primes ≤ 10M (corrected from earlier C = 7 claim). The covering set {3,7,11,19,23,31} suffices for primes ≤ 10M. A heuristic Mertens-type argument (§5.1) suggests C exists for all primes but does not yield an explicit bound. **Status: partially resolved — computational verification complete, formal proof open.**
 
 4. **Covering system proof:** The covering set {3, 7, 11, 15, 19, 23, 27, 31} covers all n ≤ 100,000 (Theorem 9). Extended to A ≤ 59 for n ≤ 10M (Theorem 9a). **Status: computationally verified, formal proof open.** The key structural identity m₃ = 2·(m₇/2) − 1 (coprimality) provides the mechanism for why m₃ and m₇/2 cannot both be all-QR for large n.
 
@@ -908,3 +908,25 @@ The author used Brodie Foxworth, an AI research agent, to assist with computatio
 ---
 
 *Computational tools: Python 3.13, SymPy 1.14.0. All computations verified with exact rational arithmetic.*
+
+---
+
+## Appendix: Lean 4 Formalization Status
+
+The project includes a Lean 4 formalization track with the following status:
+
+**Proven in Lean (machine-verified, zero `sorry`):**
+- 6 modular identities (`code/Identities.lean`): n ≡ 0 (mod 3), n ≡ 2 (mod 3), n ≡ 4 (mod 12), n ≡ 7 (mod 12), n ≡ 10 (mod 12), n ≡ 1 (mod 12) ∧ 5 | n — all verified via `ring`.
+- Theorem 2 (`code/CenteredEquivalence.lean`): n ≡ 5 (mod 8), n prime — proven via `linear_combination` + `Int.ofNat_inj`.
+- Coverage theorem (`code/MainTheorem.lean`): every n ≥ 2 falls into one of 7 residue classes.
+- Main theorem: `erdos_straus_proven_cases` — all n ≥ 2 except the open class.
+- theorem2 integration: `erdos_straus_except_residual_open_class` — carves out prime n ≡ 5 (mod 8) subfamily from the open class.
+
+**Axiomatic placeholder (not proven):**
+- The final residue class n ≡ 1 (mod 12), 5 ∤ n, n ≥ 13 is declared as an `axiom` with a docstring explicitly marking it as CONJECTURE (not proven). This is an axiomatic placeholder, not a machine-checked proof.
+
+**Lean status summary:** Zero `sorry` proof terms remain. The final residue class is represented explicitly as an axiom, not as a proven theorem. The Burgess bound (Proposition 8) also appears as axioms in the Lean code.
+
+**Computational certificates (separate layer):**
+- 166,011 auditable certificates for all admissible primes n ≤ 10M (`results/layer4_certificates.jsonl`).
+- Independent verifier: `analysis/layer4/verify_certificates.py` — 100% pass rate.
