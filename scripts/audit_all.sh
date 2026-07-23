@@ -167,42 +167,55 @@ echo ""
 
 # Find all axiom declarations in code/
 AXIOM_FOUND=$(grep -rn "^axiom\|^[[:space:]]*axiom" code/ analysis/layer4/ 2>/dev/null || true)
-AXIOM_COUNT=$(echo "$AXIOM_FOUND" | grep -c . 2>/dev/null || echo 0)
 
-echo "Found $AXIOM_COUNT axiom(s) in code:"
-if [ -z "$AXIOM_FOUND" ]; then
-    echo "  (none found)"
-else
-    echo "$AXIOM_FOUND" | while IFS= read -r line; do
-        echo "  $line"
-    done
+# Normalize discovered axioms to file:name format
+FOUND_AXIOMS=()
+if [ -n "$AXIOM_FOUND" ]; then
+    while IFS= read -r line; do
+        [ -z "$line" ] && continue
+        # Extract file path (everything before first :)
+        file=$(echo "$line" | cut -d: -f1)
+        # Extract axiom name: remove line number and whitespace, then take first token after 'axiom'
+        name=$(echo "$line" | sed 's/.*axiom[[:space:]]*//' | awk '{print $1}')
+        FOUND_AXIOMS+=("${file}:${name}")
+    done <<< "$AXIOM_FOUND"
 fi
+
+AXIOM_COUNT=${#FOUND_AXIOMS[@]}
+echo "Found $AXIOM_COUNT axiom(s) in code:"
+for ax in "${FOUND_AXIOMS[@]}"; do
+    echo "  $ax"
+done
 echo ""
 
-# Compare against whitelist
+# Compare against whitelist: check for missing expected and unexpected found
 AXIOM_ERRORS=""
-for ax in "${EXPECTED_AXIOMS[@]}"; do
-    AX_FILE=$(echo "$ax" | cut -d: -f1)
-    AX_NAME=$(echo "$ax" | cut -d: -f2 | tr -d ' ')
-    if ! echo "$AXIOM_FOUND" | grep -q "$AX_NAME"; then
-        AXIOM_ERRORS="${AXIOM_ERRORS}Missing expected axiom: $ax\n"
-    fi
-done
 
-# Check for unexpected axioms
-echo "$AXIOM_FOUND" | while IFS= read -r line; do
-    [ -z "$line" ] && continue
-    # Extract the axiom name from the line
-    AX_NAME=$(echo "$line" | sed 's/.*axiom[[:space:]]*//' | awk '{print $1}')
-    FOUND=0
-    for ax in "${EXPECTED_AXIOMS[@]}"; do
-        if echo "$ax" | grep -q "$AX_NAME"; then
-            FOUND=1
+# Check each expected axiom is present
+for expected in "${EXPECTED_AXIOMS[@]}"; do
+    found=false
+    for actual in "${FOUND_AXIOMS[@]}"; do
+        if [ "$actual" = "$expected" ]; then
+            found=true
             break
         fi
     done
-    if [ "$FOUND" -eq 0 ]; then
-        echo "  UNEXPECTED AXIOM: $line"
+    if [ "$found" = false ]; then
+        AXIOM_ERRORS="${AXIOM_ERRORS}Missing expected axiom: ${expected}\n"
+    fi
+done
+
+# Check each found axiom is expected
+for actual in "${FOUND_AXIOMS[@]}"; do
+    expected=false
+    for allowed in "${EXPECTED_AXIOMS[@]}"; do
+        if [ "$actual" = "$allowed" ]; then
+            expected=true
+            break
+        fi
+    done
+    if [ "$expected" = false ]; then
+        AXIOM_ERRORS="${AXIOM_ERRORS}Unexpected axiom: ${actual}\n"
     fi
 done
 
