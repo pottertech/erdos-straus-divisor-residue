@@ -149,7 +149,7 @@ theorem erdos_straus_not_mod_12_1 (n : ℕ) (hn : n ≥ 2) (h : n % 12 ≠ 1) :
 -- separately by theorem2 in CenteredEquivalence.lean.
 -- This theorem makes that integration explicit.
 
-theorem erdos_straus_open_class_except_prime_5_mod_8
+theorem erdos_straus_except_residual_open_class
     (n : ℕ) (hn : n ≥ 2)
     (h_not_open : ¬(n % 12 = 1 ∧ n % 5 ≠ 0 ∧ n ≥ 13
       ∧ ¬(Nat.Prime n ∧ n % 8 = 5))) :
@@ -198,7 +198,7 @@ theorem erdos_straus_open_class_except_prime_5_mod_8
 --   • n ≡ 1 (mod 12), 5 ∤ n, n ≥ 13  [axiom in Mod12Case1.lean]
 --
 -- Within that class, the prime subfamily n ≡ 5 (mod 8) is proven
--- separately by theorem2, integrated in erdos_straus_open_class_except_prime_5_mod_8.
+-- separately by theorem2, integrated in erdos_straus_except_residual_open_class.
 --
 -- Computational verification: 166,011 certificates for all admissible
 -- primes n ≤ 10M (Layer 4), with independent verification via
