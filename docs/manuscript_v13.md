@@ -135,17 +135,19 @@ Full audit: `bash scripts/audit_all.sh`
 
 ## 7. Remaining Open Class
 
-The only remaining open case is:
+The broad remaining open case is:
 
 $$n \equiv 1 \pmod{12}, \quad 5 \nmid n, \quad n \geq 13$$
 
-**What is proven within this class:**
+**Already proven within this class:**
 - Prime n ≡ 5 (mod 8): proven by theorem2 (Lean-verified)
-- n ≡ 0 (mod 5): proven by `mod_12_one_mod_5_zero` (Lean-verified)
 
-**What remains open:**
-- Composite n ≡ 1 (mod 12), 5 ∤ n, n ≡ 1 (mod 8)
-- Prime n ≡ 1 (mod 12), 5 ∤ n, n ≡ 1 (mod 8)
+Note: n ≡ 0 (mod 5) is NOT part of the residual class — the class explicitly assumes 5 ∤ n. The case 5 | n is handled separately by `mod_12_one_mod_5_zero` and is outside the open class entirely.
+
+**Still unresolved within the broad residual class** (all with n ≡ 1 mod 12, 5 ∤ n, n ≥ 13):
+- Composite n ≡ 5 (mod 8) — theorem2 requires primality, so composites are not covered
+- Composite n ≡ 1 (mod 8)
+- Prime n ≡ 1 (mod 8)
 
 **Evidence for the open case:**
 - 166,011 computational certificates, all verified
