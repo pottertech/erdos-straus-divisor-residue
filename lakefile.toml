@@ -8,7 +8,7 @@ name = "ErdosStrausConjecture"
 [[require]]
 name = "mathlib"
 git = "https://github.com/leanprover-community/mathlib4"
-rev = "v4.33.0-rc1"
+rev = "v4.30.0"
 
 [[lean_exe]]
 name = "erdosstrausconjecture"

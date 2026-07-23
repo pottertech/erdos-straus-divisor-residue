@@ -30,6 +30,7 @@ EXPECTED_MAX_A=107
 # Whitelist of intentional axioms (file: name)
 EXPECTED_AXIOMS=(
     "code/Mod12Case1.lean:erdos_straus_mod_12_1_not_div_5_conjecture"
+    "code/DivisorResidue.lean:divisor_residue_criterion_reverse"
     "code/NewTheorems.lean:C_burgess"
     "code/NewTheorems.lean:burgess_least_qnr_bound"
 )
