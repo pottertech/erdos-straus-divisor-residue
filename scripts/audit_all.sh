@@ -14,6 +14,8 @@
 #   - any skipped core check fails
 # ============================================
 
+set -o pipefail
+
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$REPO_ROOT"
 
@@ -24,6 +26,13 @@ fi
 
 EXPECTED_CERT_COUNT=166011
 EXPECTED_MAX_A=107
+
+# Whitelist of intentional axioms (file: name)
+EXPECTED_AXIOMS=(
+    "code/Mod12Case1.lean:erdos_straus_mod_12_1_not_div_5_conjecture"
+    "code/NewTheorems.lean:C_burgess"
+    "code/NewTheorems.lean:burgess_least_qnr_bound"
+)
 
 PASS_COUNT=0
 FAIL_COUNT=0
@@ -48,15 +57,19 @@ echo ""
 echo "--- 1. LEAN BUILD ---"
 LEAN_STATUS="SKIP"
 if command -v lake &> /dev/null; then
-    if lake build 2>&1 | tail -5; then
+    LEAN_LOG=$(mktemp)
+    if lake build >"$LEAN_LOG" 2>&1; then
+        tail -5 "$LEAN_LOG"
         LEAN_STATUS="PASS"
         pass
         echo "Lean build: PASS ✅"
     else
+        tail -20 "$LEAN_LOG"
         LEAN_STATUS="FAIL"
         fail
         echo "Lean build: FAIL ❌"
     fi
+    rm -f "$LEAN_LOG"
 else
     if [ "$STRICT" = true ]; then
         LEAN_STATUS="FAIL"
@@ -143,16 +156,64 @@ fi
 echo ""
 
 # ============================================
-# 5. Axioms and conjectures (intentional)
+# 5. Axiom whitelist check
 # ============================================
-echo "--- 5. AXIOMS / CONJECTURES (intentional) ---"
-echo "The following axioms are intentional placeholders for unproven results:"
+echo "--- 5. AXIOM WHITELIST CHECK ---"
+echo "Expected axioms (intentional placeholders):"
+for ax in "${EXPECTED_AXIOMS[@]}"; do
+    echo "  $ax"
+done
 echo ""
-AXIOM_COUNT=$(grep -rn "^axiom\|^[[:space:]]*axiom" code/ analysis/layer4/ 2>/dev/null | wc -l | tr -d ' ')
-grep -rn "^axiom\|^[[:space:]]*axiom" code/ analysis/layer4/ 2>/dev/null || echo "(none found)"
+
+# Find all axiom declarations in code/
+AXIOM_FOUND=$(grep -rn "^axiom\|^[[:space:]]*axiom" code/ analysis/layer4/ 2>/dev/null || true)
+AXIOM_COUNT=$(echo "$AXIOM_FOUND" | grep -c . 2>/dev/null || echo 0)
+
+echo "Found $AXIOM_COUNT axiom(s) in code:"
+if [ -z "$AXIOM_FOUND" ]; then
+    echo "  (none found)"
+else
+    echo "$AXIOM_FOUND" | while IFS= read -r line; do
+        echo "  $line"
+    done
+fi
 echo ""
-echo "Axiom count: $AXIOM_COUNT (intentional — these are conjectural placeholders)"
-echo "Axiom check: LISTED ⚠️"
+
+# Compare against whitelist
+AXIOM_ERRORS=""
+for ax in "${EXPECTED_AXIOMS[@]}"; do
+    AX_FILE=$(echo "$ax" | cut -d: -f1)
+    AX_NAME=$(echo "$ax" | cut -d: -f2 | tr -d ' ')
+    if ! echo "$AXIOM_FOUND" | grep -q "$AX_NAME"; then
+        AXIOM_ERRORS="${AXIOM_ERRORS}Missing expected axiom: $ax\n"
+    fi
+done
+
+# Check for unexpected axioms
+echo "$AXIOM_FOUND" | while IFS= read -r line; do
+    [ -z "$line" ] && continue
+    # Extract the axiom name from the line
+    AX_NAME=$(echo "$line" | sed 's/.*axiom[[:space:]]*//' | awk '{print $1}')
+    FOUND=0
+    for ax in "${EXPECTED_AXIOMS[@]}"; do
+        if echo "$ax" | grep -q "$AX_NAME"; then
+            FOUND=1
+            break
+        fi
+    done
+    if [ "$FOUND" -eq 0 ]; then
+        echo "  UNEXPECTED AXIOM: $line"
+    fi
+done
+
+if [ -z "$AXIOM_ERRORS" ]; then
+    echo "Axiom whitelist: PASS ✅"
+    pass
+else
+    echo -e "$AXIOM_ERRORS"
+    echo "Axiom whitelist: FAIL ❌"
+    fail
+fi
 echo ""
 
 # ============================================
@@ -165,7 +226,7 @@ echo "Lean build:              $LEAN_STATUS"
 echo "Certificate verification: $CERT_STATUS"
 echo "Dataset integrity:       $DATASET_STATUS"
 echo "sorry proof terms:       $SORRY_COUNT (expected: 0)"
-echo "axioms/conjectures:      $AXIOM_COUNT (intentional)"
+echo "axioms:                  $AXIOM_COUNT (whitelisted, intentional)"
 echo "Pass: $PASS_COUNT  Fail: $FAIL_COUNT  Skip: $SKIP_COUNT"
 echo "Mode: $( [ "$STRICT" = true ] && echo 'STRICT' || echo 'convenience' )"
 echo ""

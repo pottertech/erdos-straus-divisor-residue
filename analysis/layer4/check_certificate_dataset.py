@@ -22,7 +22,6 @@ Exit code: 0 if all checks pass, 1 if any fail.
 import json
 import sys
 import os
-from math import gcd
 
 DEFAULT_PATH = "results/layer4_certificates.jsonl"
 EXPECTED_COUNT = 166011
@@ -30,7 +29,7 @@ EXPECTED_MAX_A = 107
 MAX_N = 10_000_000
 
 
-def generate_expected_primes():
+def generate_expected_primes() -> set:
     """Generate all admissible primes: 13 ≤ p ≤ MAX_N, p ≡ 1 (mod 12), p ≢ 0 (mod 5)."""
     # Use a sieve for efficiency
     sieve = bytearray(b'\x01') * (MAX_N + 1)
@@ -53,20 +52,25 @@ def check_dataset(filepath, verbose=False):
     seen_n = set()
     duplicates = 0
 
-    with open(filepath, encoding="utf-8-sig") as f:
-        for line in f:
-            line = line.strip()
-            if not line:
-                continue
-            try:
-                cert = json.loads(line)
-                n = cert.get("n", 0)
-                if n in seen_n:
-                    duplicates += 1
-                seen_n.add(n)
-                records.append(cert)
-            except json.JSONDecodeError:
-                parse_errors += 1
+    # Catch file read errors
+    try:
+        with open(filepath, encoding="utf-8-sig") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    cert = json.loads(line)
+                    n = cert.get("n", 0)
+                    if n in seen_n:
+                        duplicates += 1
+                    seen_n.add(n)
+                    records.append(cert)
+                except json.JSONDecodeError:
+                    parse_errors += 1
+    except OSError as e:
+        print(f"ERROR reading file: {e}")
+        sys.exit(1)
 
     count = len(records)
     max_a = max((r.get("A", 0) for r in records), default=0)
@@ -91,12 +95,12 @@ def check_dataset(filepath, verbose=False):
     unexpected = seen_n - expected_n
     if missing:
         errors.append(f"Missing expected primes: {len(missing)}")
-        if verbose and len(missing) <= 20:
+        if len(missing) <= 20:
             for n in sorted(missing)[:20]:
                 errors.append(f"  missing: n={n}")
     if unexpected:
         errors.append(f"Unexpected n values (not admissible primes): {len(unexpected)}")
-        if verbose and len(unexpected) <= 20:
+        if len(unexpected) <= 20:
             for n in sorted(unexpected)[:20]:
                 errors.append(f"  unexpected: n={n}")
     if seen_n != expected_n:
