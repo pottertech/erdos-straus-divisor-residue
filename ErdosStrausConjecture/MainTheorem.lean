@@ -156,7 +156,7 @@ theorem erdos_straus_except_residual_open_class
     IsErdosStraus n := by
   have hclass := residue_classification n hn
   rcases hclass with h0 | h2 | h4 | h7 | h10 | ⟨h1_12, h5_0⟩ | ⟨h1_12, h5_ne0⟩
-  · exact mod_3_zero n hn h0
+  · exact mod_3_zero n (by omega) h0
   · exact mod_3_two n hn h2
   · exact mod_12_four n (by omega) h4
   · exact mod_12_seven n (by omega) h7
@@ -178,7 +178,8 @@ theorem erdos_straus_except_residual_open_class
       have : n = 12 * (n / 12) + n % 12 := (Nat.div_add_mod n 12).symm
       rw [h1_12] at this
       have h_div : n / 12 = 0 := by omega
-      rw [h_div, Nat.zero_mul, Nat.add_zero] at this
+      -- n = 12*0 + 1 = 1, but n ≥ 2, contradiction
+      have : n = 1 := by omega
       omega
 
 -- ============================================

@@ -91,7 +91,7 @@ The following six identities are proven in Lean 4 (`code/Identities.lean`) with 
 
 ## 5. Lean Formalization Status
 
-**Lean status:** Zero `sorry` proof terms remain. The final residue class is represented explicitly as an `axiom` (axiomatic placeholder), not as a proven theorem. The Burgess bound (Proposition 8) also appears as axioms.
+**Lean status:** Zero `sorry` proof terms remain. The final residue class is represented explicitly as an `axiom` (axiomatic placeholder), not as a proven theorem. The Burgess bound (Proposition 8) and the reverse direction of the divisor-residue criterion also appear as axioms.
 
 | Component | Lean status | Tactic |
 |---|---|---|
@@ -100,6 +100,8 @@ The following six identities are proven in Lean 4 (`code/Identities.lean`) with 
 | Coverage theorem | ✅ Proven | `omega + interval_cases` |
 | Main theorem | ✅ Proven | dispatch to identities |
 | theorem2 integration | ✅ Proven | dispatch to identities + theorem2 |
+| Divisor-residue criterion (forward) | ✅ Proven | certificate structure → IsErdosStraus |
+| Divisor-residue criterion (reverse) | ⚠️ Axiom in Lean | harder direction, not yet proven |
 | Divisor-residue criterion | ❌ Not formalized | — |
 | Centered signed-exponent | ❌ Not formalized | — |
 | Burgess bound (Prop 8) | ⚠️ Axiom in Lean | — |

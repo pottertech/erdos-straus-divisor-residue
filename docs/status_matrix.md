@@ -27,7 +27,9 @@ This document separates every claim in the project into four buckets:
 | **erdos_straus_proven_cases**: all n ≥ 2 except open class | `code/MainTheorem.lean` | dispatches to 6 identities | ✅ Proven |
 | **erdos_straus_small**: all n < 13 | `code/MainTheorem.lean` | corollary | ✅ Proven |
 | **erdos_straus_not_mod_12_1**: all n ≢ 1 (mod 12) | `code/MainTheorem.lean` | corollary | ✅ Proven |
-| **erdos_straus_except_residual_open_class**: all n except open class minus theorem2 subfamily | `code/MainTheorem.lean` | dispatches to identities + theorem2 | ✅ Proven |
+| **erdos_straus_except_residual_open_class**: all n except open class minus theorem2 subfamily | `ErdosStrausConjecture/MainTheorem.lean` | dispatches to identities + theorem2 | ✅ Proven |
+| **divisor_residue_criterion_forward**: certificate → IsErdosStraus n | `ErdosStrausConjecture/DivisorResidue.lean` | direct from certificate structure | ✅ Proven |
+| **erdos_straus_from_certificate**: corollary — certificate → solution | `ErdosStrausConjecture/DivisorResidue.lean` | dispatches to forward | ✅ Proven |
 
 **Lean status:** Zero `sorry` proof terms. All proofs use `ring`, `omega`, `linear_combination`, `Int.ofNat_inj`, `exact`, or dispatch to proven lemmas.
 
@@ -63,8 +65,9 @@ This document separates every claim in the project into four buckets:
 |-------|--------|----------|-------|
 | **Global sieve closure**: unconditional constant-C theorem for all n | **OPEN** | `docs/manuscript_v12.md` §5.1 | Heuristic Mertens-type argument suggests C exists but does not yield an explicit finite bound. |
 | **Partial −1 Route (general case)** | **PARTIALLY PROVEN** | `docs/manuscript_v12.md` §3.3 | Proven for h=2 and order-2 QNR subcases. General implication fails in 821 of 10,096 tested cases. |
-| **Erdős–Straus for n ≡ 1 (mod 12), 5 ∤ n, n ≥ 13** | **AXIOM** (conjecture placeholder) | `code/Mod12Case1.lean` | Declared as `axiom` with docstring: "CONJECTURE (not proven)". Backed by 166,011 computational certificates. No closed-form proof known. |
-| **Burgess bound (Proposition 8)** | **AXIOM** in Lean | `code/NewTheorems.lean` | `C_burgess` and `burgess_least_qnr_bound` declared as axioms. 8-step proof sketch in manuscript but not formalized in Lean. |
+| **Erdős–Straus for n ≡ 1 (mod 12), 5 ∤ n, n ≥ 13** | **AXIOM** (conjecture placeholder) | `ErdosStrausConjecture/Mod12Case1.lean` | Declared as `axiom` with docstring: "CONJECTURE (not proven)". Backed by 166,011 computational certificates. No closed-form proof known. |
+| **Divisor-residue criterion (reverse)**: solution → certificate exists | **AXIOM** in Lean | `ErdosStrausConjecture/DivisorResidue.lean` | Harder direction — needs full construction proof. |
+| **Burgess bound (Proposition 8)** | **AXIOM** in Lean | `ErdosStrausConjecture/NewTheorems.lean` | `C_burgess` and `burgess_least_qnr_bound` declared as axioms. 8-step proof sketch in manuscript but not formalized in Lean. |
 
 ---
 
@@ -86,8 +89,9 @@ This document separates every claim in the project into four buckets:
 
 | Claim | Status | Location | Notes |
 |-------|--------|----------|-------|
-| **Erdős–Straus for n ≡ 1 (mod 12), 5 ∤ n, n ≥ 13** | **AXIOM** (conjecture placeholder) | `code/Mod12Case1.lean` | Declared as `axiom` with docstring: "CONJECTURE (not proven)". Backed by 166,011 computational certificates. No closed-form proof known. |
-| **Burgess bound (Proposition 8)** | **AXIOM** in Lean | `code/NewTheorems.lean` | `C_burgess` and `burgess_least_qnr_bound` declared as axioms. Proven on paper (8-step proof in manuscript) but not formalized in Lean. |
+| **Erdős–Straus for n ≡ 1 (mod 12), 5 ∤ n, n ≥ 13** | **AXIOM** (conjecture placeholder) | `ErdosStrausConjecture/Mod12Case1.lean` | Declared as `axiom` with docstring: "CONJECTURE (not proven)". Backed by 166,011 computational certificates. No closed-form proof known. |
+| **Divisor-residue criterion (reverse)**: solution → certificate exists | **AXIOM** in Lean | `ErdosStrausConjecture/DivisorResidue.lean` | Harder direction — needs full construction proof. |
+| **Burgess bound (Proposition 8)** | **AXIOM** in Lean | `ErdosStrausConjecture/NewTheorems.lean` | `C_burgess` and `burgess_least_qnr_bound` declared as axioms. Proven on paper (8-step proof in manuscript) but not formalized in Lean. |
 | **Analytic sieve / covering-set proof** | **UNPROVEN** | `docs/manuscript_v12.md` §5 | The Burgess-style estimate suggests A = O(n^{1/(4√e)+ε}) but the manuscript should not claim this as a completed proof until the sieve and covering assumptions are fully formalized. |
 | **Unconditional constant-C theorem** | **OPEN** | `docs/manuscript_v12.md` §5.1 | Heuristic Mertens-type argument suggests C exists for all primes but does not yield an explicit finite bound. |
 | **Partial −1 Route (general case)** | **PARTIALLY PROVEN** | `docs/manuscript_v12.md` §3.3 | Proven for h=2 and order-2 QNR subcases. General implication fails in 821 of 10,096 tested cases. |
@@ -98,11 +102,11 @@ This document separates every claim in the project into four buckets:
 
 | Bucket | Count | Status |
 |--------|-------|--------|
-| Proven in Lean | 13 theorems/lemmas | ✅ Machine-verified, zero sorry |
+| Proven in Lean | 15 theorems/lemmas | ✅ Machine-verified, zero sorry |
 | Algebraically proven (not formalized) | 4 results | 📝 Algebraic derivation |
 | Computationally established (finite range) | 4 results | 🔍 Exhaustive computation |
 | Analytic argument (requires audit) | 1 result | ⚠️ Proof sketch, not completed |
-| Open / axiomatic | 4 items | ⚠️ Conjecture, axiom, or unproven |
+| Open / axiomatic | 5 items | ⚠️ Conjecture, axiom, or unproven |
 
 **Key distinction:** The project is NOT a full proof of the Erdős–Straus conjecture. It is a structured reduction plus formalized subtheorems plus an independently auditable finite certificate layer. The final residue class (n ≡ 1 mod 12, 5 ∤ n, n ≥ 13) remains open.
 
