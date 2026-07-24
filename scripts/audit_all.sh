@@ -29,10 +29,10 @@ EXPECTED_MAX_A=107
 
 # Whitelist of intentional axioms (file: name)
 EXPECTED_AXIOMS=(
-    "code/Mod12Case1.lean:erdos_straus_mod_12_1_not_div_5_conjecture"
-    "code/DivisorResidue.lean:divisor_residue_criterion_reverse"
-    "code/NewTheorems.lean:C_burgess"
-    "code/NewTheorems.lean:burgess_least_qnr_bound"
+    "ErdosStrausConjecture/Mod12Case1.lean:erdos_straus_mod_12_1_not_div_5_conjecture"
+    "ErdosStrausConjecture/DivisorResidue.lean:divisor_residue_criterion_reverse"
+    "ErdosStrausConjecture/NewTheorems.lean:C_burgess"
+    "ErdosStrausConjecture/NewTheorems.lean:burgess_least_qnr_bound"
 )
 
 PASS_COUNT=0
@@ -142,8 +142,8 @@ echo ""
 # 4. sorry count (should be 0)
 # ============================================
 echo "--- 4. SORRY CHECK ---"
-SORRY_COUNT=$(grep -rn "sorry" code/ analysis/layer4/ 2>/dev/null | grep -v "^.*:.*--.*sorry" | grep -v "^.*:.*#.*sorry" | wc -l | tr -d ' ')
-SORRY_COMMENTS=$(grep -rn "sorry" code/ analysis/layer4/ 2>/dev/null | grep "^.*:.*--.*sorry" | wc -l | tr -d ' ')
+SORRY_COUNT=$(grep -rn "sorry" ErdosStrausConjecture/ analysis/layer4/ 2>/dev/null | grep -v "^.*:.*--.*sorry" | grep -v "^.*:.*#.*sorry" | wc -l | tr -d ' ')
+SORRY_COMMENTS=$(grep -rn "sorry" ErdosStrausConjecture/ analysis/layer4/ 2>/dev/null | grep "^.*:.*--.*sorry" | wc -l | tr -d ' ')
 echo "sorry proof terms: $SORRY_COUNT (expected: 0)"
 echo "sorry in comments: $SORRY_COMMENTS (informational)"
 if [ "$SORRY_COUNT" -eq 0 ]; then
@@ -152,7 +152,7 @@ if [ "$SORRY_COUNT" -eq 0 ]; then
 else
     fail
     echo "Sorry check: FAIL ❌"
-    grep -rn "sorry" code/ analysis/layer4/ 2>/dev/null | grep -v "^.*:.*--.*sorry"
+    grep -rn "sorry" ErdosStrausConjecture/ analysis/layer4/ 2>/dev/null | grep -v "^.*:.*--.*sorry"
 fi
 echo ""
 
