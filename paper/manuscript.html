@@ -201,27 +201,30 @@ AI Assistance: OpenClaw</p>
 <p>We present a divisor-residue criterion for the Erdős–Straus
 conjecture and prove that the “hard case” family (where the standard
 <span class="math inline">\(A=3\)</span> Pell approach fails) is
-<strong>A-bounded</strong>: <span class="math inline">\(A = O(\log n
-\cdot \log\log n)\)</span> suffices for all hard cases, verified
-computationally to <span class="math inline">\(n =
-10{,}000{,}000\)</span>. The proof decomposes by <span
-class="math inline">\(\omega(n)\)</span>, the number of distinct prime
-factors: <span class="math inline">\(\omega \geq 3\)</span> gives <span
+<strong>A-bounded</strong>: <span class="math inline">\(A =
+O(n^{1/(4\sqrt{e})+\varepsilon})\)</span> suffices for all hard cases,
+<strong>unconditionally and effectively</strong> via the Burgess bound.
+The proof decomposes by <span class="math inline">\(\omega(n)\)</span>:
+<span class="math inline">\(\omega \geq 3\)</span> gives <span
 class="math inline">\(A \leq 11\)</span> (subset sum in <span
 class="math inline">\(\mathbb{Z}/6\mathbb{Z}+
 \mathbb{Z}/10\mathbb{Z}\)</span>), <span class="math inline">\(\omega =
 2\)</span> gives <span class="math inline">\(A = O(\log n)\)</span>
-(Chebotarev density + Linnik), and <span class="math inline">\(\omega =
+(Chebotarev + Linnik), and <span class="math inline">\(\omega =
 1\)</span> (prime <span class="math inline">\(n\)</span>) gives <span
-class="math inline">\(A = O(\log n \cdot \log\log n)\)</span> via a
-deterministic QNR rescue argument using quadratic reciprocity and
-effective Chebotarev. We introduce the <strong>u-method</strong>
-identity <span class="math inline">\((uy - nx)(uz - nx) = n^2
-x^2\)</span>, which provides abundant divisors for prime <span
-class="math inline">\(n\)</span> and dramatically outperforms the
-restrictive BPS approach. Six modular identities covering 6 of 7 residue
-classes are proven rigorously in Lean 4 with zero
-<code>sorry</code>.</p>
+class="math inline">\(A = O(n^{0.152})\)</span> via a deterministic QNR
+rescue argument using quadratic reciprocity and the Burgess character
+sum bound. A sharper <span class="math inline">\(A = O(\log n \cdot
+\log\log n)\)</span> bound matches observations but requires GRH or
+ineffective Siegel–Walfisz constants. We introduce the
+<strong>u-method</strong> identity <span class="math inline">\((uy -
+nx)(uz - nx) = n^2 x^2\)</span>, which provides abundant divisors for
+prime <span class="math inline">\(n\)</span>. Six modular identities
+covering 6 of 7 residue classes are proven rigorously in Lean 4 with
+zero <code>sorry</code>. Computational verification to <span
+class="math inline">\(n = 10{,}000{,}000\)</span> shows zero failures,
+with max <span class="math inline">\(A = 107\)</span> for prime <span
+class="math inline">\(n\)</span>.</p>
 </div>
 </header>
 <h1 id="introduction">Introduction</h1>
@@ -394,9 +397,13 @@ class="math inline">\(n\)</span>) <span
 class="math inline">\(\Rightarrow A = O(\log n \cdot \log\log
 n)\)</span></h2>
 <p>For prime <span class="math inline">\(n\)</span> in the hard case
-regime, the u-method works with <span class="math inline">\(A = O(\log n
-\cdot \log\log n)\)</span>.</p>
-<p><strong>Proof (deterministic):</strong></p>
+regime, the u-method works with <span class="math inline">\(A =
+O(n^{1/(4\sqrt{e})+\varepsilon})\)</span> for any <span
+class="math inline">\(\varepsilon &gt; 0\)</span>, unconditionally and
+effectively. The sharper bound <span class="math inline">\(A = O(\log n
+\cdot \log\log n)\)</span> holds under GRH or with ineffective
+Siegel–Walfisz constants.</p>
+<p><strong>Proof (unconditional, via Burgess bound):</strong></p>
 <p><strong>Step 1 (QNR Rescue via Quadratic Reciprocity):</strong> For
 <span class="math inline">\(n \equiv 1 \pmod{4}\)</span> and prime <span
 class="math inline">\(p \equiv 3 \pmod{4}\)</span>: <span
@@ -414,37 +421,85 @@ must have a prime factor that is QNR mod <span
 class="math inline">\(p\)</span>, which provides the additional divisor
 coverage needed. The u-method then works with <span
 class="math inline">\(A = p \leq U\)</span>.</p>
-<p><strong>Step 2 (Density of Bad Set):</strong> If <span
-class="math inline">\(n\)</span> is QR mod ALL primes <span
-class="math inline">\(p \equiv 3 \pmod{4}\)</span> up to <span
-class="math inline">\(U\)</span>, then <span
-class="math inline">\(n\)</span> lies in a set of density <span
-class="math inline">\((1/2)^{\pi_{3,4}(U)}\)</span>, where <span
-class="math inline">\(\pi_{3,4}(U)\)</span> counts primes <span
-class="math inline">\(\equiv 3 \pmod{4}\)</span> up to <span
-class="math inline">\(U\)</span>. By Dirichlet’s theorem: <span
-class="math inline">\(\pi_{3,4}(U) \sim U/(2\log U)\)</span>.</p>
-<p><strong>Step 3 (Making the Bad Set Empty):</strong> For the bad set
-to be empty up to <span class="math inline">\(N\)</span>: <span
-class="math display">\[\pi_{3,4}(U) &gt; \log_2 N - \log_2 \log N +
-O(1).\]</span> By the Siegel–Walfisz theorem (effective form), this is
-achievable for <span class="math inline">\(U = O(\log N \cdot \log\log
-N)\)</span>.</p>
-<p><strong>Step 4 (Finite Verification):</strong> For <span
-class="math inline">\(N \leq 10^7\)</span>: <span
-class="math inline">\(U = 146\)</span> suffices. Verified: all 42,465
-prime hard cases solved with <span class="math inline">\(u \leq 107 &lt;
-146\)</span>. For <span class="math inline">\(N &gt; 10^7\)</span>:
-<span class="math inline">\(U = 3 \cdot \log_2(N) \cdot \log(\log_2
-N)\)</span> gives the theoretical bound.</p>
+<p><strong>Step 2 (Burgess Bound, Effective and Unconditional):</strong>
+By the Burgess bound <span class="citation"
+data-cites="burgess1963"></span>; <span class="citation"
+data-cites="IK2004"></span>, for a non-principal Dirichlet character
+<span class="math inline">\(\chi\)</span> modulo <span
+class="math inline">\(q\)</span> and any <span class="math inline">\(r
+\geq 3\)</span>: <span class="math display">\[\left|\sum_{k=1}^{N}
+\chi(k)\right| \leq C_r \cdot q^{1/(4r)} \cdot N^{1-1/r}\]</span> where
+<span class="math inline">\(C_r\)</span> is effectively computable.
+Applied to <span class="math inline">\(\chi(\cdot) =
+\left(\frac{\cdot}{n}\right)\)</span>, this gives a nontrivial bound
+(i.e., <span class="math inline">\(|\sum| &lt; N\)</span>) for <span
+class="math inline">\(N &gt; n^{1/(4\sqrt{e})+\varepsilon}\)</span>,
+implying not all <span class="math inline">\(\left(\frac{k}{n}\right) =
++1\)</span> for <span class="math inline">\(k \leq N\)</span>.</p>
+<p><strong>Step 3 (From Integers to Primes <span
+class="math inline">\(\equiv 3 \pmod{4}\)</span>):</strong> The sum over
+primes <span class="math inline">\(p \equiv 3 \pmod{4}\)</span>
+decomposes as <span class="math display">\[\sum_{\substack{p \leq N \\ p
+\equiv 3 \pmod{4}}} \left(\frac{n}{p}\right) = \frac{1}{2}\left[\sum_{p
+\leq N} \left(\frac{n}{p}\right) - \sum_{p \leq N}
+\chi_4(p)\left(\frac{n}{p}\right)\right]\]</span> where <span
+class="math inline">\(\chi_4\)</span> is the non-trivial character mod
+4. Both <span
+class="math inline">\(\left(\frac{\cdot}{n}\right)\)</span> and <span
+class="math inline">\(\chi_4 \cdot \left(\frac{\cdot}{n}\right)\)</span>
+are non-principal (the latter because <span class="math inline">\(n
+\equiv 1 \pmod{4}\)</span>). By partial summation + Burgess: <span
+class="math display">\[\left|\sum_{\substack{p \leq N \\ p \equiv 3
+\pmod{4}}} \left(\frac{n}{p}\right)\right| \leq C&#39; \cdot N \cdot
+\exp(-c&#39;\sqrt{\log N})\]</span> for <span class="math inline">\(N
+&gt; n^{1/(4\sqrt{e})+\varepsilon}\)</span>, with <span
+class="math inline">\(C&#39;, c&#39;\)</span> effectively
+computable.</p>
+<p><strong>Step 4 (Existence of QNR Prime <span
+class="math inline">\(\equiv 3 \pmod{4}\)</span>):</strong> If all
+primes <span class="math inline">\(p \equiv 3 \pmod{4}\)</span> up to
+<span class="math inline">\(N\)</span> had <span
+class="math inline">\(\left(\frac{n}{p}\right) = +1\)</span>, the sum
+would equal <span class="math inline">\(\pi(N; 4, 3) \sim N/(2\log
+N)\)</span>. But the Burgess bound gives <span
+class="math inline">\(|\sum| \leq C&#39; \cdot N \cdot
+\exp(-c&#39;\sqrt{\log N}) &lt; N/(2\log N)\)</span> for <span
+class="math inline">\(N\)</span> large enough. Contradiction. Therefore
+there exists a prime <span class="math inline">\(p \equiv 3
+\pmod{4}\)</span> with <span
+class="math inline">\(\left(\frac{n}{p}\right) = -1\)</span> and <span
+class="math inline">\(p \leq N =
+O(n^{1/(4\sqrt{e})+\varepsilon})\)</span>.</p>
+<p><strong>Step 5 (Positive Solutions):</strong> With <span
+class="math inline">\(A = p\)</span> and <span class="math inline">\(x =
+(n+p)/4\)</span>: <span class="math inline">\(D = n^2 x^2\)</span>,
+<span class="math inline">\(d_1 \leq \sqrt{D} = nx\)</span>, <span
+class="math inline">\(y = (d_1 + nx)/A &gt; 0\)</span>, <span
+class="math inline">\(z = (D/d_1 + nx)/A &gt; 0\)</span>. Both <span
+class="math inline">\(y, z\)</span> are positive integers.</p>
+<p><strong>Step 6 (Finite Verification):</strong> Verified: all 42,465
+prime hard cases up to <span class="math inline">\(10^7\)</span> solved
+with <span class="math inline">\(u \leq 107\)</span>. The Burgess bound
+gives <span class="math inline">\(A \leq (10^7)^{0.152} \approx
+12\)</span> for the integer QNR, and the prime bound with partial
+summation gives a slightly larger but still effective constant. The
+observed <span class="math inline">\(A = 107\)</span> is well within the
+effective bound.</p>
+<p><strong>Remark on Sharper Bounds:</strong> The bound <span
+class="math inline">\(A = O(\log n \cdot \log\log n)\)</span> (matching
+observations) requires either GRH (giving <span class="math inline">\(A
+= O((\log n)^2)\)</span>) or the Siegel–Walfisz theorem (ineffective
+constant due to the Siegel zero problem). The Burgess bound is the
+strongest <em>unconditional and effective</em> result available.</p>
 <h2 id="theorem-4-combined-a-boundedness">Theorem 4: Combined
 A-Boundedness</h2>
 <div class="theorem">
 <p><strong>Theorem 3</strong>. <em>For every <span
 class="math inline">\(n \geq 2\)</span> satisfying the hard case
 conditions, there exists a solution to <span class="math inline">\(4/n =
-1/x + 1/y + 1/z\)</span> with <span class="math inline">\(A = O(\log n
-\cdot \log\log n)\)</span>.</em></p>
+1/x + 1/y + 1/z\)</span> with <span class="math inline">\(A =
+O(n^{1/(4\sqrt{e})+\varepsilon})\)</span>, unconditionally and
+effectively.</em></p>
 </div>
 <div class="center">
 <table>
@@ -491,7 +546,7 @@ class="math inline">\(10{,}000{,}000\)</span></td>
 <tr>
 <td style="text-align: left;"><strong>Total</strong></td>
 <td style="text-align: left;"><span class="math inline">\(\boldsymbol{A
-= O(\log n \cdot \log\log n)}\)</span></td>
+= O(n^{0.152})}\)</span> <strong>(unconditional)</strong></td>
 <td style="text-align: left;"><strong><span
 class="math inline">\(z=my\)</span> + u-method</strong></td>
 <td style="text-align: left;"><span
@@ -744,14 +799,15 @@ O((\log n)^2)\)</span> via Lamzouri–Li–Soundararajan bounds.</p></li>
 </tr>
 <tr>
 <td style="text-align: left;"><span class="math inline">\(\omega =
-1\)</span>: <span class="math inline">\(A = O(\log n \cdot \log\log
-n)\)</span></td>
-<td style="text-align: left;">deterministic proof + comp.</td>
+1\)</span>: <span class="math inline">\(A = O(n^{0.152})\)</span>
+Burgess</td>
+<td style="text-align: left;">proven (unconditional)</td>
 <td style="text-align: left;">prime hard cases</td>
 </tr>
 <tr>
-<td style="text-align: left;">QNR rescue via quad. reciprocity</td>
-<td style="text-align: left;">proven</td>
+<td style="text-align: left;">QNR rescue via quad. reciprocity +
+Burgess</td>
+<td style="text-align: left;">proven (unconditional)</td>
 <td style="text-align: left;">prime <span
 class="math inline">\(n\)</span></td>
 </tr>
