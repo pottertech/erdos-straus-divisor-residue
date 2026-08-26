@@ -1,0 +1,7 @@
+.lake/build/
+.lake/packages/
+*.olean
+*.ilean
+*.c
+*.c.hash
+*.setup.json
