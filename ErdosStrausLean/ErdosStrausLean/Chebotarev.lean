@@ -214,6 +214,14 @@ theorem chebotarev_corollary_discrete_log (n : ℕ) [Fact n.Prime] (hn2 : n ≠ 
         4 * ((n + A) / 4) * y * z = n * (((n + A) / 4) * z + y * z + ((n + A) / 4) * y) := by
   -- Step 1: Get a prime p ≡ 3 mod 4 with (n/p) = -1
   obtain ⟨p, hp_prime, hp_mod4, hp_qnr⟩ := exists_prime_qnr_mod4_3 n hn2 hn4
+  -- Precompute needed facts for Step 3
+  have hn_mod4 : n % 4 = 1 := hn4
+  have hp_mod4_val : p % 4 = 3 := by
+    rw [Nat.ModEq] at hp_mod4
+    rw [show (3 : ℕ) % 4 = 3 from by norm_num] at hp_mod4
+    exact hp_mod4
+  have h4_dvd_np : 4 ∣ (n + p) := ⟨(n + p) / 4, by omega⟩
+  have hx_eq : 4 * ((n + p) / 4) = n + p := Nat.mul_div_cancel' h4_dvd_np
   -- Step 2: Use A = p
   use p
   constructor
@@ -228,23 +236,9 @@ theorem chebotarev_corollary_discrete_log (n : ℕ) [Fact n.Prime] (hn2 : n ≠ 
     rw [this] at hp_mod4
     norm_num [Nat.ModEq] at hp_mod4
   · -- Step 3: Construct the u-method solution
-    -- Show 4 ∣ (n + p) and 4 * ((n+p)/4) = n + p
-    have hn_mod4 : n % 4 = 1 := hn4
-    have hp_mod4_val : p % 4 = 3 := by
-      rw [Nat.ModEq] at hp_mod4
-      rw [show (3 : ℕ) % 4 = 3 from by norm_num] at hp_mod4
-      exact hp_mod4
-    have h4_dvd_np : 4 ∣ (n + p) := by
-      rw [Nat.dvd_iff_mod_eq_zero, Nat.add_mod, hn_mod4, hp_mod4_val]
-      norm_num
-    have hx_eq : 4 * ((n + p) / 4) = n + p := Nat.mul_div_cancel' h4_dvd_np
     -- The u-method: (py - nx)(pz - nx) = n²x²
     -- We need y, z ≥ 1 with this identity holding.
     -- Since p is prime and (n/p) = -1, n is QNR mod p.
-    -- By the QNR inheritance lemma (StructuralLemmas.lean),
-    -- if n is QNR mod p and p ≡ 3 mod 4, then -n is QR mod p (wait, QNR).
-    -- Actually: neg_n_qnr gives legendreSym p (-n) = -1 when n is QR and p ≡ 3 mod 4.
-    -- But we have n QNR mod p, not QR.
     --
     -- The key insight from the mathematical proof:
     -- Since n is QNR mod p, the Legendre symbol (n/p) = -1.

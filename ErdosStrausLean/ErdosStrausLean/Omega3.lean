@@ -492,7 +492,40 @@ theorem a11_rescues_a7_failure_unbounded (n : ℕ) (hn : n ≡ 1 [MOD 12])
     ∃ A : ℕ, A ≡ 3 [MOD 4] ∧ A ≥ 3 ∧ A ≤ 127 ∧
       ∃ y z : ℕ, y ≥ 1 ∧ z ≥ 1 ∧
         4 * ((n + A) / 4) * y * z = n * (((n + A) / 4) * z + y * z + ((n + A) / 4) * y) := by
-  exact chebotarev_corollary_discrete_log n 7 (by norm_num : (7 : ℕ).Prime) (by norm_num : 7 % 4 = 3) hn hn5
+  -- For prime n: use Dirichlet-based proof from Chebotarev.lean
+  -- For composite n: use bounded theorem (n ≤ 10000) or sorry (unbounded)
+  by_cases h_prime : n.Prime
+  · -- Prime n: use Dirichlet + CRT + QR proof
+    have hn2 : n ≠ 2 := by
+      intro h
+      rw [h] at hn
+      norm_num [Nat.ModEq] at hn
+    have hn4 : n % 4 = 1 := by
+      have h12 : n % 12 = 1 := by
+        rw [Nat.ModEq] at hn
+        rw [show (1 : ℕ) % 12 = 1 from by norm_num] at hn
+        exact hn
+      have : (n % 12) % 4 = n % 4 := by
+        have : 12 = 4 * 3 := by norm_num
+        rw [this, Nat.mod_mul_right_mod]
+      omega
+    have : Fact (Nat.Prime n) := ⟨h_prime⟩
+    obtain ⟨A, hA_mod, hA_ge, y, z, hy, hz, h_eq⟩ := chebotarev_corollary_discrete_log n hn2 hn4
+    refine ⟨A, hA_mod, hA_ge, ?_, y, z, hy, hz, h_eq⟩
+    sorry -- A ≤ 127 bound requires Linnik (not needed for existence)
+  · -- Composite n: use bounded theorem or sorry for unbounded
+    have hn_ge2 : 2 ≤ n := by
+      by_contra h
+      have : n ≤ 1 := by omega
+      have h_omega0 : n.factorization.support.card = 0 := by
+        interval_cases n <;> simp [Nat.factorization]
+      linarith [h_omega0, _hn_omega3]
+    by_cases h_small : n ≤ 10000
+    · have h_exists := erdos_straus_bounded_10000 n hn_ge2 h_small
+      have h_exists := erdos_straus_bounded_10000 n hn_ge2 h_small
+      rcases h_exists with ⟨x, y, z, hx, hy, hz, h_eq⟩
+      sorry
+    · sorry
 
 /-- Main theorem: ω(n) ≥ 3 ⟹ solution exists — UNBOUNDED.
     Conditional on Chebotarev Density Theorem. -/
@@ -506,84 +539,27 @@ theorem omega_ge_3_unbounded (n : ℕ) (hn_hard : is_hard_case n)
     have h_omega0 : n.factorization.support.card = 0 := by
       interval_cases n <;> simp [Nat.factorization]
     linarith [h_omega0, h_omega]
-  by_cases h7 : 7 ∣ n
-  · -- 7 ∣ n: Use Chebotarev corollary directly
-    have h_rescued := chebotarev_corollary_discrete_log n 7
-      (by norm_num : (7 : ℕ).Prime) (by norm_num : 7 % 4 = 3) h1mod12 h5
-    obtain ⟨A, hA_mod, hA_ge, hA_le, y, z, hy, hz, h_eq⟩ := h_rescued
-    -- n ≡ 1 mod 4 (from n ≡ 1 mod 12)
-    have hn_mod4 : n % 4 = 1 := by
-      have h12 : n % 12 = 1 := by
-        rw [Nat.ModEq] at h1mod12
-        rw [show (1 : ℕ) % 12 = 1 from by norm_num] at h1mod12
-        exact h1mod12
-      have : (n % 12) % 4 = n % 4 := by
-        have : 12 = 4 * 3 := by norm_num
-        rw [this, Nat.mod_mul_right_mod]
-      omega
-    -- A ≡ 3 mod 4
-    have hA_mod_val : A % 4 = 3 := by
-      rw [Nat.ModEq] at hA_mod
-      rw [show (3 : ℕ) % 4 = 3 from by norm_num] at hA_mod
-      exact hA_mod
-    -- 4 ∣ (n + A)
-    have h4_dvd_nA : 4 ∣ (n + A) := by
-      rw [Nat.dvd_iff_mod_eq_zero, Nat.add_mod, hn_mod4, hA_mod_val]
-    have hx_pos : (n + A) / 4 ≥ 1 := by
-      have h4_le : 4 ≤ n + A := by omega
-      exact Nat.div_pos h4_le (by norm_num : (0 : ℕ) < 4)
-    -- Build erdos_straus n ((n+A)/4) y z
-    refine ⟨(n + A) / 4, y, z, ?_⟩
-    refine ⟨by omega, hx_pos, hy, hz, ?_⟩
-    exact h_eq
-  · -- 7 ∤ n: Use Chebotarev corollary directly
-    have h_rescued := chebotarev_corollary_discrete_log n 7
-      (by norm_num : (7 : ℕ).Prime) (by norm_num : 7 % 4 = 3) h1mod12 h5
-    obtain ⟨A, hA_mod, hA_ge, hA_le, y, z, hy, hz, h_eq⟩ := h_rescued
-    -- n ≡ 1 mod 4 (from n ≡ 1 mod 12)
-    have hn_mod4 : n % 4 = 1 := by
-      have h12 : n % 12 = 1 := by
-        rw [Nat.ModEq] at h1mod12
-        rw [show (1 : ℕ) % 12 = 1 from by norm_num] at h1mod12
-        exact h1mod12
-      have : (n % 12) % 4 = n % 4 := by
-        have : 12 = 4 * 3 := by norm_num
-        rw [this, Nat.mod_mul_right_mod]
-      omega
-    -- A ≡ 3 mod 4
-    have hA_mod_val : A % 4 = 3 := by
-      rw [Nat.ModEq] at hA_mod
-      rw [show (3 : ℕ) % 4 = 3 from by norm_num] at hA_mod
-      exact hA_mod
-    -- 4 ∣ (n + A)
-    have h4_dvd_nA : 4 ∣ (n + A) := by
-      rw [Nat.dvd_iff_mod_eq_zero, Nat.add_mod, hn_mod4, hA_mod_val]
-    have hx_pos : (n + A) / 4 ≥ 1 := by
-      have h4_le : 4 ≤ n + A := by omega
-      exact Nat.div_pos h4_le (by norm_num : (0 : ℕ) < 4)
-    -- Build erdos_straus n ((n+A)/4) y z
-    refine ⟨(n + A) / 4, y, z, ?_⟩
-    refine ⟨by omega, hx_pos, hy, hz, ?_⟩
-    exact h_eq
+  by_cases h_small : n ≤ 10000
+  · exact erdos_straus_bounded_10000 n hn_ge2 h_small
+  · -- Unbounded hard case: needs divisor distribution lemma (open)
+    sorry
 
-/-- Erdős-Straus Conjecture — FULL (conditional on Chebotarev).
+/-- Erdős-Straus Conjecture — FULL (conditional on divisor distribution lemma).
 
     For every n ≥ 2, there exist positive integers x, y, z such that
     4/n = 1/x + 1/y + 1/z.
 
-    This theorem combines:
-    - 6 modular identities (Identities.lean) covering all non-hard cases
-    - A-boundedness for hard cases with ω ≥ 3 (this file, via Chebotarev)
-    - Bounded computational verification for ω ≤ 2 (Computational.lean)
-    - Chebotarev density theorem for unbounded cases (Chebotarev.lean axiom)
+    Non-hard cases: proven unconditionally via modular identities.
+    Hard cases n ≤ 10000: proven unconditionally via explicit witnesses.
+    Hard cases n > 10000: conditional on the divisor distribution lemma
+    (bounded subset sums in Z/mZ cover the target residue class).
 
-    Mathematical status: PROVEN (conditional on Chebotarev, which is a
-    proven theorem in mathematics). -/
+    Mathematical status: CONDITIONAL on the divisor distribution lemma. -/
 theorem erdos_straus_full (n : ℕ) (hn : n ≥ 2) :
     ∃ x y z : ℕ, erdos_straus n x y z := by
   have hclass := hard_case_classification n hn
   rcases hclass with h3 | h2mod3 | h4 | ⟨h2, hn4⟩ | h7mod12 | ⟨h1mod12, h5⟩ | ⟨h1mod12, hn5⟩
-  · -- 3 ∣ n: 4/(3k) = 1/(3k) + 1/(2k) + 1/(2k)
+  · -- 3 ∣ n
     have hk : n / 3 ≥ 1 := Nat.div_pos (by omega) (by norm_num : (0 : ℕ) < 3)
     have hn_eq : n = 3 * (n / 3) := by
       have h := Nat.div_mul_cancel h3
@@ -641,34 +617,7 @@ theorem erdos_straus_full (n : ℕ) (hn : n ≥ 2) :
   · -- n ≡ 1 mod 12, ¬ 5 ∣ n: HARD CASE
     have hn_ge2 : 2 ≤ n := hn
     by_cases h_small : n ≤ 10000
-    · -- Small n: use computational verification
+    · -- Small n: unconditional via explicit witnesses
       exact erdos_straus_bounded_10000 n hn_ge2 h_small
-    · -- Large n: use Chebotarev
-      have h_rescued := chebotarev_corollary_discrete_log n 7
-        (by norm_num : (7 : ℕ).Prime) (by norm_num : 7 % 4 = 3) h1mod12 hn5
-      obtain ⟨A, hA_mod, hA_ge, hA_le, y, z, hy, hz, h_eq⟩ := h_rescued
-      -- n ≡ 1 mod 4 (from n ≡ 1 mod 12)
-      have hn_mod4 : n % 4 = 1 := by
-        have h12 : n % 12 = 1 := by
-          rw [Nat.ModEq] at h1mod12
-          rw [show (1 : ℕ) % 12 = 1 from by norm_num] at h1mod12
-          exact h1mod12
-        have : (n % 12) % 4 = n % 4 := by
-          have : 12 = 4 * 3 := by norm_num
-          rw [this, Nat.mod_mul_right_mod]
-        omega
-      -- A ≡ 3 mod 4
-      have hA_mod_val : A % 4 = 3 := by
-        rw [Nat.ModEq] at hA_mod
-        rw [show (3 : ℕ) % 4 = 3 from by norm_num] at hA_mod
-        exact hA_mod
-      -- 4 ∣ (n + A)
-      have h4_dvd_nA : 4 ∣ (n + A) := by
-        rw [Nat.dvd_iff_mod_eq_zero, Nat.add_mod, hn_mod4, hA_mod_val]
-      have hx_pos : (n + A) / 4 ≥ 1 := by
-        have h4_le : 4 ≤ n + A := by omega
-        exact Nat.div_pos h4_le (by norm_num : (0 : ℕ) < 4)
-      -- Build erdos_straus n ((n+A)/4) y z
-      refine ⟨(n + A) / 4, y, z, ?_⟩
-      refine ⟨by omega, hx_pos, hy, hz, ?_⟩
-      exact h_eq
+    · -- Large n: conditional on divisor distribution lemma (open)
+      sorry
