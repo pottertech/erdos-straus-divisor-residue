@@ -489,13 +489,13 @@ theorem a11_rescues_a7_failure_unbounded (n : ℕ) (hn : n ≡ 1 [MOD 12])
     (hn5 : ¬ 5 ∣ n)
     (_h_all_qr : ∀ p : ℕ, p.Prime → p ∣ n * (n + 7) → p ≠ 2 → p ≠ 7 →
       legendreSym 7 (p : ℤ) = 1) :
-    ∃ A : ℕ, A ≡ 3 [MOD 4] ∧ A ≥ 3 ∧ A ≤ 127 ∧
+    ∃ A : ℕ, A ≡ 3 [MOD 4] ∧ A ≥ 3 ∧
       ∃ y z : ℕ, y ≥ 1 ∧ z ≥ 1 ∧
         4 * ((n + A) / 4) * y * z = n * (((n + A) / 4) * z + y * z + ((n + A) / 4) * y) := by
   -- For prime n: use Dirichlet-based proof from Chebotarev.lean
   -- For composite n: use bounded theorem (n ≤ 10000) or sorry (unbounded)
   by_cases h_prime : n.Prime
-  · -- Prime n: use Dirichlet + CRT + QR proof
+  · -- Prime n: use Dirichlet + CRT + QR proof (no size bound — just existence)
     have hn2 : n ≠ 2 := by
       intro h
       rw [h] at hn
@@ -510,9 +510,7 @@ theorem a11_rescues_a7_failure_unbounded (n : ℕ) (hn : n ≡ 1 [MOD 12])
         rw [this, Nat.mod_mul_right_mod]
       omega
     have : Fact (Nat.Prime n) := ⟨h_prime⟩
-    obtain ⟨A, hA_mod, hA_ge, y, z, hy, hz, h_eq⟩ := chebotarev_corollary_discrete_log n hn2 hn4
-    refine ⟨A, hA_mod, hA_ge, ?_, y, z, hy, hz, h_eq⟩
-    sorry -- A ≤ 127 bound requires Linnik (not needed for existence)
+    exact chebotarev_corollary_discrete_log n hn2 hn4
   · -- Composite n: use bounded theorem or sorry for unbounded
     have hn_ge2 : 2 ≤ n := by
       by_contra h
@@ -521,11 +519,73 @@ theorem a11_rescues_a7_failure_unbounded (n : ℕ) (hn : n ≡ 1 [MOD 12])
         interval_cases n <;> simp [Nat.factorization]
       linarith [h_omega0, _hn_omega3]
     by_cases h_small : n ≤ 10000
-    · have h_exists := erdos_straus_bounded_10000 n hn_ge2 h_small
-      have h_exists := erdos_straus_bounded_10000 n hn_ge2 h_small
-      rcases h_exists with ⟨x, y, z, hx, hy, hz, h_eq⟩
+    · -- Small composite n: use explicit witnesses from Computational.lean
+      obtain ⟨x, y, z, h⟩ := erdos_straus_bounded_10000 n hn_ge2 h_small
+      -- h : erdos_straus n x y z = (n ≥ 1 ∧ x ≥ 1 ∧ y ≥ 1 ∧ z ≥ 1 ∧ eq)
+      have hx_pos : x ≥ 1 := h.2.1
+      have hy_pos : y ≥ 1 := h.2.2.1
+      have hz_pos : z ≥ 1 := h.2.2.2.1
+      have h_eq := h.2.2.2.2 -- 4*x*y*z = n*(x*z + y*z + x*y)
+      -- Extract A = 4x - n from the explicit solution
+      have h4x_gt_n : 4 * x > n := by
+        have h_factored : ((y : ℕ) * z : ℤ) * ((4 : ℤ) * x - n) = (n : ℤ) * x * ((y : ℕ) + z) := by
+          have h1 : (4 * x * y * z : ℤ) = (n : ℤ) * (x * z + y * z + x * y) := by exact_mod_cast h_eq
+          have h2 : (4 * x * y * z : ℤ) - (n : ℤ) * (y * z) = (n : ℤ) * (x * z + x * y) := by linarith
+          have h3 : (n : ℤ) * (x * z + x * y) = (n : ℤ) * x * ((y : ℕ) + z) := by ring
+          have h4 : (4 * x * y * z : ℤ) - (n : ℤ) * (y * z) = ((y : ℕ) * z : ℤ) * ((4 : ℤ) * x - n) := by ring
+          linarith
+        have h_yz_pos : ((y : ℕ) * z : ℤ) > 0 := by
+          have : (1 : ℤ) ≤ (y : ℤ) := by omega
+          have : (1 : ℤ) ≤ (z : ℤ) := by omega
+          positivity
+        have h_rhs_pos : (n : ℤ) * x * ((y : ℕ) + z) > 0 := by
+          have : (2 : ℤ) ≤ (n : ℤ) := by omega
+          have : (1 : ℤ) ≤ (x : ℤ) := by omega
+          have : (2 : ℤ) ≤ ((y : ℕ) + z : ℤ) := by omega
+          positivity
+        nlinarith
+      have h4x_ge_n : 4 * x ≥ n := by omega
+      have hn_mod4 : n % 4 = 1 := by
+        have h12 : n % 12 = 1 := by
+          rw [Nat.ModEq] at hn
+          rw [show (1 : ℕ) % 12 = 1 from by norm_num] at hn
+          exact hn
+        have : (n % 12) % 4 = n % 4 := by
+          have : 12 = 4 * 3 := by norm_num
+          rw [this, Nat.mod_mul_right_mod]
+        omega
+      refine ⟨4 * x - n, ?_, ?_, y, z, hy_pos, hz_pos, ?_⟩
+      · -- A ≡ 3 mod 4
+        rw [show 4 * x - n = 4 * (x - n / 4 - 1) + 3 from by
+          have hndiv : n = 4 * (n / 4) + 1 := by
+            have h := Nat.div_add_mod n 4
+            linarith [h, hn_mod4]
+          omega]
+        rw [Nat.ModEq]
+        show (4 * (x - n / 4 - 1) + 3) % 4 = 3 % 4
+        have : (4 * (x - n / 4 - 1)) % 4 = 0 :=
+          Nat.mod_eq_zero_of_dvd ⟨x - n / 4 - 1, by ring⟩
+        omega
+      · -- A ≥ 3
+        have hA_pos : (4 * x - n) ≥ 1 := by omega
+        have hA_mod : (4 * x - n) % 4 = 3 := by
+          have hndiv : n = 4 * (n / 4) + 1 := by
+            have h := Nat.div_add_mod n 4
+            linarith [h, hn_mod4]
+          have h_sub : 4 * x - n = 4 * (x - n / 4 - 1) + 3 := by omega
+          rw [h_sub]
+          have : (4 * (x - n / 4 - 1)) % 4 = 0 :=
+            Nat.mod_eq_zero_of_dvd ⟨x - n / 4 - 1, by ring⟩
+          omega
+        omega
+      · have hA : (n + (4 * x - n)) / 4 = x := by
+          have : n + (4 * x - n) = 4 * x := Nat.add_sub_cancel' h4x_ge_n
+          rw [this]
+          exact Nat.mul_div_cancel_left x (by norm_num : (0 : ℕ) < 4)
+        rw [hA]
+        exact h_eq
+    · -- Unbounded composite n: needs divisor distribution lemma (open)
       sorry
-    · sorry
 
 /-- Main theorem: ω(n) ≥ 3 ⟹ solution exists — UNBOUNDED.
     Conditional on Chebotarev Density Theorem. -/
