@@ -17,9 +17,16 @@ section below.
 
 ## What needs Skip's explicit word, every time
 
-- Merging any pull request into main. There is no standing merge
-  approval, no routine-change exception, and no auto-merge. Each
-  merge needs Skip's own word for that pull request.
+- Merging a routine pull request into main proceeds on three-way
+  agreement (Skip's rule, 2026-11-24): Emily's policy verdict on the
+  current head is COMPLIANT, Arty's merge-readiness check on that
+  same head is GO, and Atlas confirms the fix state. When the three
+  agree, the merge proceeds without a per-pull-request word from
+  Skip. When they disagree or stall, Atlas escalates to Skip with
+  the disagreement stated plainly and a recommendation, and Skip's
+  ruling governs. The remaining items in this section are never
+  covered by three-way agreement: each still needs Skip's own word
+  for that item before the merge rule applies to its pull request.
 - Deleting branches, files, or history outside a pull request's own
   scope, including any history rewrite.
 - Changing the pinned Lean toolchain or the mathlib version.
@@ -57,7 +64,12 @@ Emily, a fleet agent, checks open pull requests against this policy
 on a schedule and posts a verdict comment on each: compliant, or not
 compliant with the specific line crossed. The checker never writes
 code in this repository, never pushes to a pull request branch, and
-never merges. Disputed verdicts go to Skip for his ruling.
+never merges. Arty, a fleet agent, is the Merge Reviewer: at merge
+time he verifies that the head Emily cleared is the head being
+merged, that CI is green at that head, and that the pull request
+body's claims reproduce at that head; he reports GO or NO-GO to
+Atlas only and never posts, merges, or overrules Emily. Disputed
+verdicts go to Skip for his ruling.
 
 ## When in doubt
 
