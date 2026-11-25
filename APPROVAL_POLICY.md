@@ -22,7 +22,12 @@ section below.
   current head is COMPLIANT, Arty's merge-readiness check on that
   same head is GO, and Atlas confirms the fix state. When the three
   agree, the merge proceeds without a per-pull-request word from
-  Skip. When they disagree or stall, Atlas escalates to Skip with
+  Skip. A pull request is routine when it carries none of the
+  gated items in this section. Atlas's fix-state confirmation
+  means the branch contains the repairs its reviews required and
+  the pull request body's test counts reproduce at that head;
+  Atlas records that confirmation on the pull request. When they
+  disagree or stall, Atlas escalates to Skip with
   the disagreement stated plainly and a recommendation, and Skip's
   ruling governs. The remaining items in this section are never
   covered by three-way agreement: each still needs Skip's own word
