@@ -194,16 +194,18 @@ lemma sum_even_is_even (l : List ℕ) (h : ∀ x ∈ l, x % 2 = 0) :
   induction l with
   | nil => simp
   | cons x xs ih =>
-    simp only [List.sum_cons]
-    have hx : x % 2 = 0 := h x (List.mem_cons_self _ _)
-    omega
+    have hx : x % 2 = 0 := h x (by simp)
+    have hxs : ∀ y ∈ xs, y % 2 = 0 := fun y hy => h y (by simp [hy])
+    have ih' : xs.sum % 2 = 0 := ih hxs
+    simp [List.sum_cons, Nat.add_mod, hx, ih']
 
 -- ============================================
 -- EVEN PRODUCTS LEMMA: even values × any coefficient = even
 -- ============================================
 
 lemma even_val_even_product (c v : ℕ) (hv : v % 2 = 0) :
-    (c * v) % 2 = 0 := by omega
+    (c * v) % 2 = 0 := by
+  simp [Nat.mul_mod, hv]
 
 -- ============================================
 -- CORE OBSTRUCTION: all-QR mod 7 → can't reach -1
@@ -219,6 +221,28 @@ lemma even_val_even_product (c v : ℕ) (hv : v % 2 = 0) :
 -- The obstruction: if all dlogs of factors of D are even,
 -- then the subset sum (mod 2) is always 0, but target 3 is odd.
 -- Therefore A=7 cannot work when all factors are QR mod 7.
+
+-- ============================================
+-- WEIGHTED PARITY LEMMA: even values × any coefficient = even
+-- ============================================
+
+lemma sum_even_products (vals : List ℕ) (choices : List ℕ)
+    (h_even : ∀ v ∈ vals, v % 2 = 0) :
+    (List.zipWith Nat.mul choices vals).sum % 2 = 0 := by
+  induction vals generalizing choices with
+  | nil =>
+    cases choices <;> simp
+  | cons v vs ih =>
+    cases choices with
+    | nil => simp
+    | cons c cs =>
+      have hstep : List.zipWith Nat.mul (c :: cs) (v :: vs)
+          = c * v :: List.zipWith Nat.mul cs vs := rfl
+      rw [hstep, List.sum_cons]
+      have hv : v % 2 = 0 := h_even v (by simp)
+      have hvs : ∀ x ∈ vs, x % 2 = 0 := fun x hx => h_even x (by simp [hx])
+      have ih' := ih cs hvs
+      simp [Nat.add_mod, Nat.mul_mod, hv, ih']
 
 lemma a7_all_qr_obstruction (vals : List ℕ)
     (h_even : ∀ v ∈ vals, v % 2 = 0)
@@ -241,22 +265,7 @@ lemma a7_all_qr_fails (vals : List ℕ)
   -- Therefore 3 ∉ SubsetSumSet 6 (items with even dlogs).
   trivial
 
--- Simpler version using List directly (no Fin indexing)
-lemma sum_even_products (vals : List ℕ) (choices : List ℕ)
-    (h_even : ∀ v ∈ vals, v % 2 = 0) :
-    (List.zipWith Nat.mul choices vals).sum % 2 = 0 := by
-  induction vals generalizing choices with
-  | nil =>
-    cases choices <;> simp
-  | cons v vs ih =>
-    cases choices with
-    | nil => simp
-    | cons c cs =>
-      simp only [List.zipWith_cons, List.sum_cons]
-      have hv : v % 2 = 0 := h_even v (List.mem_cons_self _ _)
-      have hvs : ∀ x ∈ vs, x % 2 = 0 := fun x hx => h_even x (List.mem_cons_of_mem _ hx)
-      have ih' := ih cs hvs
-      omega
+-- (weighted parity lemma now stated above, before its first use)
 
 -- ============================================
 -- THEOREM STATEMENTS
@@ -317,7 +326,7 @@ lemma umethod_positive (n x u : ℤ) (hn : n > 0) (hx : x > 0) (hu : u > 0)
 -- ============================================
 
 theorem erdos_straus_2 : IsErdosStraus 2 :=
-  ⟨2, 3, 6, by decide, by decide, by decide, by decide⟩
+  ⟨1, 2, 2, by decide, by decide, by decide, by decide⟩
 theorem erdos_straus_3 : IsErdosStraus 3 :=
   ⟨3, 2, 2, by decide, by decide, by decide, by decide⟩
 theorem erdos_straus_4 : IsErdosStraus 4 :=
@@ -325,7 +334,7 @@ theorem erdos_straus_4 : IsErdosStraus 4 :=
 theorem erdos_straus_5 : IsErdosStraus 5 :=
   ⟨2, 5, 10, by decide, by decide, by decide, by decide⟩
 theorem erdos_straus_7 : IsErdosStraus 7 :=
-  ⟨6, 4, 84, by decide, by decide, by decide, by decide⟩
+  ⟨2, 28, 28, by decide, by decide, by decide, by decide⟩
 theorem erdos_straus_13 : IsErdosStraus 13 :=
   ⟨4, 20, 130, by decide, by decide, by decide, by decide⟩
 
