@@ -20,8 +20,15 @@ jobs:
 
   pdf-build:
     runs-on: ubuntu-latest
+    env:
+      # pdfTeX writes the build time into /CreationDate and /ID, so two builds
+      # of identical sources never hash the same. Pin both to the commit time
+      # of the manuscript so the rebuilt PDF is reproducible.
+      FORCE_SOURCE_DATE: "1"
     steps:
       - uses: actions/checkout@v4
+      - name: Pin PDF build timestamp
+        run: echo "SOURCE_DATE_EPOCH=$(git log -1 --format=%ct -- paper/manuscript.tex)" >> "$GITHUB_ENV"
       - name: Install TeX
         run: |
           sudo apt-get update
@@ -46,3 +53,11 @@ jobs:
             echo "::error::Committed PDF does not match rebuilt PDF. Run pdflatex and commit the updated docs/manuscript.pdf"
             exit 1
           fi
+      # The rebuilt PDF is the authoritative artifact: on mismatch, download this
+      # and commit it as docs/manuscript.pdf so the hashes agree.
+      - name: Upload rebuilt PDF
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: manuscript-pdf
+          path: paper/manuscript.pdf

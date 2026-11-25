@@ -24,7 +24,9 @@ theorem erdos_straus_mod_3 (n : Nat) (hn : n ≥ 3) (hmod : n % 3 = 0) :
     IsErdosStraus n := by
   have ⟨k, hk⟩ : ∃ k, n = 3 * k := ⟨n / 3, by omega⟩
   refine ⟨n, 2 * k, 2 * k, ?_, ?_, ?_, ?_⟩
-  · omega · omega · omega
+  · omega
+  · omega
+  · omega
   · rw [hk]; ring
 
 -- ============================================
@@ -36,7 +38,9 @@ theorem erdos_straus_mod_3_2 (n : Nat) (hn : n ≥ 2) (hmod : n % 3 = 2) :
     IsErdosStraus n := by
   have ⟨k, hk⟩ : ∃ k, n = 3 * k + 2 := ⟨(n - 2) / 3, by omega⟩
   refine ⟨n, k + 1, n * (k + 1), ?_, ?_, ?_, ?_⟩
-  · omega · omega · omega
+  · omega
+  · omega
+  · omega
   · rw [hk]; ring
 
 -- ============================================
@@ -48,7 +52,9 @@ theorem erdos_straus_mod_12_4 (n : Nat) (hn : n ≥ 4) (hmod : n % 12 = 4) :
     IsErdosStraus n := by
   have ⟨m, hm⟩ : ∃ m, n = 12 * m + 4 := ⟨(n - 4) / 12, by omega⟩
   refine ⟨9 * m + 3, 9 * m + 3, 9 * m + 3, ?_, ?_, ?_, ?_⟩
-  · omega · omega · omega
+  · omega
+  · omega
+  · omega
   · rw [hm]; ring
 
 -- ============================================
@@ -60,7 +66,9 @@ theorem erdos_straus_mod_12_10 (n : Nat) (hn : n ≥ 10) (hmod : n % 12 = 10) :
     IsErdosStraus n := by
   have ⟨m, hm⟩ : ∃ m, n = 12 * m + 10 := ⟨(n - 10) / 12, by omega⟩
   refine ⟨6 * m + 5, 12 * m + 10, 12 * m + 10, ?_, ?_, ?_, ?_⟩
-  · omega · omega · omega
+  · omega
+  · omega
+  · omega
   · rw [hm]; ring
 
 -- ============================================
@@ -72,32 +80,34 @@ theorem erdos_straus_mod_12_7 (n : Nat) (hn : n ≥ 7) (hmod : n % 12 = 7) :
     IsErdosStraus n := by
   have ⟨m, hm⟩ : ∃ m, n = 12 * m + 7 := ⟨(n - 7) / 12, by omega⟩
   refine ⟨6 * m + 4, 6 * m + 4, (12 * m + 7) * (3 * m + 2), ?_, ?_, ?_, ?_⟩
-  · omega · omega · omega
+  · omega
+  · omega
+  · omega
   · rw [hm]; ring
 
 -- ============================================
--- IDENTITY 6: n ≡ 25 (mod 60)
--- 4/n = 5/(2n) + 1/n + 1/(2n), x = 2n, y = n, z = 2n
+-- REMOVED: the former "n ≡ 25 (mod 60)" identity
 -- ============================================
-
-theorem erdos_straus_mod_60_25 (n : Nat) (hn : n ≥ 25) (hmod : n % 60 = 25) :
-    IsErdosStraus n := by
-  refine ⟨2 * n, n, 2 * n, ?_, ?_, ?_, ?_⟩
-  · omega · omega · omega · ring
+-- The deleted theorem asserted the triple x = 2n, y = n, z = 2n for
+-- n ≡ 25 (mod 60), i.e. 4/n = 1/(2n) + 1/n + 1/(2n). That right-hand side is
+-- 2/n, not 4/n (n = 25 gives 2/25 versus 4/25), so the cross-multiplied goal
+-- was false and `ring` could never close it. The five-term identity
+-- 5/(2n) + 1/n + 1/(2n) = 4/n quoted in the old comment is true, but it is not
+-- of Erdős–Straus shape, so it cannot witness `IsErdosStraus`.
+-- The residue class itself is covered by the computational verification
+-- below, not by a closed-form identity.
 
 -- ============================================
 -- QR LEMMAS MOD 7
 -- ============================================
 
-lemma squares_mod_7 : {x : ZMod 7 | ∃ a, a * a = x} = {0, 1, 2, 4} := by
-  ext x; match x with
-  | 0 => decide | 1 => decide | 2 => decide | 3 => decide
-  | 4 => decide | 5 => decide | 6 => decide
+lemma squares_mod_7 : {x : ZMod 7 | ∃ a, a * a = x} = ({0, 1, 2, 4} : Set (ZMod 7)) := by
+  decide
 
 lemma neg_one_mod_7 : (-1 : ZMod 7) = 6 := by decide
 
 lemma neg_one_not_square_mod_7 : ¬ ∃ a : ZMod 7, a * a = (-1 : ZMod 7) := by
-  rw [neg_one_mod_7]; decide
+  decide
 
 -- ============================================
 -- QR LEMMAS MOD 11
@@ -106,7 +116,7 @@ lemma neg_one_not_square_mod_7 : ¬ ∃ a : ZMod 7, a * a = (-1 : ZMod 7) := by
 lemma neg_one_mod_11 : (-1 : ZMod 11) = 10 := by decide
 
 lemma neg_one_not_square_mod_11 : ¬ ∃ a : ZMod 11, a * a = (-1 : ZMod 11) := by
-  rw [neg_one_mod_11]; decide
+  decide
 
 -- ============================================
 -- QR CLOSED UNDER MULTIPLICATION
@@ -116,44 +126,68 @@ lemma qr_closed_under_mul (p : ℕ) [hp : Fact p.Prime] (a b : ZMod p) :
     (∃ x, x * x = a) → (∃ y, y * y = b) → ∃ z, z * z = a * b := by
   rintro ⟨x, hx⟩ ⟨y, hy⟩
   refine ⟨x * y, ?_⟩
-  rw [hx, hy]; ring
+  rw [← hx, ← hy]; ring
 
 -- ============================================
 -- U-METHOD IDENTITY
 -- ============================================
+-- If 4xyz = n(xy + xz + yz) and u = 4x - n then (uy - nx)(uz - nx) = (nx)^2.
+-- Only the forward direction is unconditional: the converse also needs u ≠ 0,
+-- because u = 0 is the degenerate case n = 4x, where the left-hand side is
+-- (nx)^2 for every choice of y and z.
 
-lemma umethod_identity (n x u y z : ℤ) (hu : u = 4 * x - n) :
+lemma umethod_identity (n x u y z : ℤ) (hu : u = 4 * x - n)
+    (hes : 4 * x * y * z = n * (x * y + x * z + y * z)) :
+    (u * y - n * x) * (u * z - n * x) = (n * x)^2 := by
+  have h_uyz : u * y * z = n * x * (y + z) := by
+    have h4x : 4 * x = u + n := by linarith
+    have h : (u + n) * y * z = n * (x * y + x * z + y * z) := by
+      rw [← h4x]; linarith
+    nlinarith
+  have hexp : (u * y - n * x) * (u * z - n * x)
+      = u * (u * y * z) - n * x * u * (y + z) + (n * x)^2 := by ring
+  rw [hexp, h_uyz]; ring
+
+lemma umethod_identity_iff (n x u y z : ℤ) (hu : u = 4 * x - n) (hu0 : u ≠ 0) :
     (u * y - n * x) * (u * z - n * x) = (n * x)^2 ↔
     4 * x * y * z = n * (x * y + x * z + y * z) := by
-  rw [hu]; ring_nf; ring_nf
+  constructor
+  · intro h
+    have hexp : (u * y - n * x) * (u * z - n * x) - (n * x)^2
+        = u * (4 * x * y * z - n * (x * y + x * z + y * z)) := by
+      rw [hu]; ring
+    rw [h] at hexp
+    have hz : u * (4 * x * y * z - n * (x * y + x * z + y * z)) = 0 := by
+      linarith
+    exact sub_eq_zero.mp ((mul_eq_zero.mp hz).resolve_left hu0)
+  · intro h
+    exact umethod_identity n x u y z hu h
 
 -- ============================================
 -- DISCRETE LOG TABLE MOD 7
 -- (Z/7Z)* = ⟨3⟩, order 6
 -- 3^0=1, 3^1=3, 3^2=2, 3^3=6, 3^4=4, 3^5=5
 -- ============================================
+-- The table is total on ZMod 7 (dlog 0 := 0) so that the statements below are
+-- closed goals that `decide` can evaluate; the old explicit-nonzero-argument
+-- form left a proof variable free inside the goal, which blocks `decide`.
 
-def dlog7 (a : ZMod 7) (ha : a ≠ 0) : Fin 6 :=
+def dlog7 (a : ZMod 7) : Fin 6 :=
   match a with
   | 1 => 0 | 2 => 2 | 3 => 1 | 4 => 4 | 5 => 5 | 6 => 3 | 0 => 0
 
-lemma dlog7_correct (a : ZMod 7) (ha : a ≠ 0) :
-    (3 : ZMod 7)^(dlog7 a ha).val = a := by
-  match a with
-  | 1 => rfl | 2 => rfl | 3 => rfl | 4 => rfl | 5 => rfl | 6 => rfl | 0 => contradiction
+lemma dlog7_correct : ∀ a : ZMod 7, (3 : ZMod 7)^(dlog7 a).val = a := by
+  decide
 
 -- QR(7) = {1,2,4} ↔ even dlogs {0,2,4}
 -- QNR(7) = {3,5,6} ↔ odd dlogs {1,3,5}
 -- -1 = 6 ↔ dlog = 3 (odd → QNR)
 
-lemma qr7_iff_even_dlog (a : ZMod 7) (ha : a ≠ 0) :
-    (∃ x, x * x = a) ↔ (dlog7 a ha).val % 2 = 0 := by
-  match a with
-  | 1 => decide | 2 => decide | 3 => decide
-  | 4 => decide | 5 => decide | 6 => decide | 0 => contradiction
+lemma qr7_iff_even_dlog :
+    ∀ a : ZMod 7, (∃ x, x * x = a) ↔ (dlog7 a).val % 2 = 0 := by
+  decide
 
-lemma neg_one_dlog7 : dlog7 (-1 : ZMod 7) (by decide) = 3 := by
-  rw [show (-1 : ZMod 7) = 6 from by decide]; rfl
+lemma neg_one_dlog7 : dlog7 (-1 : ZMod 7) = 3 := by decide
 
 -- ============================================
 -- DISCRETE LOG TABLE MOD 11
@@ -161,29 +195,34 @@ lemma neg_one_dlog7 : dlog7 (-1 : ZMod 7) (by decide) = 3 := by
 -- 2^0=1, 2^1=2, 2^2=4, 2^3=8, 2^4=5, 2^5=10, 2^6=9, 2^7=7, 2^8=3, 2^9=6
 -- ============================================
 
-def dlog11 (a : ZMod 11) (ha : a ≠ 0) : Fin 10 :=
+def dlog11 (a : ZMod 11) : Fin 10 :=
   match a with
   | 1 => 0 | 2 => 1 | 3 => 8 | 4 => 2 | 5 => 4 | 6 => 9
   | 7 => 7 | 8 => 3 | 9 => 6 | 10 => 5 | 0 => 0
 
-lemma dlog11_correct (a : ZMod 11) (ha : a ≠ 0) :
-    (2 : ZMod 11)^(dlog11 a ha).val = a := by
-  match a with
-  | 1 => rfl | 2 => rfl | 3 => rfl | 4 => rfl | 5 => rfl | 6 => rfl
-  | 7 => rfl | 8 => rfl | 9 => rfl | 10 => rfl | 0 => contradiction
+lemma dlog11_correct : ∀ a : ZMod 11, (2 : ZMod 11)^(dlog11 a).val = a := by
+  decide
 
-lemma neg_one_dlog11 : dlog11 (-1 : ZMod 11) (by decide) = 5 := by
-  rw [show (-1 : ZMod 11) = 10 from by decide]; rfl
+lemma qr11_iff_even_dlog :
+    ∀ a : ZMod 11, (∃ x, x * x = a) ↔ (dlog11 a).val % 2 = 0 := by
+  decide
+
+lemma neg_one_dlog11 : dlog11 (-1 : ZMod 11) = 5 := by decide
 
 -- ============================================
 -- SUBSET SUM PREDICATE
 -- ============================================
+-- Coefficients are paired with items positionally (the length hypothesis is
+-- kept); coefficient i is bounded by item i's value, and the weighted sum of
+-- the item residues is taken mod n. The zip form replaces `choices[i]!` on a
+-- dependent `i`, whose indexing needs a bound proof that the length hypothesis
+-- does not make definitionally available.
 
 def SubsetSumSet (n : ℕ) (items : List (Fin n × ℕ)) : Set (Fin n) :=
   { s : Fin n | ∃ choices : List ℕ,
-    choices.length = items.length ∧
-    (∀ i : Fin items.length, choices[i]! ≤ items[i]!.2) ∧
-    s.val = (∑ i : Fin items.length, choices[i]! * items[i]!.1.val) % n }
+      choices.length = items.length ∧
+      (∀ b ∈ List.zipWith (fun c it => c ≤ it.2) choices items, b) ∧
+      s.val = (List.zipWith (fun c it => c * it.1.val) choices items).sum % n }
 
 -- ============================================
 -- PARITY LEMMA: even inputs → even sums
@@ -194,16 +233,18 @@ lemma sum_even_is_even (l : List ℕ) (h : ∀ x ∈ l, x % 2 = 0) :
   induction l with
   | nil => simp
   | cons x xs ih =>
-    simp only [List.sum_cons]
-    have hx : x % 2 = 0 := h x (List.mem_cons_self _ _)
-    omega
+    have hx : x % 2 = 0 := h x (by simp)
+    have hxs : ∀ y ∈ xs, y % 2 = 0 := fun y hy => h y (by simp [hy])
+    have ih' : xs.sum % 2 = 0 := ih hxs
+    simp [List.sum_cons, Nat.add_mod, hx, ih']
 
 -- ============================================
 -- EVEN PRODUCTS LEMMA: even values × any coefficient = even
 -- ============================================
 
 lemma even_val_even_product (c v : ℕ) (hv : v % 2 = 0) :
-    (c * v) % 2 = 0 := by omega
+    (c * v) % 2 = 0 := by
+  simp [Nat.mul_mod, hv]
 
 -- ============================================
 -- CORE OBSTRUCTION: all-QR mod 7 → can't reach -1
@@ -212,9 +253,27 @@ lemma even_val_even_product (c v : ℕ) (hv : v % 2 = 0) :
 -- then all subset sums are even (mod 6).
 -- Target 3 (= dlog of -1) is odd → unreachable.
 
--- The parity lemma (List-based, compiles):
--- If all values are even, any weighted sum with nonneg coefficients is even.
--- This is `sum_even_products` above.
+-- ============================================
+-- WEIGHTED PARITY LEMMA: even values × any coefficient = even
+-- ============================================
+
+lemma sum_even_products (vals : List ℕ) (choices : List ℕ)
+    (h_even : ∀ v ∈ vals, v % 2 = 0) :
+    (List.zipWith Nat.mul choices vals).sum % 2 = 0 := by
+  induction vals generalizing choices with
+  | nil =>
+    cases choices <;> simp
+  | cons v vs ih =>
+    cases choices with
+    | nil => simp
+    | cons c cs =>
+      have hstep : List.zipWith Nat.mul (c :: cs) (v :: vs)
+          = c * v :: List.zipWith Nat.mul cs vs := rfl
+      rw [hstep, List.sum_cons]
+      have hv : v % 2 = 0 := h_even v (by simp)
+      have hvs : ∀ x ∈ vs, x % 2 = 0 := fun x hx => h_even x (by simp [hx])
+      have ih' := ih cs hvs
+      simp [Nat.add_mod, Nat.mul_mod, hv, ih']
 
 -- The obstruction: if all dlogs of factors of D are even,
 -- then the subset sum (mod 2) is always 0, but target 3 is odd.
@@ -240,23 +299,6 @@ lemma a7_all_qr_fails (vals : List ℕ)
   -- but 3 is odd, so 3 mod 2 = 1 ≠ 0 = (subset sum) mod 2.
   -- Therefore 3 ∉ SubsetSumSet 6 (items with even dlogs).
   trivial
-
--- Simpler version using List directly (no Fin indexing)
-lemma sum_even_products (vals : List ℕ) (choices : List ℕ)
-    (h_even : ∀ v ∈ vals, v % 2 = 0) :
-    (List.zipWith Nat.mul choices vals).sum % 2 = 0 := by
-  induction vals generalizing choices with
-  | nil =>
-    cases choices <;> simp
-  | cons v vs ih =>
-    cases choices with
-    | nil => simp
-    | cons c cs =>
-      simp only [List.zipWith_cons, List.sum_cons]
-      have hv : v % 2 = 0 := h_even v (List.mem_cons_self _ _)
-      have hvs : ∀ x ∈ vs, x % 2 = 0 := fun x hx => h_even x (List.mem_cons_of_mem _ hx)
-      have ih' := ih cs hvs
-      omega
 
 -- ============================================
 -- THEOREM STATEMENTS
@@ -317,7 +359,7 @@ lemma umethod_positive (n x u : ℤ) (hn : n > 0) (hx : x > 0) (hu : u > 0)
 -- ============================================
 
 theorem erdos_straus_2 : IsErdosStraus 2 :=
-  ⟨2, 3, 6, by decide, by decide, by decide, by decide⟩
+  ⟨1, 2, 2, by decide, by decide, by decide, by decide⟩
 theorem erdos_straus_3 : IsErdosStraus 3 :=
   ⟨3, 2, 2, by decide, by decide, by decide, by decide⟩
 theorem erdos_straus_4 : IsErdosStraus 4 :=
@@ -325,7 +367,7 @@ theorem erdos_straus_4 : IsErdosStraus 4 :=
 theorem erdos_straus_5 : IsErdosStraus 5 :=
   ⟨2, 5, 10, by decide, by decide, by decide, by decide⟩
 theorem erdos_straus_7 : IsErdosStraus 7 :=
-  ⟨6, 4, 84, by decide, by decide, by decide, by decide⟩
+  ⟨2, 28, 28, by decide, by decide, by decide, by decide⟩
 theorem erdos_straus_13 : IsErdosStraus 13 :=
   ⟨4, 20, 130, by decide, by decide, by decide, by decide⟩
 
